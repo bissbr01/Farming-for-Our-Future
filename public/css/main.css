@@ -1,0 +1,67 @@
+/*
+*   Styles for USDA Contest Application
+*   
+*  Color Scheme: 	#4A6713 
+*					#234311 
+*					#DCDB45 
+*					#9C7D23 
+*					#F1DD9E
+*
+*/
+
+html, body {
+	font: 20px;
+	background: url("../images/farm-background.jpg") no-repeat #F1DD9E;
+}
+
+.banner {
+	height: 80px;
+	background-color:  hsla(98, 60%, 16%, .3);
+	color: #DCDB45; 
+}
+.banner-item {
+	margin: 0 auto;
+}
+
+#sidebar {
+	float: left;
+	padding: 5px;
+	left: 0;
+	width: 35%;
+}
+
+#graph {
+	float: right;
+	width: 65%;
+	background: hsla(45, 64%, 37%, .7);
+}
+
+/**********************************
+*       Masonry Grid Styles
+***********************************/
+.grid::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.grid-sizer, .grid-item {
+	width: 30%;
+}
+
+.grid-item {
+	float:left;
+	background: hsla(98, 60%, 16%, .7);
+	height: 120px;
+	border: 2px solid hsla(0,0%,0%, 0.5);
+	border-radius: 5px;
+}
+
+/* example of fixed position item */
+.stamp {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  width: 20%;
+  height: 90%;
+}
