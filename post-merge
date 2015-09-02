@@ -1,0 +1,4 @@
+#!/bin/bash
+mysql -u bbissell -pIamcool10 USDA < /C/wamp/www/USDA_Project/USDA.sql
+
+chmod +x /C/wamp/www/USDA_Project/.git/hooks/post-merge
