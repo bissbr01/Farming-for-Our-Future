@@ -73,19 +73,3 @@
 // echo $text;
 // echo "</pre>"
 ?>
-
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title></title>
-	<link rel="stylesheet" href="">
-</head>
-<body>
-	
-</body>
-<script src="data_test.js">
-	
-</script>
-</html>

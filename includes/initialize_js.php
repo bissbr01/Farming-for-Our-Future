@@ -4,6 +4,7 @@
 $path = "../includes/js";
 ?>
 
-<script src="$path/jQuery/jQuery-2.1.4.min.js"></script>
-<script src="$path/masonry/dist/masonry.pckgd.min.js"></script>
-<script src="$path/highcharts/highcharts.min.js"></script>
+<script src="../includes/js/jQuery/jQuery-2.1.4.min.js"></script>
+<script src="../includes/js/masonry/dist/masonry.pkgd.min.js"></script>
+<script src="../includes/js/highcharts/highcharts.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
