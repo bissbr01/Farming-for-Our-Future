@@ -12,6 +12,8 @@
 html, body {
 	font: 20px;
 	background: url("../images/farm-background.jpg") no-repeat #F1DD9E;
+	color: white;
+
 }
 
 .banner {
@@ -32,8 +34,17 @@ html, body {
 
 #graph {
 	float: right;
-	width: 65%;
-	background: hsla(45, 64%, 37%, .7);
+	width: 60%;
+	height: 500px;
+}
+
+#selectors {
+	float: left;
+	width: 40%;
+}
+
+.clearfix {
+	clear: both;
 }
 
 /**********************************
