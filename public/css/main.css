@@ -46,6 +46,9 @@ html, body {
 .clearfix {
 	clear: both;
 }
+.form-group > select > option {
+	text-transform: uppercase;
+}
 
 /**********************************
 *       Masonry Grid Styles

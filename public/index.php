@@ -1,12 +1,3 @@
-<?php 
-
-if(isset($_POST['submit'])){
-	$sector = $_POST['sector'];
-	$group = $_POST['group'];
-	$commodity = $_POST['commodity'];
-}
-
- ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,9 +7,6 @@ if(isset($_POST['submit'])){
 	<link rel="stylesheet" type="text/css" href="css/normalize.css">
 	<link rel="stylesheet" media="screen" href="//netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/main.css">
-	<?php require("../includes/initialize_js.php"); ?>
-
-
 </head>
 <body>
 	<div class="banner">
@@ -61,6 +49,13 @@ if(isset($_POST['submit'])){
 					  <option>Yogurt</option>
 				</select>
 			</div>
+			<div class="form-group">
+				<label>Data Category:</label>
+				<select name="category" class="form-control">
+					  <option>Price Received</option>
+					  <option>Sales</option> 
+				</select>
+			</div>
 		<button id="submit" type="submit" name="submit" class="btn btn-primary">Submit</button>
 		</form>
 	</div>
@@ -70,45 +65,23 @@ if(isset($_POST['submit'])){
 	<main id="graph">
 
 	</main>
-	
+	<?php 
+		if(isset($_POST['submit'])){
+			$sector = $_POST['sector'];
+			$group = $_POST['group'];
+			$commodity = $_POST['commodity'];
+			$category  = $_POST['category'];
+		}
+	 ?>
+	<?php require("../includes/initialize_js.php"); ?>
+	<script src="../includes/js/data_query.js"></script>
 	<script>
-	$(document).ready(function() {
-		$("#submit").click(function() {
-    	var sector = "<?php echo $sector; ?>";
-    	var group = "<?php echo $group; ?>";
-    	var commodity = "<?php echo $commodity; ?>";
-		// var link = "http://nass-api.azurewebsites.net/api/api_get?source_desc=SURVEY&sector_desc=" + sector + "&group_desc=" + group + "&commodity_desc=" + commodity;	   
-		var link = "http://nass-api.azurewebsites.net/api/api_get?source_desc=SURVEY&sector_desc=ANIMALS%20%26%20PRODUCTS&group_desc=DAIRY&commodity_desc=BUTTER&statisticcat_desc=MOISTURE%20CONTENT&class_desc=ALL%20CLASSES&agg_level_desc=NATIONAL&state_name=US%20TOTAL&year=1999&freq_desc=WEEKLY";
-	    $.ajax({
-	    	type: "GET",
-	    	url: link,
-	    	cached: true,
-	    	crossDomain: true,
-	    	contentType: "application/json; charset=utf-8",
-	    	dataType: "json", 
-	    	success: function(json){
-	    		console.log(json);
-	    		var dataArray = [];
-	    		 $.each(json.data, function(i){
-					dataArray.push(parseFloat(this.value));
-				});
-	    		 console.log(dataArray);
-    			$('#graph').highcharts({
-    				title: {
-    					text: 'Values of ajax query'
-    				},
-    				series: [{
-    					data: dataArray
-    				}]
-
-    			})
-			}
-		});
-	});
-	});
-	</script>	
-	</script>	
-
+		var sector = strEncode("<?php echo $sector; ?>");
+		var group = strEncode("<?php echo $group; ?>");
+		var commodity = strEncode("<?php echo $commodity; ?>");
+		var category = strEncode("<?php echo $category; ?>");
+		loadAjax(sector, group, commodity, category);
+	</script>
 
 
 	<script type="text/javascript">
