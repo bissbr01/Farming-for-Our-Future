@@ -15,55 +15,19 @@
 	<div id="selectors">
 		<form action="index.php" method="POST" accept-charset="utf-8">
 			<div class="form-group">
-				<label>Sector:</label>
-				<select name="sector" class="form-control">
-					  <option>Animals & Products</option>
-					  <option>Crops</option>
-					  <option>Economics</option>
-				</select>
-			</div>
-			<div class="form-group">
-				<label>Group:</label>
-				<select name="group" class="form-control">
-					  <option>Dairy</option>
-					  <option>Livestock</option>
-					  <option>Poultry</option>
-				</select>
-			</div>
-			<div class="form-group">
 				<label>Commodity:</label>
-				<select name="commodity" class="form-control">
-					  <option>Butter</option>
-					  <option>Buttermilk</option>
-					  <option>Cattle</option>
-					  <option>Cheese</option>
-					  <option>Cream</option>
-					  <option>Eggs</option>
-					  <option>Hogs</option>
-					  <option>Ice Cream</option>
-					  <option>Milk</option>
-					  <option>Red Meat</option>
-					  <option>Sheep</option>
-					  <option>Sherbet</option>
-					  <option>Whey</option>
-					  <option>Yogurt</option>
+				<select id="commodity" name="commodity" class="form-control">
 				</select>
 			</div>
 			<div class="form-group">
-				<label>Data Category:</label>
-				<select name="category" class="form-control">
-					  <option>Price Received</option>
-					  <option>Sales</option> 
+				<label>Year:</label>
+				<select id="year" name="year" class="form-control">
 				</select>
 			</div>
-		<button id="submit" type="submit" name="submit" class="btn btn-primary">Submit</button>
+		<button type="submit" name="submit" class="btn btn-primary">Submit</button>
 		</form>
 	</div>
-	<div id="test" style="background: grey">
-		
-	</div>
 	<main id="graph">
-
 	</main>
 	<?php 
 		if(isset($_POST['submit'])){
@@ -74,15 +38,23 @@
 		}
 	 ?>
 	<?php require("../includes/initialize_js.php"); ?>
-	<script src="../includes/js/data_query.js"></script>
 	<script>
+	$(document).ready(function() {
+		loadCommodities();
+	});
+	
+	$("form").submit(function(event) {
+		/* Act on the event */
+		
+	});
+
+
 		var sector = strEncode("<?php echo $sector; ?>");
 		var group = strEncode("<?php echo $group; ?>");
 		var commodity = strEncode("<?php echo $commodity; ?>");
 		var category = strEncode("<?php echo $category; ?>");
-		loadAjax(sector, group, commodity, category);
+		// loadAjax(sector, group, commodity, category);
 	</script>
-
 
 	<script type="text/javascript">
 	$(document).ready(function() {
