@@ -31,10 +31,8 @@
 	</main>
 	<?php 
 		if(isset($_POST['submit'])){
-			$sector = $_POST['sector'];
-			$group = $_POST['group'];
 			$commodity = $_POST['commodity'];
-			$category  = $_POST['category'];
+			$year  = $_POST['year'];
 		}
 	 ?>
 	<?php require("../includes/initialize_js.php"); ?>
@@ -42,18 +40,17 @@
 	$(document).ready(function() {
 		loadCommodities();
 	});
-	
+
 	$("form").submit(function(event) {
 		/* Act on the event */
 		
 	});
 
 
-		var sector = strEncode("<?php echo $sector; ?>");
-		var group = strEncode("<?php echo $group; ?>");
+
 		var commodity = strEncode("<?php echo $commodity; ?>");
-		var category = strEncode("<?php echo $category; ?>");
-		// loadAjax(sector, group, commodity, category);
+		var year = strEncode("<?php echo $year; ?>");
+		loadAjax(commodity, year);
 	</script>
 
 	<script type="text/javascript">

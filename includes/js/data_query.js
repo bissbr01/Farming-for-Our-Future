@@ -1,12 +1,8 @@
 
-function loadAjax(sector, group, commodity, category) {
-	alert("sector: " + sector);
+function loadAjax(commodity, year) {
 	var link = "http://nass-api.azurewebsites.net/api/api_get?" + 
-		"source_desc="  + "SURVEY" + 
-		"&sector_desc=" + sector +
-		"&group_desc=" + group + 
 		"&commodity_desc=" + commodity + 
-		"&statisticcat_desc=" + category;	   
+		"&year" + year;	   
     $.ajax({
     	type: "GET",
     	url: link,
@@ -14,7 +10,7 @@ function loadAjax(sector, group, commodity, category) {
     	crossDomain: true,
     	contentType: "application/json; charset=utf-8",
     	dataType: "json", 
-    	success: function(json){
+    	success: function(json) {
 	    		console.log(json);
     		if (json != undefined && json.data != undefined) {
 	    		var dataArray = [];
@@ -31,6 +27,15 @@ function loadAjax(sector, group, commodity, category) {
 						}
 					},
 					series: [{
+						type: "line",
+						allowPointSelect: false,
+						animation: true,
+						color: undefined,
+						connectEnds: true,
+						connectNulls: false,
+						cropThreshold: 300,
+						cursor: undefined,
+						dashStyle: "Solid",
 						data: dataArray
 					}]
 
