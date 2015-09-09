@@ -14,6 +14,18 @@
 	</div>
 	<div id="selectors">
 		<form action="index.php" method="POST" accept-charset="utf-8">
+			
+			<div class="form-group">
+				<label>Sector:</label>
+				<select id="sector" name="sector" class="form-control">
+				</select>
+			</div>
+			<div class="form-group">
+				<label>Group:</label>
+				<select id="Group" name="Group" class="form-control">
+				</select>
+			</div>
+
 			<div class="form-group">
 				<label>Commodity:</label>
 				<select id="commodity" name="commodity" class="form-control">
@@ -29,28 +41,22 @@
 	</div>
 	<main id="graph">
 	</main>
-	<?php 
-		if(isset($_POST['submit'])){
-			$commodity = $_POST['commodity'];
-			$year  = $_POST['year'];
-		}
-	 ?>
 	<?php require("../includes/initialize_js.php"); ?>
 	<script>
 	$(document).ready(function() {
-		loadCommodities();
+		// loadCommodities();
 	});
 
 	$("form").submit(function(event) {
-		/* Act on the event */
+	var commodity = strEncode($.post('commodity'));
+	var year =      strEncode($.post('year'));
+	// loadAjax(commodity, year);
 		
 	});
 
 
 
-		var commodity = strEncode("<?php echo $commodity; ?>");
-		var year = strEncode("<?php echo $year; ?>");
-		loadAjax(commodity, year);
+		
 	</script>
 
 	<script type="text/javascript">

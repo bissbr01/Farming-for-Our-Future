@@ -57,57 +57,31 @@ function getContainers() {
 	});
 }
 
-function optionHTML(param, id){
-
-
-	var link = "http://nass-api.azurewebsites.net/api/get_param_values?" + 
-		"param=" + param;	   
-    $.ajax({
-    	type: "GET",
-    	url: link,
-    	cached: true,
-    	crossDomain: true,
-    	contentType: "application/json; charset=utf-8",
-    	dataType: "json", 
-    	success: function(json){
-			var array = [];
-			$.each(json.data, function(i, data){
-					array.push(data);
-				});
-			console.log("json to array: ");
-			console.log(array);
-			// return array;
-			// 
-			for (var i=0; i < array.length; i++) {
-		    	$("<option>" + array[i].toString() + "</option>").appendTo(id);
-			}
-		},
-		error: function(error){
-			console.log(error.responseText);
-		}
-	});
-
-
-
-
-	// var array = parameterQuery(param);
-	// console.log("Parameter query returned: ");
-	// console.log(array);
-	
-
-	// for (var i=0; i < array.length; i++) {
- //    	$("<option>" + array[i] + "</option>").appendTo("#year");
-	// }
+function optionHTML(json, param, i){
+	// var array = [];
+	// $.each(json.data, function(i, data){
+	// 		array.push(data);
+	// 	});
+	var html = "";
+	html += "<div class=\"form-group\">";
+	html +=	"<label>" + param + ":</label>";
+	html +=	"<select id=\"" + param + "\" name=\"" + param + "\" class=\"form-control\">"
+	for (var j=0; j < json.data[i].values.length; j++) {
+    	html += "<option>" + json.data[i].values[j].toString() + "</option>";
+	}
+	html +=	"</select></div>";
+	$("form").append(html);
 }
+
 /**
  * output html options for array of commodities
  * @param  {[array of commoditynames]} array [description]
  * @return {[none]}       [description]
  */
-function loadCommodities(){
-	// get commodities
-	optionHTML("commodity_desc", "#commodity");
-	findYears();
+function loadCommodities(json){
+	for (var i = 0; i < json.data.length; i++) {
+		optionHTML(json.data[i], json.data[i].name, i)
+	};
 }
 
 function findYears(){
@@ -120,6 +94,29 @@ function findYears(){
     $.each(years, function (i) { 
         $("<option>" + years[i] + "</option>").appendTo("#year"); 
     });
+}
+
+function query_dependent_params(){
+	var url = "http://nass-api.azurewebsites.net/api/get_dependent_param_values?" + 
+		"distinctParams=commodity_desc" + 
+		"&distinctParams=agg_level_desc" + 
+		"&distinctParams=year" +
+		"&distinctParams=freq_desc";
+	$.ajax({
+    	type: "GET",
+    	url: url,
+    	cached: true,
+    	crossDomain: true,
+    	contentType: "application/json; charset=utf-8",
+    	dataType: "json", 
+    	success: function(json){
+    		console.log(json);
+			loadCommodities(json);
+		},
+		error: function(error){
+			console.log(error.responseText);
+		}
+	});
 }
 
 
