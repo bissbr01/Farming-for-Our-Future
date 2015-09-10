@@ -57,7 +57,7 @@ function getContainers() {
 	});
 }
 
-function optionHTML(json, param, i){
+function optionHTML(json, param){
 	// var array = [];
 	// $.each(json.data, function(i, data){
 	// 		array.push(data);
@@ -66,11 +66,11 @@ function optionHTML(json, param, i){
 	html += "<div class=\"form-group\">";
 	html +=	"<label>" + param + ":</label>";
 	html +=	"<select id=\"" + param + "\" name=\"" + param + "\" class=\"form-control\">"
-	for (var j=0; j < json.data[i].values.length; j++) {
-    	html += "<option>" + json.data[i].values[j].toString() + "</option>";
+	for (var j=0; j < json.Values.length; j++) {
+    	html += "<option>" + json.Values[j].toString() + "</option>";
 	}
 	html +=	"</select></div>";
-	$("form").append(html);
+	$("#selectors").append(html);
 }
 
 /**
@@ -80,7 +80,9 @@ function optionHTML(json, param, i){
  */
 function loadCommodities(json){
 	for (var i = 0; i < json.data.length; i++) {
-		optionHTML(json.data[i], json.data[i].name, i)
+		console.log(json.data[i].Name);
+		console.log(json.data[i].Values.length);
+		optionHTML(json.data[i], json.data[i].Name)
 	};
 }
 

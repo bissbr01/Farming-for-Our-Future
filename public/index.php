@@ -13,29 +13,11 @@
 		<h1 class="banner-item">USDA Challenge App</h1>
 	</div>
 	<div id="selectors">
-		<form action="index.php" method="POST" accept-charset="utf-8">
+		<form action="" method="POST" accept-charset="utf-8">  <!-- Want to make it so page doesn't reload, but just pass data to js -->
 			
-			<div class="form-group">
-				<label>Sector:</label>
-				<select id="sector" name="sector" class="form-control">
-				</select>
-			</div>
-			<div class="form-group">
-				<label>Group:</label>
-				<select id="Group" name="Group" class="form-control">
-				</select>
-			</div>
+			<div id="selectors"></div>
 
-			<div class="form-group">
-				<label>Commodity:</label>
-				<select id="commodity" name="commodity" class="form-control">
-				</select>
-			</div>
-			<div class="form-group">
-				<label>Year:</label>
-				<select id="year" name="year" class="form-control">
-				</select>
-			</div>
+
 		<button type="submit" name="submit" class="btn btn-primary">Submit</button>
 		</form>
 	</div>
@@ -44,7 +26,7 @@
 	<?php require("../includes/initialize_js.php"); ?>
 	<script>
 	$(document).ready(function() {
-		// loadCommodities();
+		query_dependent_params();
 	});
 
 	$("form").submit(function(event) {
