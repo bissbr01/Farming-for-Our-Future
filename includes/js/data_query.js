@@ -1,5 +1,8 @@
 
-
+/**
+ * Find parameter names and values from form 'selector' inputs.  Basically, get form values.
+ * @return {assoc array of params}
+ */
 function find_params(){
 	var params = new Object();
 	$('#selectors div').children("select").each(function() {
@@ -10,7 +13,10 @@ function find_params(){
 	console.log(params);
 	return params;
 }
-
+/** converts assoc array of params to string ready for ajax request URL
+ * @param  {assoc array of params}
+ * @return {string for URL}
+ */
 function params_to_string(params){
 	var string = "";
 	$.each(params, function(key, value) {
@@ -24,7 +30,10 @@ function params_to_string(params){
 }
 
 
-
+/**
+ * Processes Form to display Highcharts chart with NASS data
+ * @return {none}
+ */
 function display_chart() {
 	var params = find_params();
 	var link = "http://nass-api.azurewebsites.net/api/api_get?";
@@ -78,6 +87,3 @@ function display_chart() {
 	});
 }
 
-function strEncode(string){
-	return encodeURIComponent(string).toUpperCase();
-}

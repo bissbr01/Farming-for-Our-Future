@@ -1,67 +1,11 @@
-/**
- * [parameter_Query description]
- * @param  {[string]} param [description]
- * @return {[json ]}       [description]
+
+/** output html corresponding to JSON object
+ * @param  {array of json objects}
+ * @param  {[ name of NASS parameter]}
+ * @return {[none]} just outputs html to "#selectors"
  */
-function parameterQuery(param) {
-	var link = "http://nass-api.azurewebsites.net/api/get_param_values?" + 
-		"param=" + param;	   
-    $.ajax({
-    	type: "GET",
-    	url: link,
-    	cached: true,
-    	crossDomain: true,
-    	contentType: "application/json; charset=utf-8",
-    	dataType: "json", 
-    	success: function(json){
-			var array = [];
-			$.each(json.data, function(i, data){
-					array.push(data);
-				});
-			console.log("json to array: ");
-			console.log(array);
-			return array;
-		},
-		error: function(error){
-			console.log(error.responseText);
-		}
-	});
-}
+function optionHTML(json, param) {
 
-function getContainers() {
-	var link = "http://innovationchallenge.azurewebsites.net/Api/Sources/Get?containers=source_desc;"
-	$.ajax({
-    	type: "GET",
-    	url: link,
-    	cached: true,
-    	crossDomain: true,
-    	contentType: "application/json; charset=utf-8",
-    	dataType: "json", 
-    	success: function(json){
-	    		console.log(json);
-    		if (json != undefined && json.data != undefined) {
-	    		var dataArray = [];
-	    		 $.each(json.data, function(i){
-					dataArray.push(parseFloat(this.value));
-				});
-	    		return dataArray;
-				
-			} else {
-				console.log("Object or object property is undefined");
-				return null;
-			}
-		},
-		error: function(error){
-			console.log(error.responseText);
-		}
-	});
-}
-
-function optionHTML(json, param){
-	// var array = [];
-	// $.each(json.data, function(i, data){
-	// 		array.push(data);
-	// 	});
 	var html = "";
 	html += "<div class=\"form-group\">";
 	html +=	"<label>" + param + ":</label>";
@@ -74,9 +18,9 @@ function optionHTML(json, param){
 }
 
 /**
- * output html options for array of commodities
- * @param  {[array of commoditynames]} array [description]
- * @return {[none]}       [description]
+ * loop through JSON objects and display HTML
+ * @param  {[Object]} json [array of NASS JSON Objects]
+ * ]
  */
 function loadCommodities(json){
 	for (var i = 0; i < json.data.length; i++) {
@@ -86,6 +30,10 @@ function loadCommodities(json){
 	};
 }
 
+/**
+ *  displays initial parameters to index.php.
+ * @return {[none]}
+ */
 function display_inital_params(){
 	var url = "http://nass-api.azurewebsites.net/api/get_dependent_param_values?" + 
 		"distinctParams=commodity_desc" + 

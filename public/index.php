@@ -18,7 +18,7 @@
 			<div id="selectors"> </div>
 
 
-		<button type="submit" name="submit" class="btn btn-primary" onClick="display_chart();">Submit</button>
+		<button type="submit" name="submit" class="btn btn-primary">Submit</button>
 		</form>
 	</div>
 	<main id="graph">
@@ -31,8 +31,7 @@
 
 	$("form").submit(function(event) {
 		event.preventDefault();
-	// loadAjax(commodity, year);
-		
+		display_chart();		
 	});
 
 
