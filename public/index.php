@@ -13,12 +13,12 @@
 		<h1 class="banner-item">USDA Challenge App</h1>
 	</div>
 	<div id="selectors">
-		<form action="" method="POST" accept-charset="utf-8">  <!-- Want to make it so page doesn't reload, but just pass data to js -->
+		<form accept-charset="utf-8">  <!-- Want to make it so page doesn't reload, but just pass data to js -->
 			
-			<div id="selectors"></div>
+			<div id="selectors"> </div>
 
 
-		<button type="submit" name="submit" class="btn btn-primary">Submit</button>
+		<button type="submit" name="submit" class="btn btn-primary" onClick="display_chart();">Submit</button>
 		</form>
 	</div>
 	<main id="graph">
@@ -26,12 +26,11 @@
 	<?php require("../includes/initialize_js.php"); ?>
 	<script>
 	$(document).ready(function() {
-		query_dependent_params();
+		display_inital_params();
 	});
 
 	$("form").submit(function(event) {
-	var commodity = strEncode($.post('commodity'));
-	var year =      strEncode($.post('year'));
+		event.preventDefault();
 	// loadAjax(commodity, year);
 		
 	});

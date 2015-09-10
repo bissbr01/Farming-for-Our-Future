@@ -1,6 +1,0 @@
-#!/bin/bash
-mysqldump -u bbissell -pIamcool10 --skip-extended-insert usda > /C/wamp/www/USDA_PROJECT/USDA.sql
-cd /C/wamp/www/WP_Kiwi/wp-content
-git add USDA.sql
-
-chmod +x /C/wamp/www/USDA_PROJECT/.git/hooks/pre-commit

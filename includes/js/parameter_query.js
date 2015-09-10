@@ -70,7 +70,7 @@ function optionHTML(json, param){
     	html += "<option>" + json.Values[j].toString() + "</option>";
 	}
 	html +=	"</select></div>";
-	$("#selectors").append(html);
+	$("#selectors").prepend(html);
 }
 
 /**
@@ -86,19 +86,7 @@ function loadCommodities(json){
 	};
 }
 
-function findYears(){
-	var years = [];
-	for (var i = 1899; i < 2015; i++) {
-		years.push(i);
-	};
-	console.log(years);
-
-    $.each(years, function (i) { 
-        $("<option>" + years[i] + "</option>").appendTo("#year"); 
-    });
-}
-
-function query_dependent_params(){
+function display_inital_params(){
 	var url = "http://nass-api.azurewebsites.net/api/get_dependent_param_values?" + 
 		"distinctParams=commodity_desc" + 
 		"&distinctParams=agg_level_desc" + 

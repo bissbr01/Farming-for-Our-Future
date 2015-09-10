@@ -1,8 +1,36 @@
 
-function loadAjax(commodity, year) {
-	var link = "http://nass-api.azurewebsites.net/api/api_get?" + 
-		"&commodity_desc=" + commodity + 
-		"&year" + year;	   
+
+function find_params(){
+	var params = new Object();
+	$('#selectors div').children("select").each(function() {
+		var key = $(this).attr('id');
+		var value = $(this).val();
+		params[key] = value;
+	});
+	console.log(params);
+	return params;
+}
+
+function params_to_string(params){
+	var string = "";
+	$.each(params, function(key, value) {
+	
+	string += key;
+	string += "=";
+	string += value;
+	string += "&";
+	});
+	return encodeURI(string);
+}
+
+
+
+function display_chart() {
+	var params = find_params();
+	var link = "http://nass-api.azurewebsites.net/api/api_get?";
+	link += params_to_string(params);
+	console.log(link);
+
     $.ajax({
     	type: "GET",
     	url: link,
