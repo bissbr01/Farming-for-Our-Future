@@ -40,7 +40,7 @@
 	
 	$(document).on('change','.form-control',function(){
 		$('#loadingModal').fadeIn();
-		display_chart();
+		get_dependent_params();
 	});
 	
 	</script>
