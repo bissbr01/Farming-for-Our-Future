@@ -4,11 +4,17 @@
  * @return {assoc array of params}
  */
 function find_params(){
-	var params = new Object();
+	var params = '';
 	$('#selectors div').children("select").each(function() {
 		var key = $(this).attr('id');
 		var value = $(this).val();
-		params[key] = value;
+		if (value === '') //Means input is in default state
+		{
+			//Set to default query. Ex. "distinctParams=sector_desc"
+			value = key;
+			key = 'distinctParams';
+		}
+		params+= key + '=' + value + '&';
 	});
 	console.log(params);
 	return params;
@@ -36,8 +42,10 @@ function params_to_string(params){
  */
 function display_chart() {
 	var params = find_params();
-	var link = "http://nass-api.azurewebsites.net/api/api_get?";
-	link += params_to_string(params);
+	//var link = "http://nass-api.azurewebsites.net/api/api_get?";
+	var link = "http://nass-api.azurewebsites.net/api/get_dependent_param_values?";
+	//link += params_to_string(params);
+	link += params;
 	console.log(link);
 
     $.ajax({
@@ -48,7 +56,21 @@ function display_chart() {
     	contentType: "application/json; charset=utf-8",
     	dataType: "json", 
     	success: function(json) {
-	    		console.log(json);
+	    	console.log("Success! Data: " + json);
+			loadCommodities(json);
+				
+		},
+		error: function(error){
+			console.log(error.responseText);
+		}
+	})
+  .done(function() {  
+		$('#loadingModal').fadeOut('slow');
+  });
+}
+
+
+/*
     		if (json != undefined && json.data != undefined) {
 	    		var dataArray = [];
 	    		 $.each(json.data, function(i){
@@ -80,10 +102,4 @@ function display_chart() {
 			} else {
 				console.log("Object or object property is undefined");
 			}
-		},
-		error: function(error){
-			console.log(error.responseText);
-		}
-	});
-}
-
+			*/

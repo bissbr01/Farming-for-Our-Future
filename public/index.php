@@ -13,6 +13,7 @@
 		<h1 class="banner-item">USDA Challenge App</h1>
 	</div>
 	<div id="selectors">
+	<div id='loadingModal'> <div id='loading-text'>Hold up! We're shucking corn and grinding out some data... </div> </div>
 		<form accept-charset="utf-8">  <!-- Want to make it so page doesn't reload, but just pass data to js -->
 			
 			<div id="selectors"> </div>
@@ -21,9 +22,12 @@
 		<button type="submit" name="submit" class="btn btn-primary">Submit</button>
 		</form>
 	</div>
+	
 	<main id="graph">
 	</main>
+	
 	<?php require("../includes/initialize_js.php"); ?>
+	
 	<script>
 	$(document).ready(function() {
 		display_inital_params();
@@ -33,12 +37,15 @@
 		event.preventDefault();
 		display_chart();		
 	});
-
-
-
-		
+	
+	$(document).on('change','.form-control',function(){
+		$('#loadingModal').fadeIn();
+		display_chart();
+	});
+	
 	</script>
 
+	<!--
 	<script type="text/javascript">
 	$(document).ready(function() {
 		$('.grid').masonry({
@@ -49,6 +56,8 @@
 		});
 	});
 	</script>
+	-->
+	
 </body>
 </html>
 

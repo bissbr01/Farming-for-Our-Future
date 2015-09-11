@@ -6,10 +6,13 @@
  */
 function optionHTML(json, param) {
 
+	$('select#' + param).parent().remove();
+
 	var html = "";
 	html += "<div class=\"form-group\">";
 	html +=	"<label>" + param + ":</label>";
 	html +=	"<select id=\"" + param + "\" name=\"" + param + "\" class=\"form-control\">"
+    html += "<option value='' selected>None</option>"; //Default option
 	for (var j=0; j < json.Values.length; j++) {
     	html += "<option>" + json.Values[j].toString() + "</option>";
 	}
@@ -35,11 +38,11 @@ function loadCommodities(json){
  * @return {[none]}
  */
 function display_inital_params(){
-	var url = "http://nass-api.azurewebsites.net/api/get_dependent_param_values?" + 
-		"distinctParams=commodity_desc" + 
-		"&distinctParams=agg_level_desc" + 
-		"&distinctParams=year" +
-		"&distinctParams=freq_desc";
+
+var defaultsValues = "distinctParams=sector_desc&distinctParams=group_desc&distinctParams=commodity_desc&distinctParams=agg_level_desc&distinctParams=year&distinctParams=source_desc"; //&distinctParams=freq_desc
+var url = "http://nass-api.azurewebsites.net/api/get_dependent_param_values?" + defaultsValues;
+//var url = 'http://nass-api.azurewebsites.net/api/get?containers=source_desc&sector_desc&group_desc&commodity_desc&agg_level_desc&year'
+	
 	$.ajax({
     	type: "GET",
     	url: url,
@@ -54,7 +57,10 @@ function display_inital_params(){
 		error: function(error){
 			console.log(error.responseText);
 		}
-	});
+	})
+  .done(function() {  
+		$('#loadingModal').fadeOut();
+  });	
 }
 
 
