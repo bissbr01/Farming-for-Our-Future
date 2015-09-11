@@ -14,7 +14,7 @@ function find_params(){
 			value = key;
 			key = 'distinctParams';
 		}
-		params+= key + '=' + value + '&';
+		params += key + '=' + value + '&'; //need to encode, otherwise spaces & symbols break ajax request (like "anmials & products")
 	});
 	console.log(params);
 	return params;
@@ -45,7 +45,7 @@ function display_chart() {
 	//var link = "http://nass-api.azurewebsites.net/api/api_get?";
 	var link = "http://nass-api.azurewebsites.net/api/get_dependent_param_values?";
 	//link += params_to_string(params);
-	link += params;
+	link += params;  
 	console.log(link);
 
     $.ajax({
@@ -56,7 +56,7 @@ function display_chart() {
     	contentType: "application/json; charset=utf-8",
     	dataType: "json", 
     	success: function(json) {
-	    	console.log("Success! Data: " + json);
+	    	console.log("Success! Data: " + json.data);
 			loadCommodities(json);
 				
 		},

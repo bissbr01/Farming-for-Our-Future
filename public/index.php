@@ -14,7 +14,7 @@
 	</div>
 	<div id="selectors">
 	<div id='loadingModal'> <div id='loading-text'>Hold up! We're shucking corn and grinding out some data... </div> </div>
-		<form accept-charset="utf-8">  <!-- Want to make it so page doesn't reload, but just pass data to js -->
+		<form accept-charset="utf-8"> 
 			
 			<div id="selectors"> </div>
 

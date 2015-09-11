@@ -51,7 +51,7 @@ var url = "http://nass-api.azurewebsites.net/api/get_dependent_param_values?" + 
     	contentType: "application/json; charset=utf-8",
     	dataType: "json", 
     	success: function(json){
-    		console.log(json);
+    		console.log("Initial params: " + json);
 			loadCommodities(json);
 		},
 		error: function(error){
