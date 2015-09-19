@@ -36,7 +36,7 @@
 	});
 
 	$('.btn-danger').click(function(event) {
-		display_inital_params();
+		location.reload();
 	});
 
 	$("form").submit(function(event) {
