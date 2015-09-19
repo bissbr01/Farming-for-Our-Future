@@ -20,6 +20,7 @@
 
 
 		<button type="submit" name="submit" class="btn btn-primary">Submit</button>
+		<a class="btn btn-danger">Cancel</a>
 		</form>
 	</div>
 	
@@ -30,6 +31,11 @@
 	
 	<script>
 	$(document).ready(function() {
+		display_inital_params();
+		console.log(location.href);	
+	});
+
+	$('.btn-danger').click(function(event) {
 		display_inital_params();
 	});
 

@@ -13,10 +13,46 @@ function find_params(){
 			//Set to default query. Ex. "distinctParams=sector_desc"
 			value = key;
 			key = 'distinctParams';
-		}
-		params += key + '=' + encodeURIComponent(value )+ '&'; //need to encode, otherwise spaces & symbols break ajax request (like "anmials & products")
+		} 
+		params += key + '=' + encodeURIComponent(value) + '&'; //need to encode, otherwise spaces & symbols break ajax request (like "anmials & products")
 	});
-	console.log(params);
+		
+
+	// Go through params, see if params with hidden fields are set.  
+	//    -->If so, see if hidden fields are already set.  
+	//       --> If they are not set, assign them as dependentParams.
+	if ( params.search('COMMODITY_DESC=') >= 0 ) {
+		if (params.search('CLASS_DESC=') == -1) {	
+			params += 'distinctParams' + '=' + 'CLASS_DESC' + '&';
+		}
+		if (params.search('STATISTICCAT_DESC=') == -1) {
+			params += 'distinctParams' + '=' + 'STATISTICCAT_DESC' + '&';
+		}
+	}
+	else if ( params.search('AGG_LEVEL_DESC=') >= 0 ) {
+		if (params.search('STATE_NAME=') == -1) {
+			params += 'distinctParams' + '=' + 'STATE_NAME' + '&';
+		}
+		if (params.search('ASD_DESC=') == -1) {
+			params += 'distinctParams' + '=' + 'ASD_DESC' + '&';
+		}
+		if (params.search('COUNTY_NAME=') == -1) {
+			params += 'distinctParams' + '=' + 'COUNTY_NAME' + '&'; //should this be included?
+		}
+	}
+	else if ( params.search('YEAR=') >= 0 ) {
+		if (params.search('FREQ_DESC=') == -1) {
+			params += 'distinctParams' + '=' + 'FREQ_DESC' + '&';
+		}
+	}
+	// Output URI as pretty as Brian
+	var strArray = params.split('&');
+	console.log("*************");
+	for (var i = 0; i < strArray.length; i++) {
+		console.log(strArray[i]);
+	}
+	console.log("*************");
+
 	return params;
 }
 
@@ -38,7 +74,6 @@ function find_GET_params(){
 	console.log(params);
 	return params;
 }
-
 
 
 /** converts assoc array of params to string ready for ajax request URL

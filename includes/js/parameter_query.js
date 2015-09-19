@@ -22,13 +22,16 @@ function optionHTML(json, param) {
 
 /**
  * loop through JSON objects and display HTML
+ *   > Also disables old input values
  * @param  {[Object]} json [array of NASS JSON Objects]
  * ]
  */
 function loadCommodities(json){
+	console.log("Loaded Commodities:");
+	// Disable select inputs that are not updated.  Safegaurd against going back and changing, getting bad inputs
+	$('select').attr('disabled', 'true');
+
 	for (var i = 0; i < json.data.length; i++) {
-		console.log(json.data[i].Name);
-		console.log(json.data[i].Values.length);
 		optionHTML(json.data[i], json.data[i].Name)
 	};
 }
@@ -51,7 +54,8 @@ var url = "http://nass-api.azurewebsites.net/api/get_dependent_param_values?" + 
     	contentType: "application/json; charset=utf-8",
     	dataType: "json", 
     	success: function(json){
-    		console.log("Initial params: " + json);
+    		console.log("Initial params: ");
+    		console.log(json);
 			loadCommodities(json);
 		},
 		error: function(error){
