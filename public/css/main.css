@@ -25,22 +25,25 @@ html, body {
 	margin: 0 auto;
 }
 
-#sidebar {
-	float: left;
-	padding: 5px;
-	left: 0;
-	width: 35%;
-}
-
 #graph {
-	float: right;
-	width: 60%;
 	height: 500px;
 }
+#selectors > div {
+	min-height: 10em;					   
+	border: 2px solid #9C7D23;
+	border-radius: 25px;
+	 
+}
+#selectors > div > .form-group {
+	margin: 1rem;
+}
 
-#selectors {
-	float: left;
-	width: 40%;
+#selectors > div::after {
+	clear: both;
+}
+
+#selectors > div > .form-group {
+	width: auto;
 }
 
 #loadingModal {

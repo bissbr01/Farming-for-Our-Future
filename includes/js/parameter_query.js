@@ -17,7 +17,36 @@ function optionHTML(json, param) {
     	html += "<option>" + json.Values[j].toString() + "</option>";
 	}
 	html +=	"</select></div>";
-	$("#selectors").prepend(html);
+	if (
+		param == 'SOURCE_DESC' ||
+		param == 'SECTOR_DESC' ||
+		param == 'COMMODITY_DESC' ||
+		param == 'STATISTICCAT_DESC' ||
+		param == 'CLASS_DESC'
+		)
+	{
+		var div = '#commodity';
+	}
+	else if 
+		(
+		param == 'AGG_LEVEL_DESC' ||
+		param == 'STATE_NAME' ||
+		param == 'ASD_DESC' ||
+		param == 'COUNTY_NAME'
+		) 
+	{
+		var div = '#location';
+	}
+	else if 
+		(
+		param == 'YEAR' ||
+		param == 'FREQ_DESC'
+		) 
+	{
+		var div = '#time';
+	}
+
+	$(div).append(html);
 }
 
 /**
@@ -42,9 +71,9 @@ function loadCommodities(json){
  */
 function display_inital_params(){
 
-var defaultsValues = "distinctParams=sector_desc&distinctParams=group_desc&distinctParams=commodity_desc&distinctParams=agg_level_desc&distinctParams=year&distinctParams=source_desc"; //&distinctParams=freq_desc
-var url = "http://nass-api.azurewebsites.net/api/get_dependent_param_values?" + defaultsValues;
-//var url = 'http://nass-api.azurewebsites.net/api/get?containers=source_desc&sector_desc&group_desc&commodity_desc&agg_level_desc&year'
+	var defaultsValues = "distinctParams=source_desc&distinctParams=sector_desc&distinctParams=group_desc&distinctParams=commodity_desc&distinctParams=agg_level_desc&distinctParams=year"; //&distinctParams=freq_desc
+	var url = "http://nass-api.azurewebsites.net/api/get_dependent_param_values?" + defaultsValues;
+	//var url = 'http://nass-api.azurewebsites.net/api/get?containers=source_desc&sector_desc&group_desc&commodity_desc&agg_level_desc&year'
 	
 	$.ajax({
     	type: "GET",

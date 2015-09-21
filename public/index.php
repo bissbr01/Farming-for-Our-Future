@@ -9,61 +9,72 @@
 	<link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-	<div class="banner">
-		<h1 class="banner-item">USDA Challenge App</h1>
-	</div>
-	<div id="selectors">
-	<div id='loadingModal'> <div id='loading-text'>Hold up! We're shucking corn and grinding out some data... </div> </div>
-		<form accept-charset="utf-8"> 
-			
-			<div id="selectors"> </div>
-
-
-		<button type="submit" name="submit" class="btn btn-primary">Submit</button>
-		<a class="btn btn-danger">Cancel</a>
-		</form>
-	</div>
+	<div class="page-container">
+		<div class="banner">
+			<h1 class="banner-item">USDA Challenge App</h1>
+		</div>
+		<div id='loadingModal'> <div id='loading-text'>Hold up! We're shucking corn and grinding out some data... </div> </div>
+		<div class="col-sm-6 col-xs-12">
+			<form accept-charset="utf-8"> 
+				
+				<div id="selectors"> 
+					<div id="commodity">
+						<h3>Commodity</h3>
+					</div>
+					<div id="location">
+						<h3>Location</h3>
+					</div>
+					<div id="time">
+						<h3>Time</h3>
+					</div>
+				</div>
+		
+		
+				<button type="submit" name="submit" class="btn btn-primary">Submit</button>
+				<a class="btn btn-danger">Cancel</a>
+			</form>
+		</div>	
 	
-	<main id="graph">
-	</main>
+		<main id="graph" class="col-sm-6 col-xs-12">
+		</main>
+		
+		<?php require("../includes/initialize_js.php"); ?>
+		
+		<script>
+			$(document).ready(function() {
+				display_inital_params();
+				console.log(location.href);	
+			});
 	
-	<?php require("../includes/initialize_js.php"); ?>
+			$('.btn-danger').click(function(event) {
+				location.reload();
+			});
 	
-	<script>
-	$(document).ready(function() {
-		display_inital_params();
-		console.log(location.href);	
-	});
-
-	$('.btn-danger').click(function(event) {
-		location.reload();
-	});
-
-	$("form").submit(function(event) {
-		event.preventDefault();
-		display_chart();		
-	});
+			$("form").submit(function(event) {
+				event.preventDefault();
+				display_chart();		
+			});
 	
-	$(document).on('change','.form-control',function(){
-		$('#loadingModal').fadeIn();
-		get_dependent_params();
-	});
+			$(document).on('change','.form-control',function(){
+				$('#loadingModal').fadeIn();
+				get_dependent_params();
+			});
 	
-	</script>
-
-	<!--
-	<script type="text/javascript">
-	$(document).ready(function() {
-		$('.grid').masonry({
-	  		itemSelector: '.grid-item',
-	  		columnWidth: '.grid-sizer',
-	  		percentPosition: true,
-	  		stamp: '.stamp'
+		</script>
+	
+		<!--
+		<script type="text/javascript">
+		$(document).ready(function() {
+			$('.grid').masonry({
+		  		itemSelector: '.grid-item',
+		  		columnWidth: '.grid-sizer',
+		  		percentPosition: true,
+		  		stamp: '.stamp'
+			});
 		});
-	});
-	</script>
+		</script>
 	-->
-	
+	</div>
 </body>
 </html>
 

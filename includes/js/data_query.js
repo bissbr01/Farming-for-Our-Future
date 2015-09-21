@@ -1,9 +1,10 @@
 
 /**
+ * THIS IS OBSOLETE, USE FIND_PARAMS
  * Find parameter names and values from form 'selector' inputs.  Basically, get form values.
  * @return {assoc array of params}
  */
-function find_params(){
+function find_params_string(){
 	var params = '';
 	$('#selectors div').children("select").each(function() {
 		var key = $(this).attr('id');
@@ -56,6 +57,61 @@ function find_params(){
 	return params;
 }
 
+function find_params(){
+	var params = new Object();
+	params['distinctParams'] = [];
+	$('#selectors div').children("select").each(function() {
+		var key = $(this).attr('id');
+		var value = $(this).val();
+		if (value === '') //Means input is in default state
+		{
+			//Set to default query. Ex. "distinctParams=sector_desc"
+			params['distinctParams'].push(key);
+		} 
+		else {
+			params[key] = encodeURIComponent(value);
+		}
+	});
+	find_hidden_params(params);
+	console.log(params);
+	return params;
+}
+
+/**
+ * finds initially hidden params and evaultes if they should appear
+ * @param  find_params() parameters object array
+ * @return {[array]}        array of dependentParams
+ */
+function find_hidden_params(params){
+	// Go through params, see if params with hidden fields are set.  
+	//    -->If so, see if hidden fields are already set.  
+	//       --> If they are not set, assign them as dependentParams.
+	if ( 'COMMODITY_DESC' in params ) {
+		if ( !('CLASS_DESC' in  params)) {	
+			params['distinctParams'].push('CLASS_DESC');
+		}
+		if ( !('STATISTICCAT_DESC' in params)) {
+			params['distinctParams'].push('STATISTICCAT_DESC');
+		}
+	}
+	if ( 'AGG_LEVEL_DESC' in params ) {
+		if ( !('STATE_NAME' in params)) {
+			params['distinctParams'].push('STATE_NAME');
+		}
+		if ( ('STATE_NAME' in params) && !('ASD_DESC' in params)) {
+			params['distinctParams'].push('ASD_DESC');
+		}
+		if ( ('ASD_DESC' in params) && !('COUNTY_NAME' in params)) {
+			params['distinctParams'].push('COUNTY_NAME'); //should this be included?
+		}
+	}
+	if ( 'YEAR' in params) {
+		if ( !('FREQ_DESC' in params)) {
+			params['distinctParams'].push('FREQ_DESC');
+		}
+	}
+}
+
 /**
  * Get params formatted for the api/api_get? request needed to display data to chart
  * @return {string of params}
@@ -69,7 +125,7 @@ function find_GET_params(){
 		{
 			return true; // skip this value because blank
 		}
-		params += key + '=' + encodeURIComponent(value )+ '&'; //need to encode, otherwise spaces & symbols break ajax request (like "anmials & products")
+		params += key + '=' + encodeURIComponent(value) + '&'; //need to encode, otherwise spaces & symbols break ajax request (like "anmials & products")
 	});
 	console.log(params);
 	return params;
@@ -83,13 +139,30 @@ function find_GET_params(){
 function params_to_string(params){
 	var string = "";
 	$.each(params, function(key, value) {
-	
-	string += key;
-	string += "=";
-	string += value;
-	string += "&";
+	if (key == 'distinctParams'){
+		for (var i = 0; i < params['distinctParams'].length; i++) {
+			string += 'distinctParams';
+			string += '=';
+			string += params['distinctParams'][i];
+			string += "&";
+		};
+	} else {
+		string += key;
+		string += "=";
+		string += value;
+		string += "&";
+	}
 	});
-	return encodeURI(string);
+	// Output URI as pretty as Brian
+	// var output = string;
+	// var strArray = string.split('&');
+	// console.log("*************");
+	// for (var i = 0; i < strArray.length; i++) {
+	// 	console.log(strArray[i]);
+	// }
+	// console.log("*************");
+
+	return string;
 }
 
 
@@ -98,7 +171,7 @@ function params_to_string(params){
  * @return {none}
  */
 function get_dependent_params() {
-	var params = find_params();
+	var params = params_to_string(find_params());
 	//var link = "http://nass-api.azurewebsites.net/api/api_get?";
 	var link = "http://nass-api.azurewebsites.net/api/get_dependent_param_values?";
 	//link += params_to_string(params);
@@ -183,26 +256,24 @@ function highchart_line_graph(json){
 	dataArray = format_data(json);
 	$('#graph').highcharts({
 		title: {
-			text: json.data[1].commodity_desc
+			text: json.data[0].commodity_desc
 		},
 		subtitle: {
-            text: json.data[1].data_item
+            text: json.data[0].data_item
+        },
+        xAxis: {
+        	title: {
+        		text: json.data[0].freq_desc
+        	}
         },
 		yAxis: {
 			title: {
-				text: json.data[1].statisticcat_desc + " in " + json.data[1].unit_desc
+				text: json.data[0].statisticcat_desc + " in " + json.data[0].unit_desc
 			}
 		},
 		series: [{
 			type: "line",
 			allowPointSelect: true,
-			animation: true,
-			color: undefined,
-			connectEnds: true,
-			connectNulls: false,
-			cropThreshold: 300,
-			cursor: undefined,
-			dashStyle: "Solid",
 			data: dataArray
 		}]
 
@@ -216,14 +287,14 @@ function highchart_area_graph(json){
             type: 'area'
         },
         title: {
-			text: json.data[1].commodity_desc
+			text: json.data[0].commodity_desc
 		},
 		subtitle: {
-            text: json.data[1].data_item
+            text: json.data[0].data_item
         },
 		yAxis: {
 			title: {
-				text: json.data[1].statisticcat_desc + " in " + json.data[1].unit_desc
+				text: json.data[0].statisticcat_desc + " in " + json.data[0].unit_desc
 			}
 		},
         tooltip: {
