@@ -279,6 +279,7 @@ function highchart_line_graph(json){
 		series: [{
 			type: "line",
 			allowPointSelect: true,
+			name: 'Farm Data',
 			data: dataArray
 		}]
 
@@ -303,6 +304,11 @@ function highchart_area_graph(json){
 				text: json.data[0].statisticcat_desc + " in " + json.data[0].unit_desc
 			}
 		},
+        xAxis: {
+        	title: {
+        		text: json.data[0].freq_desc
+        	}
+        },
         tooltip: {
             pointFormat: ''
         },
