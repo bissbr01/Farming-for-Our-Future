@@ -65,6 +65,7 @@ function loadCommodities(json){
 	};
 }
 
+
 /**
  *  displays initial parameters to index.php.
  * @return {[none]}

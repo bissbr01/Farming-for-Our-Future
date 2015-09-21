@@ -28,11 +28,13 @@ html, body {
 #graph {
 	height: 500px;
 }
+
+
 #selectors > div {
-	min-height: 10em;					   
+	min-height: 10em;	
+	padding: 2rem;				   
 	border: 2px solid #9C7D23;
 	border-radius: 25px;
-	 
 }
 #selectors > div > .form-group {
 	margin: 1rem;
@@ -73,6 +75,12 @@ html, body {
 }
 .form-group > select > option {
 	text-transform: uppercase;
+}
+
+.btn {
+	width: 40%;
+	float:left;
+	margin: 1rem;
 }
 
 /**********************************

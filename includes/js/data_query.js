@@ -226,7 +226,7 @@ function display_chart(){
     	success: function(json) {
 	    	console.log("Success! Data: ");
 	    	console.log(json);
-			highchart_line_graph(json);
+			highchart_area_graph(json);
 				
 		},
 		error: function(error){
@@ -238,11 +238,16 @@ function display_chart(){
   });
 }
 
+function parseFloatIgnoreCommas(number) {
+    var numberNoCommas = number.replace(/,/g, '');
+    return parseFloat(numberNoCommas);
+}
+
 function format_data(json){
 	if (json != undefined && json.data != undefined) {
 		var dataArray = [];
 		$.each(json.data, function(i){
-			dataArray.push(parseFloat(this.value));
+			dataArray.push(parseFloatIgnoreCommas(this.value));
 		});
 		return dataArray;
 	} else {
@@ -282,6 +287,7 @@ function highchart_line_graph(json){
 }
 
 function highchart_area_graph(json){
+	 dataArray = format_data(json);
 	 $('#graph').highcharts({
         chart: {
             type: 'area'
