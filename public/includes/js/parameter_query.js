@@ -11,8 +11,8 @@ function optionHTML(json, param) {
 	var html = "";
 	html += "<div class=\"form-group\">";
 	html +=	"<label>" + param + ":</label>";
-	html +=	"<select id=\"" + param + "\" name=\"" + param + "\" class=\"form-control\">"
-    html += "<option value='' selected>None</option>"; //Default option
+	html +=	"<select id=\"" + param + "\" name=\"" + param + "\" class=\"form-control\" MULTIPLE SIZE=5>"
+    // html += "<option value='' selected>None</option>"; //Default option
 	for (var j=0; j < json.Values.length; j++) {
     	html += "<option>" + json.Values[j].toString() + "</option>";
 	}
@@ -58,7 +58,7 @@ function optionHTML(json, param) {
 function loadCommodities(json){
 	console.log("Loaded Commodities:");
 	// Disable select inputs that are not updated.  Safegaurd against going back and changing, getting bad inputs
-	$('select').attr('disabled', 'true');
+	// $('select').attr('disabled', 'true');
 
 	for (var i = 0; i < json.data.length; i++) {
 		optionHTML(json.data[i], json.data[i].Name)

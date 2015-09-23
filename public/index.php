@@ -39,7 +39,7 @@
 		<main id="graph" class="col-sm-6 col-xs-12">
 		</main>
 		
-		<?php require("../includes/initialize_js.php"); ?>
+		<?php require("includes/initialize_js.php"); ?>
 		
 		<script>
 			$(document).ready(function() {
