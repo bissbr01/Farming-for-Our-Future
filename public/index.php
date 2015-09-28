@@ -19,13 +19,13 @@
 			<form accept-charset="utf-8"> 
 				
 				<div id="selectors"> 
-					<div id="commodity">
+					<div id="commodity" class="filter">
 						<h3>Commodity</h3>
 					</div>
-					<div id="location">
+					<div id="location" class="filter">
 						<h3>Location</h3>
 					</div>
-					<div id="time">
+					<div id="time" class="filter">
 						<h3>Time</h3>
 					</div>
 				</div>
@@ -51,14 +51,14 @@
 				location.reload();
 			});
 	
-			$("form").submit(function(event) {
+			$('form').submit(function(event) {
 				event.preventDefault();
 				display_chart();		
 			});
 	
-			$(document).on('change','.form-control',function(){
+			$('form').change(function(event){
 				$('#loadingModal').fadeIn();
-				get_dependent_params();
+				get_dependent_params(event);
 			});
 	
 		</script>

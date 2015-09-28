@@ -1,70 +1,185 @@
 
-/** output html corresponding to JSON object
- * @param  {array of json objects}
- * @param  {[ name of NASS parameter]}
- * @return {[none]} just outputs html to "#selectors"
- */
-function optionHTML(json, param) {
+function find_params(changeEvent){
+	var params = new Object();
+	params['distinctParams'] = [];
+	$('#selectors div').children("select").each(function() {
+		var key = $(this).attr('id');
+		var values = [];
+		var $select = $(this);
+		// find each selected option
+		$select.children('option').each(function(){  
+			if (this.selected){
+				values.push(this.value);
+			}
+		});
+		params[key] = values;
+		if (values.length == 0) //Means input is in default state
+		{
+			//Set to default query. Ex. "distinctParams=sector_desc"
+			params['distinctParams'].push(key);
+			// delete params[this.value];
+		} 
 
-	$('select#' + param).parent().remove();
-
-	var html = "";
-	html += "<div class=\"form-group\">";
-	html +=	"<label>" + param + ":</label>";
-	html +=	"<select id=\"" + param + "\" name=\"" + param + "\" class=\"form-control\" MULTIPLE SIZE=5>"
-    // html += "<option value='' selected>None</option>"; //Default option
-	for (var j=0; j < json.Values.length; j++) {
-    	html += "<option>" + json.Values[j].toString() + "</option>";
-	}
-	html +=	"</select></div>";
-	if (
-		param == 'SOURCE_DESC' ||
-		param == 'SECTOR_DESC' ||
-		param == 'COMMODITY_DESC' ||
-		param == 'STATISTICCAT_DESC' ||
-		param == 'CLASS_DESC'
-		)
-	{
-		var div = '#commodity';
-	}
-	else if 
-		(
-		param == 'AGG_LEVEL_DESC' ||
-		param == 'STATE_NAME' ||
-		param == 'ASD_DESC' ||
-		param == 'COUNTY_NAME'
-		) 
-	{
-		var div = '#location';
-	}
-	else if 
-		(
-		param == 'YEAR' ||
-		param == 'FREQ_DESC'
-		) 
-	{
-		var div = '#time';
-	}
-
-	$(div).append(html);
+	});
+	find_hidden_params(params);
+	console.log(params);
+	return params;
 }
 
 /**
- * loop through JSON objects and display HTML
- *   > Also disables old input values
- * @param  {[Object]} json [array of NASS JSON Objects]
- * ]
+ * If a change is made in higher-order selector, clear values of lower selectors
+ * @param  {handle} changeEvent 
+ * @return {null}             
  */
-function loadCommodities(json){
-	console.log("Loaded Commodities:");
-	// Disable select inputs that are not updated.  Safegaurd against going back and changing, getting bad inputs
-	// $('select').attr('disabled', 'true');
+function erase_stale_params(changeEvent){
 
-	for (var i = 0; i < json.data.length; i++) {
-		optionHTML(json.data[i], json.data[i].Name)
-	};
+	var select = changeEvent.target.id;
+	var clear = false;
+	var id = '#' + changeEvent.target.id;
+	var filter = $(id).parents('.filter')[0];
+	var filterID = '#' + filter.id;
+	console.log('**********************');
+	console.log(select);
+	console.log(filterID);
+
+	$(filterID).find('select').each(function() {
+		console.log($(this)[0].id);
+		if (clear == true) {
+			$(this).children('option').removeAttr('selected');
+		}
+		if ( $(this)[0].id == select){
+			console.log('trigger!');
+			clear = true;
+		}
+	});
+	
 }
 
+/**
+ * finds initially hidden params and evaultes if they should appear
+ * @param  find_params() parameters object array
+ * @return {[array]}        array of dependentParams
+ */
+function find_hidden_params(params){
+	// Go through params, see if params with hidden fields are set.  
+	//    -->If so, see if hidden fields are already set.  
+	//       --> If they are not set, assign them as dependentParams.
+	if ( params['COMMODITY_DESC'].length > 0 ) {
+		if ( !('CLASS_DESC' in  params)) {	
+			params['distinctParams'].push('CLASS_DESC');
+		}
+		if ( !('STATISTICCAT_DESC' in params)) {
+			params['distinctParams'].push('STATISTICCAT_DESC');
+		}
+	}
+	if ( params['AGG_LEVEL_DESC'].length > 0 ) {
+		if ( !('STATE_NAME' in params)) {
+			params['distinctParams'].push('STATE_NAME');
+		}
+		if ( ('STATE_NAME' in params) && !('ASD_DESC' in params)) {
+			params['distinctParams'].push('ASD_DESC');
+		}
+		if ( ('ASD_DESC' in params) && !('COUNTY_NAME' in params)) {
+			params['distinctParams'].push('COUNTY_NAME'); //should this be included?
+		}
+	}
+	if ( params['YEAR'].length > 0) {
+		if ( !('FREQ_DESC' in params)) {
+			params['distinctParams'].push('FREQ_DESC');
+		}
+	}
+}
+
+/**
+ * Get params formatted for the api/api_get? request needed to display data to chart
+ * @return {string of params}
+ */
+function find_GET_params(){
+	var params = find_params();
+	delete params['distinctParams'];
+
+	return params_to_string(params);
+}
+
+/** converts assoc array of params to string ready for ajax request URL
+ * @param  {assoc array of params}
+ * @return {string for URL}
+ */
+function params_to_string(params){
+	var string = "";
+	$.each(params, function(key, values) {
+		for (var i = 0; i < values.length; i++) {
+
+			if (key == 'distinctParams'){
+					string += 'distinctParams';
+					string += '=';
+					string += values[i];
+					string += "&";
+			} else if (values.length == 1) {
+				string += key;
+				string += "=";
+				string += encodeURIComponent(values[i]);
+				string += "&";
+			} else if (values.length > 1) {
+				string += key;
+				string += "__or";  //GET request syntax changes for multiple selects. 
+				string += "=";
+				string += encodeURIComponent(values[i]);
+				string += "&";
+			}
+		};
+	});
+	// Output URI as pretty as Brian
+	// var output = string;
+	// var strArray = string.split('&');
+	// console.log("*************");
+	// for (var i = 0; i < strArray.length; i++) {
+	// 	console.log(strArray[i]);
+	// }
+	// console.log("*************");
+
+	return string;
+}
+
+/**
+ * Processes Form to display Highcharts chart with NASS data
+ * @return {none}
+ */
+function get_dependent_params(changeEvent) {
+	erase_stale_params(changeEvent);
+	var params = params_to_string(find_params(changeEvent));
+	//var link = "http://nass-api.azurewebsites.net/api/api_get?";
+	var link = "http://nass-api.azurewebsites.net/api/get_dependent_param_values?";
+	//link += params_to_string(params);
+	link += params;  
+	console.log(link);
+
+    $.ajax({
+    	type: "GET",
+    	url: link,
+    	cached: true,
+    	crossDomain: true,
+    	contentType: "application/json; charset=utf-8",
+    	dataType: "json", 
+    	success: function(json) {
+	    	console.log("Success! ");
+	    	console.log(json);
+	    	// Need to check to see if empty.  This will occur when all params are selected.
+	    	if (json != undefined && json.data != undefined) {
+			loadCommodities(json);
+			} else {
+				console.log("All Parameters are chosen.  Click submit to query, or change params");
+			}
+				
+		},
+		error: function(error){
+			console.log(error.responseText);
+		}
+	})
+  .done(function() {  
+		$('#loadingModal').fadeOut('slow');
+  });
+}
 
 /**
  *  displays initial parameters to index.php.
