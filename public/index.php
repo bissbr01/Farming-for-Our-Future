@@ -7,6 +7,7 @@
 	<title>USDA Challenge App</title>
 	<link rel="stylesheet" type="text/css" href="css/normalize.css">
 	<link rel="stylesheet" media="screen" href="//netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<link href='https://fonts.googleapis.com/css?family=Comfortaa:400,300' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="css/main.css">
 </head>
 <body>
@@ -17,26 +18,40 @@
 		<div id='loadingModal'> <div id='loading-text'>Hold up! We're shucking corn and grinding out some data... </div> </div>
 		<div class="col-sm-6 col-xs-12">
 			<form accept-charset="utf-8"> 
-				
-				<div id="selectors"> 
-					<div id="commodity" class="filter">
-						<h3>Commodity</h3>
+				<div role="tabpanel">
+					<!-- Nav tabs -->
+					<ul class="nav nav-tabs" role="tablist">
+						<li role="presentation" class="active">
+							<a href="#commodity" aria-controls="commodity" role="tab" data-toggle="tab">Commodity</a>
+						</li>
+						<li role="presentation">
+							<a href="#location" aria-controls="location" role="tab" data-toggle="tab">Location</a>
+						</li>
+						<li role="presentation"> 
+							<a href="#time" aria-controls="time" role="tab" data-toggle="tab">Time</a>
+						</li>
+					</ul>
+					<!-- Tab panes -->
+					<div id="selectors" class="tab-content">
+						<div id="commodity" role="tabpanel" class="tab-pane active filter">
+						</div>
+						<div id="location" role="tabpanel" class="tab-pane filter">
+						</div>
+						<div id="time" role="tabpanel" class="tab-pane filter">
+						</div>
 					</div>
-					<div id="location" class="filter">
-						<h3>Location</h3>
 					</div>
-					<div id="time" class="filter">
-						<h3>Time</h3>
-					</div>
-				</div>
+				</div>	
 		
 		
-				<button type="submit" name="submit" class="btn btn-primary">Submit</button>
-				<a class="btn btn-danger">Cancel</a>
 			</form>
 		</div>	
 	
-		<main id="graph" class="col-sm-6 col-xs-12">
+		<main class="col-sm-6 col-xs-12">
+			<button id="submit" class="btn btn-primary">Submit</button>
+			<a class="btn btn-danger">Cancel</a>
+			<div id="graph">
+			</div>
 		</main>
 		
 		<?php require("includes/initialize_js.php"); ?>
@@ -44,14 +59,16 @@
 		<script>
 			$(document).ready(function() {
 				display_inital_params();
-				console.log(location.href);	
 			});
 	
 			$('.btn-danger').click(function(event) {
-				location.reload();
+				$('.form-group').remove();
+				display_inital_params();
+
+				// location.reload();
 			});
 	
-			$('form').submit(function(event) {
+			$('#submit').click(function(event) {
 				event.preventDefault();
 				display_chart();		
 			});

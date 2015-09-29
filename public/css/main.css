@@ -11,15 +11,24 @@
 
 html, body {
 	font: 20px;
+	font-family: 'Comfortaa', cursive;
+	font-weight: 300;
 	background: url("../images/farm-background.jpg") no-repeat #F1DD9E;
 	color: white;
 
 }
 
+h3, label {
+	background: hsla(0, 0%, 0%, .3);
+	padding: 1rem;
+	border-radius: 25px;
+	font-weight: 400;
+}
+
 .banner {
 	height: 80px;
 	background-color:  hsla(98, 60%, 16%, .3);
-	color: #DCDB45; 
+	color: white; 
 }
 .banner-item {
 	margin: 0 auto;
@@ -34,7 +43,6 @@ html, body {
 	min-height: 10em;	
 	padding: 2rem;				   
 	border: 2px solid #9C7D23;
-	border-radius: 25px;
 }
 #selectors > div > .form-group {
 	margin: 1rem;
@@ -79,9 +87,26 @@ html, body {
 
 .btn {
 	width: 40%;
-	float:left;
 	margin: 1rem;
 }
+
+/******bs3 navtabs********/
+.nav-tabs > li > a {
+	background-color: hsla(98, 60%, 16%, .7);
+	color: white;
+}
+
+.nav-tabs > li:hover > a {
+	background-color: hsla(98, 60%, 16%, .4);
+}
+
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:focus, 
+.nav-tabs > li.active > a:hover {
+ 	background-color: #F1DD9E;
+ 	color: #333;
+ }
+
 
 /**********************************
 *       Masonry Grid Styles
