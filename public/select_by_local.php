@@ -22,25 +22,20 @@
 					<!-- Nav tabs -->
 					<ul class="nav nav-tabs" role="tablist">
 						<li role="presentation" class="active">
-							<a href="#commodity" aria-controls="commodity" role="tab" data-toggle="tab">Commodity</a>
-						</li>
-						<li role="presentation">
 							<a href="#location" aria-controls="location" role="tab" data-toggle="tab">Location</a>
 						</li>
-						<li role="presentation"> 
-							<a href="#time" aria-controls="time" role="tab" data-toggle="tab">Time</a>
+						<li role="presentation" class="">
+							<a href="#commodity" aria-controls="commodity" role="tab" data-toggle="tab">Commodity</a>
 						</li>
 					</ul>
 					<!-- Tab panes -->
 					<div id="selectors" class="tab-content">
-						<div id="commodity" role="tabpanel" class="tab-pane active filter">
+						<div id="commodity" role="tabpanel" class="tab-pane  filter">
 						</div>
-						<div id="location" role="tabpanel" class="tab-pane filter">
-						</div>
-						<div id="time" role="tabpanel" class="tab-pane filter">
+						<div id="location" role="tabpanel" class="tab-pane active filter">
 						</div>
 					</div>
-				</div>			
+				</div>	
 			</form>
 		</div>	
 	
