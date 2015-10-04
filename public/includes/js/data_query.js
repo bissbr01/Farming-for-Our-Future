@@ -8,7 +8,8 @@ function optionHTML(json, param) {
 
 	$('select#' + param).parent().remove();
 
-	if (json.Values[0] != ""){  //ensure we don't output an empty selector, which can then be selected and break app
+	// if (json.Values[0] != ""){  //ensure we don't output an empty selector, which can then be selected and break app
+	if (json.Values[0] != ""){
 		var html = "";
 		html += "<div class=\"form-group\">";
 		html +=	"<label>" + param + ":</label>";
@@ -124,7 +125,7 @@ function highchart_line_graph(json){
 			data: dataArray
 		}]
 
-	})
+	});
 
 }
 

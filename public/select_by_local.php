@@ -16,7 +16,10 @@
 			<h1 class="banner-item">USDA Challenge App</h1>
 		</div>
 		<div id='loadingModal'> <div id='loading-text'>Hold up! We're shucking corn and grinding out some data... </div> </div>
-		<div class="col-sm-6 col-xs-12">
+		
+		
+
+		<div class="col-sm-12 col-xs-12">
 			<form accept-charset="utf-8"> 
 				<div role="tabpanel">
 					<!-- Nav tabs -->
@@ -24,45 +27,42 @@
 						<li role="presentation" class="active">
 							<a href="#location" aria-controls="location" role="tab" data-toggle="tab">Location</a>
 						</li>
-						<li role="presentation" class="">
-							<a href="#commodity" aria-controls="commodity" role="tab" data-toggle="tab">Commodity</a>
-						</li>
 					</ul>
 					<!-- Tab panes -->
 					<div id="selectors" class="tab-content">
-						<div id="commodity" role="tabpanel" class="tab-pane  filter">
-						</div>
 						<div id="location" role="tabpanel" class="tab-pane active filter">
 						</div>
 					</div>
 				</div>	
 			</form>
 		</div>	
-	
-		<main class="col-sm-6 col-xs-12">
+		
+		<main class="col-sm-12 col-xs-12">
 			<button id="submit" class="btn btn-primary">Submit</button>
 			<a class="btn btn-danger">Cancel</a>
-			<div id="graph">
+			<div id="graphs" class='grid'>
+				<div class='grid-sizer'></div>
 			</div>
 		</main>
+		
 		
 		<?php require("includes/initialize_js.php"); ?>
 		
 		<script>
 			$(document).ready(function() {
-				display_inital_params();
+				display_location_params();
 			});
 	
 			$('.btn-danger').click(function(event) {
 				$('.form-group').remove();
 				display_inital_params();
-
+				
 				// location.reload();
 			});
 	
 			$('#submit').click(function(event) {
 				event.preventDefault();
-				display_chart();		
+				generate_defaults();		
 			});
 	
 			$('form').change(function(event){
@@ -72,7 +72,7 @@
 	
 		</script>
 	
-		<!--
+		
 		<script type="text/javascript">
 		$(document).ready(function() {
 			$('.grid').masonry({
@@ -83,7 +83,7 @@
 			});
 		});
 		</script>
-	-->
+	
 	</div>
 </body>
 </html>

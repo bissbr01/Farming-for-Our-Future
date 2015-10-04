@@ -34,8 +34,13 @@ h3, label {
 	margin: 0 auto;
 }
 
-#graph {
-	height: 500px;
+.chart {
+	height: inherit;
+	width: inherit;
+}
+
+.spacer {
+	height: 20px;
 }
 
 
@@ -111,22 +116,15 @@ h3, label {
 /**********************************
 *       Masonry Grid Styles
 ***********************************/
-.grid::after {
-  content: '';
-  display: block;
-  clear: both;
-}
 
 .grid-sizer, .grid-item {
-	width: 30%;
+	width: 400px;
 }
 
 .grid-item {
-	float:left;
-	background: hsla(98, 60%, 16%, .7);
-	height: 120px;
-	border: 2px solid hsla(0,0%,0%, 0.5);
-	border-radius: 5px;
+	float: left;
+	height: 500px;
+	padding: 1rem;
 }
 
 /* example of fixed position item */

@@ -21,7 +21,7 @@ function find_params(changeEvent){
 		} 
 
 	});
-	find_hidden_params(params);
+	find_hidden_params(params);  
 	console.log(params);
 	return params;
 }
@@ -64,7 +64,7 @@ function find_hidden_params(params){
 	// Go through params, see if params with hidden fields are set.  
 	//    -->If so, see if hidden fields are already set.  
 	//       --> If they are not set, assign them as dependentParams.
-	if ( params['COMMODITY_DESC'].length > 0 ) {
+	if ( ('COMMODITY_DESC' in params) && (params['COMMODITY_DESC'].length > 0) ) {
 		if ( !('CLASS_DESC' in  params)) {	
 			params['distinctParams'].push('CLASS_DESC');
 		}
@@ -72,7 +72,7 @@ function find_hidden_params(params){
 			params['distinctParams'].push('STATISTICCAT_DESC');
 		}
 	}
-	if ( params['AGG_LEVEL_DESC'].length > 0 ) {
+	if ( ('AGG_LEVEL_DESC' in params) && (params['AGG_LEVEL_DESC'].length > 0) ) {
 		if ( !('STATE_NAME' in params)) {
 			params['distinctParams'].push('STATE_NAME');
 		}
@@ -83,7 +83,7 @@ function find_hidden_params(params){
 			params['distinctParams'].push('COUNTY_NAME'); //should this be included?
 		}
 	}
-	if ( params['YEAR'].length > 0) {
+	if ( ('YEAR' in params) && (params['YEAR'].length > 0)) {
 		if ( !('FREQ_DESC' in params)) {
 			params['distinctParams'].push('FREQ_DESC');
 		}
