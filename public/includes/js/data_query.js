@@ -156,7 +156,6 @@ function highchart_area_graph(json){
         },
         plotOptions: {
             area: {
-                
                 marker: {
                     enabled: false,
                     symbol: 'circle',
@@ -185,7 +184,9 @@ function format_data(json){
 	if (json != undefined && json.data != undefined) {
 		var dataArray = [];
 		$.each(json.data, function(i){
-			dataArray.push(parseFloatIgnoreCommas(this.value));
+			if(!isNaN(parseFloatIgnoreCommas(this.value))){
+				dataArray.push(parseFloatIgnoreCommas(this.value));
+			}
 		});
 		return dataArray;
 	} else {

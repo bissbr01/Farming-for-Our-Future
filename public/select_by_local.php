@@ -56,8 +56,7 @@
 			$('.btn-danger').click(function(event) {
 				$('.form-group').remove();
 				display_inital_params();
-				
-				// location.reload();
+				$('#graphs').empty();			
 			});
 	
 			$('#submit').click(function(event) {
@@ -69,6 +68,11 @@
 				$('#loadingModal').fadeIn();
 				get_dependent_params(event);
 			});
+
+			$('.highcharts-container').click(function() {
+				$(this).parent('.grid-item').toggleClass('grid-item-full');
+				$(this).highcharts().reflow();
+			});
 	
 		</script>
 	
@@ -78,7 +82,7 @@
 			$('.grid').masonry({
 		  		itemSelector: '.grid-item',
 		  		columnWidth: '.grid-sizer',
-		  		percentPosition: true,
+		  		isAnimated: true,
 		  		stamp: '.stamp'
 			});
 		});

@@ -3,49 +3,41 @@ function find_location(){
 	return find_GET_params();  //need to change eventually 
 }
 
-
 function generate_defaults(){
-	//default values for params
-	// var default_sources = [
-	// 	'CENSUS',
-	// 	'SURVEY'
-	// ];
-	var default_sectors = [
-		'ANIMALS & PRODUCTS',
-		'CROPS',
-		'ECONOMICS'
-	];
-	var default_groups = [
-		'ANIMAL TOTALS',
-		'CROP TOTALS',
-		'INCOME'
-	];
+     
+	var default_queries = new Object;
 
-	var default_locations = [
-		'STATE',
-	];  
+	default_queries['ANIMAL TOTALS'] = { 
+		"SECTOR_DESC" : 'ANIMALS & PRODUCTS', 
+		"GROUP_DESC":'ANIMAL TOTALS', 
+		"COMMODITY_DESC":'ANIMAL TOTALS', 
+		"STATISTICCAT_DESC":'SALES'};
 
-	var default_commodities = [
-		'ANIMAL TOTALS',
-		'CROP TOTALS',
-		'INCOME, NET CASH FARM'
-	];        
+	default_queries['CROP TOTALS'] = { 
+		"SECTOR_DESC":'CROPS',               
+		"GROUP_DESC":'CROP TOTALS',   
+		"COMMODITY_DESC":'CROP TOTALS',             
+		'STATISTICCAT_DESC':'SALES'};
 
-	var default_categories = [
-		'SALES',
-		'SALES',
-		'NET INCOME'
-	];       
+	default_queries['INCOME'] = { 
+		"SECTOR_DESC":'ECONOMICS',           
+		"GROUP_DESC":'INCOME',        
+		"COMMODITY_DESC":'INCOME, NET CASH FARM',   
+		"STATISTICCAT_DESC":'NET INCOME'};
         
 	// query API for each default, then display each in graph
 	var queries = [];
-	var string;
-	for (var i = 0; i < default_sectors.length; i++) {
-		string =  'SECTOR_DESC='    + encodeURIComponent(default_sectors[i]) + '&'; 
-		string += 'GROUP_DESC='     + encodeURIComponent(default_groups[i]) + '&';
-		string += 'COMMODITY_DESC=' + encodeURIComponent(default_commodities[i]) + '&';
-		string += 'STATISTICCAT_DESC' + encodeURIComponent(default_categories[i]) + '&';
-		string += 'AGG_LEVEL_DESC=' + encodeURIComponent(default_locations[0]) + '&';
+	for (var key in default_queries) {
+		if (!default_queries.hasOwnProperty(key)){continue;}
+
+		var string = "";
+		for (var prop in default_queries[key]) {
+			if (!default_queries[key].hasOwnProperty(prop)){continue;}
+			string += prop;
+			string += "=";
+			string += encodeURIComponent(default_queries[key][prop]);
+			string += "&";
+		};
 		string += find_location();
 		queries.push(string);
 	};
@@ -53,10 +45,6 @@ function generate_defaults(){
 	for (var i = 0; i < queries.length; i++) {
 		url = "http://nass-api.azurewebsites.net/api/api_get?";
 		url += queries[i];
-		console.log('Query:');
-		console.log(queries[i]);
-		console.log('url:');
-		console.log(url);
 		query_api(url);
 	};
 }
@@ -70,10 +58,9 @@ function query_api(url){
     	contentType: "application/json; charset=utf-8",
     	dataType: "json", 
     	success: function(json){
-    		console.log("Initial params: ");
     		console.log(json);
 			draw_graph(json);
-			msnry.layout();
+			
 		},
 		error: function(error){
 			console.log(error.responseText);
@@ -81,6 +68,7 @@ function query_api(url){
 	})
   .done(function() {  
 		$('#loadingModal').fadeOut();
+		$('.grid').masonry();
   });	
 }
 
@@ -88,13 +76,39 @@ function query_api(url){
 function draw_graph(json){
 	
 	dataArray = format_data(json);
-
+	console.log("Data array:");
+	console.log(dataArray);
 	var key = String(Math.random());
 	var html = '<div id=\'' + key + '\' class=\'chart grid-item\'></div>';
 	$('#graphs').append(html);
-	console.log(key);
+
 
 	var chart = new Highcharts.Chart({
+	       plotOptions: {
+	        series: {
+	            cursor: 'pointer',
+	            point: {
+	                events: {
+	                    click: function (e) {
+	                        hs.htmlExpand(null, {
+	                            pageOrigin: {
+	                                x: e.pageX || e.clientX,
+	                                y: e.pageY || e.clientY
+	                            },
+	                            headingText: this.series.name,
+	                            maincontentText: Highcharts.dateFormat('%A, %b %e, %Y', this.x) + ':<br/> ' +
+	                                this.y + ' visits',
+	                            width: 200
+	                        });
+	                    }
+	                }
+	            },
+	            marker: {
+	                lineWidth: 1
+	            }
+	        }
+	    },
+
 		chart: {
 			renderTo: key
 		},
@@ -105,23 +119,35 @@ function draw_graph(json){
             text: json.data[0].data_item
         },
         xAxis: {
-        	title: {
-        		text: json.data[0].freq_desc
-        	}
-        },
-		yAxis: {
-			title: {
-				text: json.data[0].statisticcat_desc + " in " + json.data[0].unit_desc
-			}
-		},
+                tickInterval: 7 * 24 * 3600 * 1000 * 52, // one year
+                tickWidth: 0,
+                gridLineWidth: 1,
+                labels: {
+                    align: 'left',
+                    x: 3,
+                    y: -3
+                },
+                title: {
+        			text: json.data[0].freq_desc
+        		}
+            },
+
+            yAxis: { 
+                title: {
+					text: json.data[0].statisticcat_desc + " in " + json.data[0].unit_desc
+				},
+            },
 		series: [{
 			type: "line",
 			allowPointSelect: true,
+			pointStart: dataArray[1],
+			pointInterval: (dataArray.length / 15),
 			name: 'Farm Data',
 			data: dataArray
 		}]
 
 	});
+	$('.grid').masonry( 'addItems', chart )
 }
 
 function display_location_params(){

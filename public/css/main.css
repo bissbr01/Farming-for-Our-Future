@@ -117,14 +117,24 @@ h3, label {
 *       Masonry Grid Styles
 ***********************************/
 
+.grid {
+	display: table;
+}
+
 .grid-sizer, .grid-item {
-	width: 400px;
+	width: 300px;
+	display: table-row;
 }
 
 .grid-item {
+	height: 300px;
 	float: left;
-	height: 500px;
 	padding: 1rem;
+}
+
+.grid-item-full {
+	width: 700px;
+	height: 500px;
 }
 
 /* example of fixed position item */
