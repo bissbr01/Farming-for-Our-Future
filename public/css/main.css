@@ -118,19 +118,19 @@ h3, label {
 ***********************************/
 
 .grid {
-	display: table;
 }
 
 .grid-sizer, .grid-item {
 	width: 300px;
-	display: table-row;
 }
 
 .grid-item {
 	height: 300px;
 	float: left;
 	padding: 1rem;
+	border: 2px solid black;
 }
+
 
 .grid-item-full {
 	width: 700px;

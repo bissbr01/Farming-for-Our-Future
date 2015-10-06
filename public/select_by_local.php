@@ -41,7 +41,10 @@
 			<button id="submit" class="btn btn-primary">Submit</button>
 			<a class="btn btn-danger">Cancel</a>
 			<div id="graphs" class='grid'>
-				<div class='grid-sizer'></div>
+			<!-- 	<div class='grid-sizer'></div>
+				<div class='grid-item'></div>
+				<div class='grid-item'></div>
+				<div class='grid-item'></div> -->
 			</div>
 		</main>
 		
@@ -69,10 +72,11 @@
 				get_dependent_params(event);
 			});
 
-			$('.highcharts-container').click(function() {
-				$(this).parent('.grid-item').toggleClass('grid-item-full');
-				$(this).highcharts().reflow();
+
+			$('svg').click(function(event){
+				console.log('click');
 			});
+
 	
 		</script>
 	

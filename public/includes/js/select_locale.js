@@ -3,6 +3,8 @@ function find_location(){
 	return find_GET_params();  //need to change eventually 
 }
 
+var graphs = []; // used to contain highcharts graphs after drawn
+
 function generate_defaults(){
      
 	var default_queries = new Object;
@@ -37,16 +39,17 @@ function generate_defaults(){
 			string += "=";
 			string += encodeURIComponent(default_queries[key][prop]);
 			string += "&";
-		};
+		}
 		string += find_location();
 		queries.push(string);
-	};
+	}
 
 	for (var i = 0; i < queries.length; i++) {
 		url = "http://nass-api.azurewebsites.net/api/api_get?";
 		url += queries[i];
 		query_api(url);
-	};
+
+	}
 }
 
 function query_api(url){
@@ -59,8 +62,7 @@ function query_api(url){
     	dataType: "json", 
     	success: function(json){
     		console.log(json);
-			draw_graph(json);
-			
+			graphs.push(draw_graph(json));
 		},
 		error: function(error){
 			console.log(error.responseText);
@@ -69,20 +71,19 @@ function query_api(url){
   .done(function() {  
 		$('#loadingModal').fadeOut();
 		$('.grid').masonry();
+		console.log(graphs);
   });	
 }
 
-
 function draw_graph(json){
 	
-	dataArray = format_data(json);
-	console.log("Data array:");
-	console.log(dataArray);
-	var key = String(Math.random());
+	// Create a containing div as Masonry grid item
+	var key = String(Math.random());  //used to create random key for graph ID for renderTo property
 	var html = '<div id=\'' + key + '\' class=\'chart grid-item\'></div>';
 	$('#graphs').append(html);
 
-
+	
+	dataArray = format_data(json);
 	var chart = new Highcharts.Chart({
 	       plotOptions: {
 	        series: {
@@ -147,7 +148,18 @@ function draw_graph(json){
 		}]
 
 	});
-	$('.grid').masonry( 'addItems', chart )
+
+	// Zoom on graph on click using Masonry
+	var originalEvent = chart.container.onclick;
+	chart.container.onclick = function(e){
+		$(this).parent('.grid-item').toggleClass('grid-item-full');
+		chart.reflow();
+		//$('.grid').masonry();
+		originalEvent(e);
+		console.log('event triggered');
+	}
+
+	return chart;
 }
 
 function display_location_params(){
