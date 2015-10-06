@@ -20,27 +20,55 @@
 		
 
 		<div class="col-sm-12 col-xs-12">
+			<h3 id='geo'></h3>
 			<form accept-charset="utf-8"> 
 				<div role="tabpanel">
 					<!-- Nav tabs -->
 					<ul class="nav nav-tabs" role="tablist">
 						<li role="presentation" class="active">
+							<a href="#commodity" aria-controls="commodity" role="tab" data-toggle="tab">Commodity</a>
+						</li>
+						<li role="presentation">
 							<a href="#location" aria-controls="location" role="tab" data-toggle="tab">Location</a>
+						</li>
+						<li role="presentation"> 
+							<a href="#time" aria-controls="time" role="tab" data-toggle="tab">Time</a>
 						</li>
 					</ul>
 					<!-- Tab panes -->
+					<div id="selectors" class="tab-content">
+						<div id="commodity" role="tabpanel" class="tab-pane active filter">
+						</div>
+						<div id="location" role="tabpanel" class="tab-pane filter">
+						</div>
+						<div id="time" role="tabpanel" class="tab-pane filter">
+						</div>
+					</div>
+				</div>			
+			</form>
+			<!-- <form accept-charset="utf-8"> 
+				<div role="tabpanel">
+					<ul class="nav nav-tabs" role="tablist">
+						<li role="presentation" class="active">
+							<a href="#location" aria-controls="location" role="tab" data-toggle="tab">Location</a>
+						</li>
+					</ul>
 					<div id="selectors" class="tab-content">
 						<div id="location" role="tabpanel" class="tab-pane active filter">
 						</div>
 					</div>
 				</div>	
-			</form>
+			</form> -->
 		</div>	
 		
 		<main class="col-sm-12 col-xs-12">
-			<button id="submit" class="btn btn-primary">Submit</button>
-			<a class="btn btn-danger">Cancel</a>
+			<button id="submit" class="btn btn-primary">Graph!</button>
+			<a id='clear-form' class="btn btn-danger">Clear Form</a>
+			<a id='clear-graphs' class="btn btn-danger">Clear Graphs</a>
 			<div id="graphs" class='grid'>
+			<div class='loading'>
+				<img src="images/loading.gif" alt="">
+			</div>
 			<!-- 	<div class='grid-sizer'></div>
 				<div class='grid-item'></div>
 				<div class='grid-item'></div>
@@ -53,18 +81,24 @@
 		
 		<script>
 			$(document).ready(function() {
-				display_location_params();
+				// display_location_params();
+				display_inital_params();
+				find_location();
+			
 			});
 	
-			$('.btn-danger').click(function(event) {
+			$('#clear-form').click(function(event) {
 				$('.form-group').remove();
 				display_inital_params();
+			});
+
+			$('#clear-graphs').click(function(event) {
 				$('#graphs').empty();			
 			});
 	
 			$('#submit').click(function(event) {
 				event.preventDefault();
-				generate_defaults();		
+				display_chart();		
 			});
 	
 			$('form').change(function(event){
@@ -72,10 +106,6 @@
 				get_dependent_params(event);
 			});
 
-
-			$('svg').click(function(event){
-				console.log('click');
-			});
 
 	
 		</script>

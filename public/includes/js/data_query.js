@@ -86,7 +86,7 @@ function display_chart(){
     	success: function(json) {
 	    	console.log("Success! Data: ");
 	    	console.log(json);
-			highchart_area_graph(json);
+			draw_graph(json);
 				
 		},
 		error: function(error){
@@ -98,10 +98,20 @@ function display_chart(){
   });
 }
 
+// DEPRICATED.  Use draw_graph
 function highchart_line_graph(json){
 	
+	// Create a containing div as Masonry grid item
+	var key = String(Math.random());  //used to create random key for graph ID for renderTo property
+	var html = '<div id=\'' + key + '\' class=\'chart grid-item\'></div>';
+	$('#graphs').append(html);
+
+
 	dataArray = format_data(json);
-	$('#graph').highcharts({
+	$('#graphs').highcharts({
+		chart: {
+			renderTo: key
+		},
 		title: {
 			text: json.data[0].commodity_desc
 		},
@@ -129,10 +139,18 @@ function highchart_line_graph(json){
 
 }
 
+// DEPRICATED.  Use draw_graph
 function highchart_area_graph(json){
+
+	// Create a containing div as Masonry grid item
+	var key = String(Math.random());  //used to create random key for graph ID for renderTo property
+	var html = '<div id=\'' + key + '\' class=\'chart grid-item\'></div>';
+	$('#graphs').append(html);
+
 	 dataArray = format_data(json);
-	 $('#graph').highcharts({
+	 $('#graphs').highcharts({
         chart: {
+			renderTo: key,
             type: 'area'
         },
         title: {
