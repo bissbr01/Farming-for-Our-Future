@@ -8,9 +8,17 @@ function find_location(){
 			var apiurl = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + pos.coords.latitude + ',' + pos.coords.longitude + '&sensor=false';
 		    var get = $.getJSON(apiurl,
 		        function(data){
+
 		        	loc['city'] = data.results[0].address_components[1].short_name;   // city
 		        	loc['county'] = data.results[0].address_components[3].short_name;   // county
-		        	loc['state'] = convert_state(data.results[0].address_components[4].short_name, 'name');   // state
+		        	
+		        	// find state
+		        	for (var i = 0; i < data.results[0].address_components.length; i++) {
+		        		if (data.results[0].address_components[i].types[0] == "administrative_area_level_1"){
+		        			loc['state'] = data.results[0].address_components[i].long_name;
+		        		}
+		        	};
+
 		        	console.log(loc);
 
 		            var html = 'Your location: ';
@@ -72,14 +80,13 @@ function generate_defaults(){
 			string += encodeURIComponent(default_queries[key][prop]);
 			string += "&";
 		}
-		string += 'STATE_NAME=' + loc['state'];
+		string += 'STATE_NAME=' + loc['state'].toUpperCase();
 		queries.push(string);
 	}
 
 	for (var i = 0; i < queries.length; i++) {
 		url = "http://nass-api.azurewebsites.net/api/api_get?";
 		url += queries[i];
-		console.log(loc['state']);
 		console.log(queries);
 		query_api(url);
 
@@ -222,41 +229,4 @@ function display_location_params(){
   .done(function() {  
 		$('#loadingModal').fadeOut();
   });	
-}
-
-function convert_state(name, to) {
-    var name = name.toUpperCase();
-    var states = new Array(                         {'name':'Alabama', 'abbrev':'AL'},          {'name':'Alaska', 'abbrev':'AK'},
-        {'name':'Arizona', 'abbrev':'AZ'},          {'name':'Arkansas', 'abbrev':'AR'},         {'name':'California', 'abbrev':'CA'},
-        {'name':'Colorado', 'abbrev':'CO'},         {'name':'Connecticut', 'abbrev':'CT'},      {'name':'Delaware', 'abbrev':'DE'},
-        {'name':'Florida', 'abbrev':'FL'},          {'name':'Georgia', 'abbrev':'GA'},          {'name':'Hawaii', 'abbrev':'HI'},
-        {'name':'Idaho', 'abbrev':'ID'},            {'name':'Illinois', 'abbrev':'IL'},         {'name':'Indiana', 'abbrev':'IN'},
-        {'name':'Iowa', 'abbrev':'IA'},             {'name':'Kansas', 'abbrev':'KS'},           {'name':'Kentucky', 'abbrev':'KY'},
-        {'name':'Louisiana', 'abbrev':'LA'},        {'name':'Maine', 'abbrev':'ME'},            {'name':'Maryland', 'abbrev':'MD'},
-        {'name':'Massachusetts', 'abbrev':'MA'},    {'name':'Michigan', 'abbrev':'MI'},         {'name':'Minnesota', 'abbrev':'MN'},
-        {'name':'Mississippi', 'abbrev':'MS'},      {'name':'Missouri', 'abbrev':'MO'},         {'name':'Montana', 'abbrev':'MT'},
-        {'name':'Nebraska', 'abbrev':'NE'},         {'name':'Nevada', 'abbrev':'NV'},           {'name':'New Hampshire', 'abbrev':'NH'},
-        {'name':'New Jersey', 'abbrev':'NJ'},       {'name':'New Mexico', 'abbrev':'NM'},       {'name':'New York', 'abbrev':'NY'},
-        {'name':'North Carolina', 'abbrev':'NC'},   {'name':'North Dakota', 'abbrev':'ND'},     {'name':'Ohio', 'abbrev':'OH'},
-        {'name':'Oklahoma', 'abbrev':'OK'},         {'name':'Oregon', 'abbrev':'OR'},           {'name':'Pennsylvania', 'abbrev':'PA'},
-        {'name':'Rhode Island', 'abbrev':'RI'},     {'name':'South Carolina', 'abbrev':'SC'},   {'name':'South Dakota', 'abbrev':'SD'},
-        {'name':'Tennessee', 'abbrev':'TN'},        {'name':'Texas', 'abbrev':'TX'},            {'name':'Utah', 'abbrev':'UT'},
-        {'name':'Vermont', 'abbrev':'VT'},          {'name':'Virginia', 'abbrev':'VA'},         {'name':'Washington', 'abbrev':'WA'},
-        {'name':'West Virginia', 'abbrev':'WV'},    {'name':'Wisconsin', 'abbrev':'WI'},        {'name':'Wyoming', 'abbrev':'WY'}
-        );
-    var returnthis = false;
-    $.each(states, function(index, value){
-        if (to == 'name') {
-            if (value.abbrev == name){
-                returnthis = value.name.toUpperCase();
-                return false;
-            }
-        } else if (to == 'abbrev') {
-            if (value.name.toUpperCase() == name){
-                returnthis = value.abbrev;
-                return false;
-            }
-        }
-    });
-    return returnthis;
 }

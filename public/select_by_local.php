@@ -106,20 +106,22 @@
 				get_dependent_params(event);
 			});
 
-
+			$('#graph').sortable();
+			$('#graph').disableSelection();
+			$('#graph .chart').resizable();
 	
 		</script>
 	
 		
 		<script type="text/javascript">
-		$(document).ready(function() {
-			$('.grid').masonry({
-		  		itemSelector: '.grid-item',
-		  		columnWidth: '.grid-sizer',
-		  		isAnimated: true,
-		  		stamp: '.stamp'
-			});
-		});
+		// $(document).ready(function() {
+		// 	$('.grid').masonry({
+		//   		itemSelector: '.grid-item',
+		//   		columnWidth: '.grid-sizer',
+		//   		isAnimated: true,
+		//   		stamp: '.stamp'
+		// 	});
+		// });
 		</script>
 	
 	</div>
