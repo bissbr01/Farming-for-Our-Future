@@ -8,9 +8,10 @@ function find_location(){
 			var apiurl = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + pos.coords.latitude + ',' + pos.coords.longitude + '&sensor=false';
 		    var get = $.getJSON(apiurl,
 		        function(data){
+		        	console.log(data);
 		        	loc['city'] = data.results[0].address_components[1].short_name;   // city
 		        	loc['county'] = data.results[0].address_components[3].short_name;   // county
-		        	loc['state'] = convert_state(data.results[0].address_components[4].short_name, 'name');   // state
+		        	loc['state'] = convert_state(data.results[0].address_components[5].short_name, 'name');   // state.  THIS WILL BREAK.  INDEX NOT FIXED IN DATA
 		        	console.log(loc);
 
 		            var html = 'Your location: ';
@@ -20,7 +21,9 @@ function find_location(){
             		$('#geo').html(html);
 		        }
 		    );
-		    get.done(generate_defaults);  //display graphs w/ this location w/ callback 
+		    if (loc['state'] != false){        // there is a valid value for state
+			    get.done(generate_defaults);  //display graphs w/ this location w/ callback 
+		    }
 		});
 		
 		return loc;
@@ -122,7 +125,7 @@ function draw_graph(json){
 	var chart = new Highcharts.Chart({
 	       plotOptions: {
 	        series: {
-	            cursor: 'pointer',
+	            cursor: '#hc-modal-target',
 	            point: {
 	                events: {
 	                    click: function (e) {
@@ -184,6 +187,8 @@ function draw_graph(json){
 
 	});
 
+	  
+
 	// Zoom on graph on click using Masonry
 	var originalEvent = chart.container.onclick;
 	chart.container.onclick = function(e){
@@ -193,6 +198,9 @@ function draw_graph(json){
 		originalEvent(e);
 		console.log('event triggered');
 	}
+
+	// chart.container = $('#hc-modal-target');
+
 
 	return chart;
 }

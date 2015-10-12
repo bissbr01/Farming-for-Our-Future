@@ -75,8 +75,31 @@
 				<div class='grid-item'></div> -->
 			</div>
 		</main>
-		
-		
+	</div>
+	<!-- Modals -->
+	<!-- Button trigger modal -->
+	<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+	  Launch demo modal
+	</button>
+
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">Farm Data</h4>
+	      </div>
+	      <div id="hc-modal-target" class="modal-body">
+	        
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
 		<?php require("includes/initialize_js.php"); ?>
 		
 		<script>
@@ -106,6 +129,13 @@
 				get_dependent_params(event);
 			});
 
+		    // $('#chart-modal').on('show.bs.modal', function() {
+		    //     $('#hc-modal-target').css('visibility', 'hidden');
+		    // });
+		    // $('#chart-modal').on('shown.bs.modal', function() {
+		    //     $('#hc-modal-target').css('visibility', 'initial');
+		    //     chart.reflow();
+		    // }); 
 
 	
 		</script>
@@ -122,7 +152,6 @@
 		});
 		</script>
 	
-	</div>
 </body>
 </html>
 
