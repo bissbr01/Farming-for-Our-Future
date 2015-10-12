@@ -11,10 +11,6 @@ function find_location(){
 		        	console.log(data);
 		        	loc['city'] = data.results[0].address_components[1].short_name;   // city
 		        	loc['county'] = data.results[0].address_components[3].short_name;   // county
-		        	loc['state'] = convert_state(data.results[0].address_components[5].short_name, 'name');   // state.  THIS WILL BREAK.  INDEX NOT FIXED IN DATA
-
-		        	loc['city'] = data.results[0].address_components[1].short_name;   // city
-		        	loc['county'] = data.results[0].address_components[3].short_name;   // county
 		        	
 		        	// find state
 		        	for (var i = 0; i < data.results[0].address_components.length; i++) {
@@ -118,8 +114,18 @@ function query_api(url){
 	})
     .done(function() {  
   		$('.loading').fadeOut();
-		$('.grid').masonry();
+  		$('#graphs').sortable();
+  		$('.chart').resizable({
+			stop: function( event, ui) {
+				for (var i = 0; i < graphs.length; i++) {
+					graphs[i].reflow();
+				};
+			}
+		});
+		
+
 		console.log(graphs);
+
     });	
 }
 
@@ -127,10 +133,11 @@ function draw_graph(json){
 	
 	// Create a containing div as Masonry grid item
 	var key = String(Math.random());  //used to create random key for graph ID for renderTo property
-	var html = '<div id=\'' + key + '\' class=\'chart grid-item\'></div>';
+	var html = '<div id=\'' + key + '\' class=\'chart grid-item\'><span class=\"glyphicon glyphicon-new-window\" aria-hidden=\"true\"> </span>  </div>';
 	$('#graphs').append(html);
 
 	
+
 	dataArray = format_data(json);
 	var chart = new Highcharts.Chart({
 	       plotOptions: {
@@ -196,18 +203,47 @@ function draw_graph(json){
 		}]
 
 	});
+	
+	html = '<a><span class=\"glyphicon glyphicon-new-window\" aria-hidden=\"true\"><a>';
+	$(chart.container).prepend(html);
+
+	$(chart.container).children('a').click(function(event) {
+	   	$(this).parents('.chart').dialog({
+	   		width: 'auto',
+	   		height: 'auto',
+	   		modal: true,
+	   		open: function() {
+				$(this).css('overflow', 'hidden'); //this line does the actual hiding
+			},
+	   		resize: function() {
+	   			chart.reflow();
+	   		},
+	   		close: function() {
+	   			$(this).dialog('destroy');
+	   			$(this).removeClass();
+	   			$(this).removeAttr('style');
+	   			$(this).addClass('chart griditem ui-resizable');
+	   			$('#graphs').append($(this))
+	   			chart.reflow();
+	   			// $(this).prepend(html);
+	   			// $(this).remove();
+	   		}
+	   	});
+	});
+
+	
 
 	  
-
+	
 	// Zoom on graph on click using Masonry
-	var originalEvent = chart.container.onclick;
-	chart.container.onclick = function(e){
-		$(this).parent('.grid-item').toggleClass('grid-item-full');
-		chart.reflow();
-		//$('.grid').masonry();
-		originalEvent(e);
-		console.log('event triggered');
-	}
+	// var originalEvent = chart.container.onclick;
+	// chart.container.onclick = function(e){
+	// 	$(this).parent('.grid-item').toggleClass('grid-item-full');
+	// 	chart.reflow();
+	// 	//$('.grid').masonry();
+	// 	originalEvent(e);
+	// 	console.log('event triggered');
+	// }
 
 	// chart.container = $('#hc-modal-target');
 

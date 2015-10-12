@@ -25,6 +25,11 @@ h3, label {
 	font-weight: 400;
 }
 
+main {
+	min-height: 600px !important;
+}
+
+
 .banner {
 	background-color:  hsla(98, 60%, 16%, .3);
 	color: white; 
@@ -122,31 +127,39 @@ h3, label {
 *       Masonry Grid Styles
 ***********************************/
 
-.grid {
-}
 
-.grid-sizer, .grid-item {
+.chart{
 	width: 300px;
-}
-
-.grid-item {
 	height: 300px;
 	float: left;
 	padding: 1rem;
 	border: 2px solid black;
+	color: white;
+	overflow: hidden;
 }
 
 
-.grid-item-full {
-	width: 100%;
-	height: auto;
+/* jquery-ui resizable css*/
+.ui-resizable-se{
+  background-image: none;
+  background-color: white;
+}
+/* pop-out button*/
+.glyphicon-new-window {
+	color: white;
+}
+.glyphicon-new-window:hover {
+	color: hsla(0, 0%, 100%, 0.7);
 }
 
-/* example of fixed position item */
-.stamp {
-  position: absolute;
-  left: 10px;
-  top: 10px;
-  width: 20%;
-  height: 90%;
+/* jquery-ui dialog styles */
+.ui-dialog {
+	background-color: hsla(0, 0%, 100%, 0.5) !important;
+}
+
+.ui-widget-header,
+.ui-dialog-titlebar {
+	background-image: none;
+	border: none;
+	background-color: #4A6713 !important;
 }

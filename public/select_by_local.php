@@ -5,8 +5,8 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<title>USDA Challenge App</title>
-	<link rel="stylesheet" type="text/css" href="css/normalize.css">
 	<link rel="stylesheet" media="screen" href="//netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="includes/js/jQuery/jquery-ui-1.11.4/jquery-ui.min.css">
 	<link href='https://fonts.googleapis.com/css?family=Comfortaa:400,300' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="css/main.css">
 </head>
@@ -76,29 +76,6 @@
 			</div>
 		</main>
 	</div>
-	<!-- Modals -->
-	<!-- Button trigger modal -->
-	<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-	  Launch demo modal
-	</button>
-
-	<!-- Modal -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	  <div class="modal-dialog" role="document">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title" id="myModalLabel">Farm Data</h4>
-	      </div>
-	      <div id="hc-modal-target" class="modal-body">
-	        
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>
 
 		<?php require("includes/initialize_js.php"); ?>
 		
@@ -129,6 +106,9 @@
 				get_dependent_params(event);
 			});
 
+			
+
+
 		    // $('#chart-modal').on('show.bs.modal', function() {
 		    //     $('#hc-modal-target').css('visibility', 'hidden');
 		    // });
@@ -136,10 +116,8 @@
 		    //     $('#hc-modal-target').css('visibility', 'initial');
 		    //     chart.reflow();
 		    // }); 
+			
 
-			$('#graph').sortable();
-			$('#graph').disableSelection();
-			$('#graph .chart').resizable();
 	
 		</script>
 	
