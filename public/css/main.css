@@ -10,12 +10,11 @@
 */
 
 html, body {
-	font: 20px;
+	font-size: 14px;
 	font-family: 'Comfortaa', cursive;
 	font-weight: 300;
 	background: url("../images/farm-background.jpg") no-repeat #F1DD9E;
 	color: white;
-
 }
 
 h3, label {
@@ -140,17 +139,24 @@ main {
 
 
 /* jquery-ui resizable css*/
-.ui-resizable-se{
+.ui-resizable-se {
   background-image: none;
   background-color: white;
 }
 /* pop-out button*/
-.glyphicon-new-window {
+.glyphicon {
+	float: right;
 	color: white;
+	padding: 0 1em;
+	margin-bottom: .3em;
 }
-.glyphicon-new-window:hover {
+.glyphicon:hover {
 	color: hsla(0, 0%, 100%, 0.7);
 }
+.ui-widget-content > .highcharts-container > a > .glyphicon {
+	visibility: hidden;
+}
+
 
 /* jquery-ui dialog styles */
 .ui-dialog {
@@ -163,3 +169,4 @@ main {
 	border: none;
 	background-color: #4A6713 !important;
 }
+

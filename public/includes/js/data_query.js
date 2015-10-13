@@ -86,7 +86,7 @@ function display_chart(){
     	success: function(json) {
 	    	console.log("Success! Data: ");
 	    	console.log(json);
-			draw_graph(json);
+			graphs.push(draw_zoom_graph(json));
 				
 		},
 		error: function(error){
@@ -95,6 +95,13 @@ function display_chart(){
 	})
   .done(function() {  
 		$('#loadingModal').fadeOut('slow');
+		$('.chart').resizable({
+			stop: function( event, ui) {
+				for (var i = 0; i < graphs.length; i++) {
+					graphs[i].reflow();
+				};
+			}
+		});
   });
 }
 
