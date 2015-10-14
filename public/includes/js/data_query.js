@@ -205,17 +205,47 @@ function parseFloatIgnoreCommas(number) {
     return parseFloat(numberNoCommas);
 }
 
-function format_data(json){
+function Comparator(a,b){
+    if (a[0] === b[0]) {
+        return 0;
+    }
+    else {
+        return (a[0] < b[0]) ? -1 : 1;
+    }
+}
+
+function format_data(json){                                    
 	if (json != undefined && json.data != undefined) {
 		var dataArray = [];
 		$.each(json.data, function(i){
 			if(!isNaN(parseFloatIgnoreCommas(this.value))){
-				dataArray.push(parseFloatIgnoreCommas(this.value));
+				dataArray.push([
+					parseInt(this.year),
+					parseFloatIgnoreCommas(this.value)
+				]);
 			}
 		});
+		dataArray.sort(Comparator);                 // find better way to sort data         
 		return dataArray;
 	} else {
 		console.log("Object or object property is undefined");
 		return false;
 	}
 }
+
+
+
+// function format_data(json){
+// 	if (json != undefined && json.data != undefined) {
+// 		var dataArray = [];
+// 		$.each(json.data, function(i){
+// 			if(!isNaN(parseFloatIgnoreCommas(this.value))){
+// 				dataArray[i] = parseFloatIgnoreCommas(this.value);
+// 			}
+// 		});
+// 		return dataArray;
+// 	} else {
+// 		console.log("Object or object property is undefined");
+// 		return false;
+// 	}
+// }

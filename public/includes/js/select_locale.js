@@ -128,127 +128,127 @@ function query_api(url){
     });	
 }
 
-function draw_graph(json){
+// function draw_graph(json){
 	
-	// Create a containing div as Masonry grid item
-	var key = String(Math.random());  //used to create random key for graph ID for renderTo property
-	var html = '<div id=\'' + key + '\' class=\'chart grid-item\'><span class=\"glyphicon glyphicon-new-window\" aria-hidden=\"true\"> </span>  </div>';
-	$('#graphs').append(html);
+// 	// Create a containing div as Masonry grid item
+// 	var key = String(Math.random());  //used to create random key for graph ID for renderTo property
+// 	var html = '<div id=\'' + key + '\' class=\'chart grid-item\'><span class=\"glyphicon glyphicon-new-window\" aria-hidden=\"true\"> </span>  </div>';
+// 	$('#graphs').append(html);
 
 	
 
-	dataArray = format_data(json);
-	var chart = new Highcharts.Chart({
-	       plotOptions: {
-	        series: {
-	            cursor: '#hc-modal-target',
-	            point: {
-	                events: {
-	                    click: function (e) {
-	                        hs.htmlExpand(null, {
-	                            pageOrigin: {
-	                                x: e.pageX || e.clientX,
-	                                y: e.pageY || e.clientY
-	                            },
-	                            headingText: this.series.name,
-	                            maincontentText: Highcharts.dateFormat('%A, %b %e, %Y', this.x) + ':<br/> ' +
-	                                this.y + ' visits',
-	                            width: 200
-	                        });
-	                    }
-	                }
-	            },
-	            marker: {
-	                lineWidth: 1
-	            }
-	        }
-	    },
+// 	dataArray = format_data(json);
+// 	var chart = new Highcharts.Chart({
+// 	       plotOptions: {
+// 	        series: {
+// 	            cursor: '#hc-modal-target',
+// 	            point: {
+// 	                events: {
+// 	                    click: function (e) {
+// 	                        hs.htmlExpand(null, {
+// 	                            pageOrigin: {
+// 	                                x: e.pageX || e.clientX,
+// 	                                y: e.pageY || e.clientY
+// 	                            },
+// 	                            headingText: this.series.name,
+// 	                            maincontentText: Highcharts.dateFormat('%A, %b %e, %Y', this.x) + ':<br/> ' +
+// 	                                this.y + ' visits',
+// 	                            width: 200
+// 	                        });
+// 	                    }
+// 	                }
+// 	            },
+// 	            marker: {
+// 	                lineWidth: 1
+// 	            }
+// 	        }
+// 	    },
 
-		chart: {
-			renderTo: key
-		},
-		title: {
-			text: json.data[0].commodity_desc
-		},
-		subtitle: {
-            text: json.data[0].data_item
-        },
-        xAxis: {
-                tickInterval: 7 * 24 * 3600 * 1000 * 52, // one year
-                tickWidth: 0,
-                gridLineWidth: 1,
-                labels: {
-                    align: 'left',
-                    x: 3,
-                    y: -3
-                },
-                title: {
-        			text: json.data[0].freq_desc
-        		}
-            },
+// 		chart: {
+// 			renderTo: key
+// 		},
+// 		title: {
+// 			text: json.data[0].commodity_desc
+// 		},
+// 		subtitle: {
+//             text: json.data[0].data_item
+//         },
+//         xAxis: {
+//                 tickInterval: 7 * 24 * 3600 * 1000 * 52, // one year
+//                 tickWidth: 0,
+//                 gridLineWidth: 1,
+//                 labels: {
+//                     align: 'left',
+//                     x: 3,
+//                     y: -3
+//                 },
+//                 title: {
+//         			text: json.data[0].freq_desc
+//         		}
+//             },
 
-            yAxis: { 
-                title: {
-					text: json.data[0].statisticcat_desc + " in " + json.data[0].unit_desc
-				},
-            },
-		series: [{
-			type: "line",
-			allowPointSelect: true,
-			pointStart: dataArray[1],
-			pointInterval: (dataArray.length / 15),
-			name: 'Farm Data',
-			data: dataArray
-		}]
+//             yAxis: { 
+//                 title: {
+// 					text: json.data[0].statisticcat_desc + " in " + json.data[0].unit_desc
+// 				},
+//             },
+// 		series: [{
+// 			type: "line",
+// 			allowPointSelect: true,
+// 			// pointStart: dataArray[1],
+// 			// pointInterval: (dataArray.length / 15),
+// 			name: 'Farm Data',
+// 			data: dataArray
+// 		}]
 
-	});
+// 	});
 	
-	html = '<a><span class=\"glyphicon glyphicon-new-window\" aria-hidden=\"true\"><a>';
-	$(chart.container).prepend(html);
+// 	html = '<a><span class=\"glyphicon glyphicon-new-window\" aria-hidden=\"true\"><a>';
+// 	$(chart.container).prepend(html);
 
-	$(chart.container).children('a').click(function(event) {
-	   	$(this).parents('.chart').dialog({
-	   		width: 'auto',
-	   		height: 'auto',
-	   		modal: true,
-	   		open: function() {
-				$(this).css('overflow', 'hidden'); //this line does the actual hiding
-			},
-	   		resize: function() {
-	   			chart.reflow();
-	   		},
-	   		close: function() {
-	   			$(this).dialog('destroy');
-	   			$(this).removeClass();
-	   			$(this).removeAttr('style');
-	   			$(this).addClass('chart griditem ui-resizable');
-	   			$('#graphs').append($(this))
-	   			chart.reflow();
-	   			// $(this).prepend(html);
-	   			// $(this).remove();
-	   		}
-	   	});
-	});
+// 	$(chart.container).children('a').click(function(event) {
+// 	   	$(this).parents('.chart').dialog({
+// 	   		width: 'auto',
+// 	   		height: 'auto',
+// 	   		modal: true,
+// 	   		open: function() {
+// 				$(this).css('overflow', 'hidden'); //this line does the actual hiding
+// 			},
+// 	   		resize: function() {
+// 	   			chart.reflow();
+// 	   		},
+// 	   		close: function() {
+// 	   			$(this).dialog('destroy');
+// 	   			$(this).removeClass();
+// 	   			$(this).removeAttr('style');
+// 	   			$(this).addClass('chart griditem ui-resizable');
+// 	   			$('#graphs').append($(this))
+// 	   			chart.reflow();
+// 	   			// $(this).prepend(html);
+// 	   			// $(this).remove();
+// 	   		}
+// 	   	});
+// 	});
 
 	
 
 	  
 	
-	// Zoom on graph on click using Masonry
-	// var originalEvent = chart.container.onclick;
-	// chart.container.onclick = function(e){
-	// 	$(this).parent('.grid-item').toggleClass('grid-item-full');
-	// 	chart.reflow();
-	// 	//$('.grid').masonry();
-	// 	originalEvent(e);
-	// 	console.log('event triggered');
-	// }
+// 	// Zoom on graph on click using Masonry
+// 	// var originalEvent = chart.container.onclick;
+// 	// chart.container.onclick = function(e){
+// 	// 	$(this).parent('.grid-item').toggleClass('grid-item-full');
+// 	// 	chart.reflow();
+// 	// 	//$('.grid').masonry();
+// 	// 	originalEvent(e);
+// 	// 	console.log('event triggered');
+// 	// }
 
-	// chart.container = $('#hc-modal-target');
+// 	// chart.container = $('#hc-modal-target');
 
 
-	return chart;
-}
+// 	return chart;
+// }
 
 function draw_zoom_graph(json){
 	// Create a containing div as Masonry grid item
@@ -257,34 +257,34 @@ function draw_zoom_graph(json){
 	$('#graphs').append(html);
 	dataArray = format_data(json);
 
-	var options_zoom = {
-		plotOptions: {
-	        series: {
-	            cursor: '#hc-modal-target',
-	            point: {
-	                events: {
-	                    click: function (e) {                    // this does not work right now, need to fix
-	                        Highcharts.htmlExpand(null, {
-	                            pageOrigin: {
-	                                x: e.pageX || e.clientX,
-	                                y: e.pageY || e.clientY
-	                            },
-	                            headingText: this.series.name,
-	                            maincontentText: Highcharts.dateFormat('%A, %b %e, %Y', this.x) + ':<br/> ' +
-	                                this.y + ' visits',
-	                            width: 200
-	                        });
-	                    }
-	                }
-	            },
-	            marker: {
-	                lineWidth: 1
-	            }
-	        }
-	    },
+	var options = {
+		// plotOptions: {
+	 //        series: {
+	 //            cursor: '#hc-modal-target',
+	 //            point: {
+	 //                events: {
+	 //                    click: function (e) {                    // this does not work right now, need to fix
+	 //                        Highcharts.htmlExpand(null, {
+	 //                            pageOrigin: {
+	 //                                x: e.pageX || e.clientX,
+	 //                                y: e.pageY || e.clientY
+	 //                            },
+	 //                            headingText: this.series.name,
+	 //                            maincontentText: Highcharts.dateFormat('%A, %b %e, %Y', this.x) + ':<br/> ' +
+	 //                                this.y + ' visits',
+	 //                            width: 200
+	 //                        });
+	 //                    }
+	 //                }
+	 //            },
+	 //            marker: {
+	 //                lineWidth: 1
+	 //            }
+	 //        }
+	 //    },
 
 		chart: {
-			zoomType: 'x',
+			zoomType: 'xy',
 			renderTo: key
 		},
 		title: {
@@ -302,27 +302,29 @@ function draw_zoom_graph(json){
                 //     x: 3,
                 //     y: -3
                 // },
-                title: {
-        			text: json.data[0].freq_desc
-        		}
-            },
-
-            yAxis: { 
-                title: {
-					text: json.data[0].statisticcat_desc + " in " + json.data[0].unit_desc
-				},
-            },
+            title: {
+    			text: json.data[0].freq_desc
+    		}
+        },
+        yAxis: { 
+            title: {
+				text: json.data[0].statisticcat_desc + " in " + json.data[0].unit_desc
+			},
+        },
 		series: [{
-			type: "line",
-			allowPointSelect: true,
-			pointStart: dataArray[1],
-			pointInterval: (dataArray.length / 15),
+			regression: true ,
+            regressionSettings: {
+                type: 'linear',
+                color:  'rgba(223, 83, 83, .9)'
+            },
+			type: 'scatter',
 			name: 'Farm Data',
 			data: dataArray
 		}]
 	};
 
-	var chart = new Highcharts.Chart(options_zoom);
+	// console.log(options.series[0].data);
+	var chart = new Highcharts.Chart(options);
 
 
 	html  = '<a><span class=\"glyphicon glyphicon-new-window\" aria-hidden=\"true\"><a>';
@@ -348,8 +350,6 @@ function draw_zoom_graph(json){
 	   			$(this).addClass('chart griditem ui-resizable');
 	   			$('#graphs').append($(this))
 	   			chart.reflow();
-	   			// $(this).prepend(html);
-	   			// $(this).remove();
 	   		}
 	   	});
 	});
@@ -357,20 +357,6 @@ function draw_zoom_graph(json){
 	$(chart.container).find('.glyphicon-remove').parent('a').click(function(event) {
 		$(chart.container).parent().remove();
 	});
-	  
-	
-	// Zoom on graph on click using Masonry
-	// var originalEvent = chart.container.onclick;
-	// chart.container.onclick = function(e){
-	// 	$(this).parent('.grid-item').toggleClass('grid-item-full');
-	// 	chart.reflow();
-	// 	//$('.grid').masonry();
-	// 	originalEvent(e);
-	// 	console.log('event triggered');
-	// }
-
-	// chart.container = $('#hc-modal-target');
-
 
 	return chart;
 }
