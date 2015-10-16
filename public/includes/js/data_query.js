@@ -86,7 +86,7 @@ function display_chart(){
     	success: function(json) {
 	    	console.log("Success! Data: ");
 	    	console.log(json);
-			graphs.push(draw_zoom_graph(json));
+			draw_zoom_graph(json);
 				
 		},
 		error: function(error){
@@ -94,110 +94,19 @@ function display_chart(){
 		}
 	})
   .done(function() {  
-		$('#loadingModal').fadeOut('slow');
-		$('.chart').resizable({
+		$('.loading').fadeOut();
+  		$('#graphs').sortable({
+  			handle: '.glyphicon-fullscreen',
+  			cancel: ''
+  		});
+  		$('.chart').resizable({
 			stop: function( event, ui) {
-				for (var i = 0; i < graphs.length; i++) {
-					graphs[i].reflow();
+				for (var i = 0; i < Highcharts.charts.length; i++) {
+					Highcharts.charts[i].reflow();
 				};
 			}
 		});
   });
-}
-
-// DEPRICATED.  Use draw_graph
-function highchart_line_graph(json){
-	
-	// Create a containing div as Masonry grid item
-	var key = String(Math.random());  //used to create random key for graph ID for renderTo property
-	var html = '<div id=\'' + key + '\' class=\'chart grid-item\'></div>';
-	$('#graphs').append(html);
-
-
-	dataArray = format_data(json);
-	$('#graphs').highcharts({
-		chart: {
-			renderTo: key
-		},
-		title: {
-			text: json.data[0].commodity_desc
-		},
-		subtitle: {
-            text: json.data[0].data_item
-        },
-        xAxis: {
-        	title: {
-        		text: json.data[0].freq_desc
-        	}
-        },
-		yAxis: {
-			title: {
-				text: json.data[0].statisticcat_desc + " in " + json.data[0].unit_desc
-			}
-		},
-		series: [{
-			type: "line",
-			allowPointSelect: true,
-			name: 'Farm Data',
-			data: dataArray
-		}]
-
-	});
-
-}
-
-// DEPRICATED.  Use draw_graph
-function highchart_area_graph(json){
-
-	// Create a containing div as Masonry grid item
-	var key = String(Math.random());  //used to create random key for graph ID for renderTo property
-	var html = '<div id=\'' + key + '\' class=\'chart grid-item\'></div>';
-	$('#graphs').append(html);
-
-	 dataArray = format_data(json);
-	 $('#graphs').highcharts({
-        chart: {
-			renderTo: key,
-            type: 'area'
-        },
-        title: {
-			text: json.data[0].commodity_desc
-		},
-		subtitle: {
-            text: json.data[0].data_item
-        },
-		yAxis: {
-			title: {
-				text: json.data[0].statisticcat_desc + " in " + json.data[0].unit_desc
-			}
-		},
-        xAxis: {
-        	title: {
-        		text: json.data[0].freq_desc
-        	}
-        },
-        tooltip: {
-            pointFormat: ''
-        },
-        plotOptions: {
-            area: {
-                marker: {
-                    enabled: false,
-                    symbol: 'circle',
-                    radius: 2,
-                    states: {
-                        hover: {
-                            enabled: true
-                        }
-                    }
-                }
-            }
-        },
-        series: [{
-            name: 'Farm Data',
-            data: dataArray
-        }]
-    });
 }
 
 function parseFloatIgnoreCommas(number) {
@@ -232,20 +141,3 @@ function format_data(json){
 		return false;
 	}
 }
-
-
-
-// function format_data(json){
-// 	if (json != undefined && json.data != undefined) {
-// 		var dataArray = [];
-// 		$.each(json.data, function(i){
-// 			if(!isNaN(parseFloatIgnoreCommas(this.value))){
-// 				dataArray[i] = parseFloatIgnoreCommas(this.value);
-// 			}
-// 		});
-// 		return dataArray;
-// 	} else {
-// 		console.log("Object or object property is undefined");
-// 		return false;
-// 	}
-// }
