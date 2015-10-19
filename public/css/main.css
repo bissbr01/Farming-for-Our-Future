@@ -13,14 +13,14 @@ html, body {
 	font-size: 14px;
 	font-family: 'Comfortaa', cursive;
 	font-weight: 300;
-	background: url("../images/farm-background.jpg") no-repeat #F1DD9E;
+	background: url("../images/farm_background_2.png") no-repeat #234311;
 	color: white;
 }
 
 h3, label {
-	background: hsla(0, 0%, 0%, .3);
+	background: hsla(0, 0%, 0%, .6);
 	padding: 1rem;
-	border-radius: 25px;
+	border-radius: 10px;
 	font-weight: 400;
 }
 
@@ -126,6 +126,11 @@ main {
 	margin: 1rem;
 }
 
+.buttons,
+.tab-content {
+	background: hsla(0, 0%, 0%, .7);
+}
+
 /******bs3 navtabs********/
 .nav-tabs > li > a {
 	background-color: hsla(98, 60%, 16%, .7);
@@ -150,8 +155,8 @@ main {
 
 
 .chart{
-	width: 300px;
-	height: 300px;
+	width: 100%;
+	height: auto;
 	float: left;
 	padding: 1rem;
 	border: 2px solid black;
@@ -174,6 +179,7 @@ main {
 }
 .glyphicon:hover {
 	color: hsla(0, 0%, 100%, 0.7);
+	cursor: pointer;
 }
 .ui-widget-content > .highcharts-container > a > .glyphicon {
 	visibility: hidden;
@@ -192,3 +198,11 @@ main {
 	background-color: #4A6713 !important;
 }
 
+@media screen and (max-width: 400px){
+	html, body {
+		background: hsla(46, 76%, 77%, .7);
+	}
+	.btn {
+		width: 90%;
+	}
+}

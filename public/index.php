@@ -13,7 +13,7 @@
 <body>
 	<div class="page-container">
 		<div class="banner">
-			<h1 class="banner-item">USDA Challenge App</h1>
+			<h1 class="banner-item">Farm Data Finder</h1>
 		</div>
 		<div id='loadingModal'> <div id='loading-text'>Hold up! We're shucking corn and grinding out some data... </div> </div>
 		
@@ -62,9 +62,11 @@
 		</div>	
 		
 		<main class="col-sm-12 col-xs-12">
-			<button id="submit" class="btn btn-primary">Graph!</button>
-			<a id='clear-form' class="btn btn-danger">Clear Form</a>
-			<a id='clear-graphs' class="btn btn-danger">Clear Graphs</a>
+			<div class="buttons">
+				<button id="submit" class="btn btn-primary" >Graph!</button>
+				<a id='clear-form' class="btn btn-danger">Clear Form</a>
+				<a id='clear-graphs' class="btn btn-danger">Clear Graphs</a>
+			</div>		
 			<div id="graphs" class='grid'>
 			<div class='loading'>
 				<img src="images/loading.gif" alt="">
@@ -81,7 +83,6 @@
 		
 		<script>
 			$(document).ready(function() {
-				// display_location_params();
 				display_inital_params();
 				find_location(); //Init other functions needing location as callback
 			});

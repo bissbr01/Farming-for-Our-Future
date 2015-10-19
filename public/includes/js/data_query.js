@@ -12,7 +12,7 @@ function optionHTML(json, param) {
 	if (json.Values[0] != ""){
 		var html = "";
 		html += "<div class=\"form-group\">";
-		html +=	"<label>" + param + ":</label>";
+		html +=	"<label>" + param.split('_').join(' ') + ":</label>";
 		html +=	"<select id=\"" + param + "\" name=\"" + param + "\" class=\"form-control\" MULTIPLE SIZE=5>"
 	    // html += "<option value='' selected>None</option>"; //Default option
 		for (var j=0; j < json.Values.length; j++) {
@@ -90,7 +90,7 @@ function Comparator(a,b){
     }
 }
 
-function format_data(json){                                    
+function format_data(json){
 	if (json != undefined && json.data != undefined) {
 		var dataArray = [];
 		$.each(json.data, function(i){

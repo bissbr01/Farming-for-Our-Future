@@ -5,7 +5,7 @@ var default_queries = new Object;
 
 function find_location(){
    if (navigator.geolocation) {  
-		navigator.geolocation.getCurrentPosition(function(pos){
+		navigator.geolocation.getCurrentPosition(function(pos) {
 			
 			var apiurl = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + pos.coords.latitude + ',' + pos.coords.longitude + '&sensor=false';
 		    var get = $.getJSON(apiurl,
@@ -30,18 +30,15 @@ function find_location(){
             		$('#geo').html(html);
 		        }
 		    );
-		    if (loc['state'] != false){        // there is a valid value for state
-			    get.done(generate_defaults);  //display graphs w/ this location w/ callback 
-		    }
-			
-		if(pos) setup_geo_services(pos);   //Run extra features requiring geolocation
-		
+			get.done(function(){
+		    	if (loc != undefined && loc['state'] != undefined){        // there is not a valid value for state
+			    	generate_defaults();
+					setup_geo_services(pos);   //Run extra features requiring geolocation
+		    	} 
+			});
+		}, function(){        // fail callback
+			$('.loading').fadeOut();
 		});			
-					
-		return loc;
-    } else {
-        $('#geo').html("Geolocation is not supported by this browser.");	
-        return null;
     }
 }
 
@@ -106,30 +103,6 @@ function generate_defaults(){
 			'COMMODITY_DESC' : 'CORN',
 			'STATISTICCAT_DESC' : 'AREA HARVESTED',
 			'AGG_LEVEL_DESC' : 'STATE'
-		},
-		options : {
-			chart: {
-				zoomType: 'xy',
-				renderTo: $('graphs')
-			},
-			title: {
-				text: 'Production'
-			},
-			subtitle: {
-	        },
-	        xAxis: {
-	            title: {
-	    			text: 'Year'
-	    		}
-	        },
-	        yAxis: { 
-	            title: {
-					text: 'Type'
-				},
-	        },
-	        series: [{
-				type: 'line',
-			}]
 		}
 	};
         
@@ -196,7 +169,6 @@ function query_api(url, key, defaults){
 	})
     .done(function(json) {  
     	console.log(json);
-
     	draw_zoom_graph(json, key, defaults);
 
   		$('.loading').fadeOut();
@@ -256,7 +228,8 @@ function draw_zoom_graph(json, key, defaults){
 				name: json.data[0].statisticcat_desc,
 				data: dataArray
 			}];
-		} else {
+		}
+		else {
 			options.series =  [{
 				regression: true ,
 	            regressionSettings: {
@@ -269,7 +242,6 @@ function draw_zoom_graph(json, key, defaults){
 			}];
 		}
 
-		// console.log(options.series[0].data);
 		var chart = new Highcharts.Chart(options);
 
 
@@ -304,10 +276,20 @@ function draw_zoom_graph(json, key, defaults){
 			$(chart.container).parent().remove();
 		});
 	} else {
-		key.addSeries({
-			name: json.data[0].statisticcat_desc,
-			data: dataArray
-		});
+		if (json.data[0].commodity_desc != 'CORN' &&
+			json.data[0].statisticcat_desc == 'AREA PLANTED'){
+			key.addSeries({
+				name: json.data[0].commodity_desc,
+				data: dataArray
+			});
+		}
+		else {
+			key.addSeries({
+				type: 'line',
+				name: json.data[0].statisticcat_desc,
+				data: dataArray
+			});
+		}
 	}
 	return chart;
 }

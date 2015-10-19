@@ -1,5 +1,6 @@
 
 function find_params(changeEvent){
+	$('#submit').attr('disabled', false); 
 	var params = new Object();
 	params['distinctParams'] = [];
 	$('#selectors div').children("select").each(function() {
@@ -38,9 +39,6 @@ function erase_stale_params(changeEvent){
 	var id = '#' + changeEvent.target.id;
 	var filter = $(id).parents('.filter')[0];
 	var filterID = '#' + filter.id;
-	console.log('**********************');
-	console.log(select);
-	console.log(filterID);
 
 	$(filterID).find('select').each(function() {
 		console.log($(this)[0].id);
@@ -48,7 +46,6 @@ function erase_stale_params(changeEvent){
 			$(this).children('option').removeAttr('selected');
 		}
 		if ( $(this)[0].id == select){
-			console.log('trigger!');
 			clear = true;
 		}
 	});
@@ -186,7 +183,7 @@ function get_dependent_params(changeEvent) {
  * @return {[none]}
  */
 function display_inital_params(){
-
+	$('#submit').attr('disabled', true);
 	var defaultsValues = "distinctParams=source_desc&distinctParams=sector_desc&distinctParams=group_desc&distinctParams=commodity_desc&distinctParams=agg_level_desc&distinctParams=year"; //&distinctParams=freq_desc
 	var url = "http://nass-api.azurewebsites.net/api/get_dependent_param_values?" + defaultsValues;
 	//var url = 'http://nass-api.azurewebsites.net/api/get?containers=source_desc&sector_desc&group_desc&commodity_desc&agg_level_desc&year'
