@@ -1,7 +1,8 @@
 
-loc = new Object(); //used to store city, county, state
-defaults_data = new Object();
+var loc = new Object(); //used to store city, county, state
+var defaults_data = new Object();
 var default_queries = new Object;
+
 function find_location(){
    if (navigator.geolocation) {
   
@@ -42,8 +43,6 @@ function find_location(){
 }
 
 function generate_defaults(){
-    console.log(loc);
-	
 
 	default_queries['AREA PLANTED'] = {
 		'CORN' : {
@@ -125,6 +124,9 @@ function generate_defaults(){
 					text: 'Type'
 				},
 	        },
+	        series: [{
+				type: 'line',
+			}]
 		}
 	};
         
@@ -138,17 +140,17 @@ function generate_defaults(){
 	};
 }
 
-function query_default_from_key(key){	
+function query_default_from_key(key){
 	url = "http://nass-api.azurewebsites.net/api/api_get?";
 	url += default_queries[key]['queries'][0];
-	var jqxhr = query_api(url);
+	var jqxhr = query_api(url, undefined, true);
 	var promises = [];
 	jqxhr.done(function(){
 		var l = Highcharts.charts.length-1;
 		for (i = 1; i < default_queries[key]['queries'].length; i++) {
 			url = "http://nass-api.azurewebsites.net/api/api_get?";
 			url += default_queries[key]['queries'][i];
-			promises.push(query_api(url, Highcharts.charts[l]));
+			promises.push(query_api(url, Highcharts.charts[l]), true);
 		};
 	});
 	return promises;
@@ -176,7 +178,7 @@ function default_queries_to_string(default_queries){
 	return default_queries;
 }
 
-function query_api(url, key){
+function query_api(url, key, defaults){
 	$('.loading').fadeIn();
 	return $.ajax({
     	type: "GET",
@@ -192,7 +194,7 @@ function query_api(url, key){
     .done(function(json) {  
     	console.log(json);
 
-    	(key === undefined) ? draw_zoom_graph(json) : draw_zoom_graph(json, key);
+    	draw_zoom_graph(json, key, defaults);
 
   		$('.loading').fadeOut();
   		$('#graphs').sortable({
@@ -209,7 +211,7 @@ function query_api(url, key){
     });	
 }
 
-function draw_zoom_graph(json, key){
+function draw_zoom_graph(json, key, defaults){
 	var original = false;
 	if (key === undefined){
 		// Create a containing div 
@@ -242,7 +244,17 @@ function draw_zoom_graph(json, key){
 					text: json.data[0].statisticcat_desc + " in " + json.data[0].unit_desc
 				},
 	        },
-			series: [{
+			
+		};
+
+		if (defaults) {
+			options.series =  [{
+				type: 'line',
+				name: json.data[0].statisticcat_desc,
+				data: dataArray
+			}];
+		} else {
+			options.series =  [{
 				regression: true ,
 	            regressionSettings: {
 	                type: 'linear',
@@ -251,8 +263,8 @@ function draw_zoom_graph(json, key){
 				type: 'scatter',
 				name: json.data[0].statisticcat_desc,
 				data: dataArray
-			}]
-		};
+			}];
+		}
 
 		// console.log(options.series[0].data);
 		var chart = new Highcharts.Chart(options);

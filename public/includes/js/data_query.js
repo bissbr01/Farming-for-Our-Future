@@ -67,46 +67,13 @@ function loadCommodities(json){
 
 function display_chart(){
 
-	$('#loadingModal').fadeIn('slow');  // trigger loading screen while ajax request processes
-
 	var params = find_GET_params();
 	//var link = "http://nass-api.azurewebsites.net/api/api_get?";
 	var link = "http://nass-api.azurewebsites.net/api/api_get?";
 	//link += params_to_string(params);
 	link += params;  
 	console.log(link);
-
-    $.ajax({
-    	type: "GET",
-    	url: link,
-    	cached: true,
-    	crossDomain: true,
-    	contentType: "application/json; charset=utf-8",
-    	dataType: "json", 
-    	success: function(json) {
-	    	console.log("Success! Data: ");
-	    	console.log(json);
-			draw_zoom_graph(json);
-				
-		},
-		error: function(error){
-			console.log(error.responseText);
-		}
-	})
-  .done(function() {  
-		$('.loading').fadeOut();
-  		$('#graphs').sortable({
-  			handle: '.glyphicon-fullscreen',
-  			cancel: ''
-  		});
-  		$('.chart').resizable({
-			stop: function( event, ui) {
-				for (var i = 0; i < Highcharts.charts.length; i++) {
-					Highcharts.charts[i].reflow();
-				};
-			}
-		});
-  });
+    query_api(link, undefined, false);
 }
 
 function parseFloatIgnoreCommas(number) {
