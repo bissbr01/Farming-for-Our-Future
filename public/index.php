@@ -15,8 +15,8 @@
 		<div class="banner">
 			<h1 class="banner-item">Farm Data Finder</h1>
 		</div>
-		<div id='loadingModal'> <div id='loading-text'>Hold up! We're shucking corn and grinding out some data... </div> </div>
-		
+<!-- 		<div id='loadingModal'> <div id='loading-text'>Hold up! We're shucking corn and grinding out some data... </div> </div>
+ -->		
 		
 
 		<div class="col-sm-12 col-xs-12">
@@ -68,7 +68,7 @@
 				<a id='clear-graphs' class="btn btn-danger">Clear Graphs</a>
 			</div>		
 			<div id="graphs" class='grid'>
-			<div class='loading'>
+			<div class='loading chart'>
 				<img src="images/loading.gif" alt="">
 			</div>
 			<!-- 	<div class='grid-sizer'></div>
@@ -102,7 +102,7 @@
 			});
 	
 			$('form').change(function(event){
-				$('#loadingModal').fadeIn();
+				// $('#loadingModal').fadeIn();
 				get_dependent_params(event);
 			});
 

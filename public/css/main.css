@@ -149,9 +149,10 @@ main {
  }
 
 
-/**********************************
-*       Masonry Grid Styles
-***********************************/
+.spinner {
+    
+    background: url('../images/spinner.gif') no-repeat right center;
+}
 
 
 .chart{

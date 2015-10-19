@@ -138,12 +138,15 @@ function params_to_string(params){
 	return string;
 }
 
+
 /**
  * Processes Form to display Highcharts chart with NASS data
  * @return {none}
  */
 function get_dependent_params(changeEvent) {
 	erase_stale_params(changeEvent);
+	$('.form-control').attr('disabled', 'disabled');
+
 	var params = params_to_string(find_params(changeEvent));
 	//var link = "http://nass-api.azurewebsites.net/api/api_get?";
 	var link = "http://nass-api.azurewebsites.net/api/get_dependent_param_values?";
@@ -174,7 +177,8 @@ function get_dependent_params(changeEvent) {
 		}
 	})
   .done(function() {  
-		$('#loadingModal').fadeOut('slow');
+		// $('#loadingModal').fadeOut('slow');
+		$('.form-control').removeAttr('disabled');
   });
 }
 
@@ -205,9 +209,11 @@ function display_inital_params(){
 		}
 	})
   .done(function() {  
-		$('#loadingModal').fadeOut();
+  		$('.form-control').attr('disabled', false);
+		// $('#loadingModal').fadeOut();
   });	
 }
+
 
 
 
