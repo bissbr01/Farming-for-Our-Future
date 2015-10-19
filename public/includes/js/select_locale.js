@@ -1,5 +1,7 @@
 
-loc = new Object(); //used to store city, county, state
+var loc = new Object(); //used to store city, county, state
+var defaults_data = new Object();
+var default_queries = new Object;
 
 function find_location(){
    if (navigator.geolocation) {  
@@ -43,75 +45,160 @@ function find_location(){
     }
 }
 
-var graphs = []; // used to contain highcharts graphs after drawn
-
 function generate_defaults(){
-    console.log(loc);
-	var default_queries = new Object;
 
-	default_queries['ANIMAL TOTALS'] = { 
-		"SECTOR_DESC" : 'ANIMALS & PRODUCTS', 
-		"GROUP_DESC":'ANIMAL TOTALS', 
-		"COMMODITY_DESC":'ANIMAL TOTALS', 
-		"STATISTICCAT_DESC":'SALES'};
+	default_queries['AREA PLANTED'] = {
+		'CORN' : {
+			'SOURCE_DESC' : 'SURVEY',
+			'SECTOR_DESC' : 'CROPS',
+			'COMMODITY_DESC' : 'CORN',
+			'STATISTICCAT_DESC' : 'AREA PLANTED',
+			'AGG_LEVEL_DESC' : 'STATE'
+		},
+		'COTTON' : {
+			'SOURCE_DESC' : 'SURVEY',
+			'SECTOR_DESC' : 'CROPS',
+			'COMMODITY_DESC' : 'COTTON',
+			'STATISTICCAT_DESC' : 'AREA PLANTED',
+			'AGG_LEVEL_DESC' : 'STATE'
+		},
+		'RICE' : {
+			'SOURCE_DESC' : 'SURVEY',
+			'SECTOR_DESC' : 'CROPS',
+			'COMMODITY_DESC' : 'RICE',
+			'STATISTICCAT_DESC' : 'AREA PLANTED',
+			'AGG_LEVEL_DESC' : 'STATE'
+		},
+		'SOYBEANS' : {
+			'SOURCE_DESC' : 'SURVEY',
+			'SECTOR_DESC' : 'CROPS',
+			'COMMODITY_DESC' : 'SOYBEANS',
+			'STATISTICCAT_DESC' : 'AREA PLANTED',
+			'AGG_LEVEL_DESC' : 'STATE'
+		},
+		'WHEAT' : {
+			'SOURCE_DESC' : 'SURVEY',
+			'SECTOR_DESC' : 'CROPS',
+			'COMMODITY_DESC' : 'WHEAT',
+			'STATISTICCAT_DESC' : 'AREA PLANTED',
+			'AGG_LEVEL_DESC' : 'STATE'
+		}
+	};
 
-	default_queries['CROP TOTALS'] = { 
-		"SECTOR_DESC":'CROPS',               
-		"GROUP_DESC":'CROP TOTALS',   
-		"COMMODITY_DESC":'CROP TOTALS',             
-		'STATISTICCAT_DESC':'SALES'};
-
-	default_queries['INCOME'] = { 
-		"SECTOR_DESC":'ECONOMICS',           
-		"GROUP_DESC":'INCOME',        
-		"COMMODITY_DESC":'INCOME, NET CASH FARM',   
-		"STATISTICCAT_DESC":'NET INCOME'};
+	default_queries['PRODUCTION'] = {
+		'YIELD' : {
+			'SOURCE_DESC' : 'SURVEY',
+			'SECTOR_DESC' : 'CROPS',
+			'COMMODITY_DESC' : 'CORN',
+			'STATISTICCAT_DESC' : 'YIELD',
+			'AGG_LEVEL_DESC' : 'STATE'
+		},
+		'AREA PLANTED' : {
+			'SOURCE_DESC' : 'SURVEY',
+			'SECTOR_DESC' : 'CROPS',
+			'COMMODITY_DESC' : 'CORN',
+			'STATISTICCAT_DESC' : 'AREA PLANTED',
+			'AGG_LEVEL_DESC' : 'STATE'
+		},
+		'AREA HARVESTED' : {
+			'SOURCE_DESC' : 'SURVEY',
+			'SECTOR_DESC' : 'CROPS',
+			'COMMODITY_DESC' : 'CORN',
+			'STATISTICCAT_DESC' : 'AREA HARVESTED',
+			'AGG_LEVEL_DESC' : 'STATE'
+		},
+		options : {
+			chart: {
+				zoomType: 'xy',
+				renderTo: $('graphs')
+			},
+			title: {
+				text: 'Production'
+			},
+			subtitle: {
+	        },
+	        xAxis: {
+	            title: {
+	    			text: 'Year'
+	    		}
+	        },
+	        yAxis: { 
+	            title: {
+					text: 'Type'
+				},
+	        },
+	        series: [{
+				type: 'line',
+			}]
+		}
+	};
         
 	// query API for each default, then display each in graph
-	var queries = [];
-	
-	for (var key in default_queries) {
-		if (!default_queries.hasOwnProperty(key)){continue;}
+	default_queries_to_string(default_queries);
+	console.log(default_queries);
 
-		var string = "";
-		for (var prop in default_queries[key]) {
-			if (!default_queries[key].hasOwnProperty(prop)){continue;}
-			string += prop;
-			string += "=";
-			string += encodeURIComponent(default_queries[key][prop]);
-			string += "&";
-		}
-		string += 'STATE_NAME=' + loc['state'].toUpperCase();
-		queries.push(string);
-	}
-
-	for (var i = 0; i < queries.length; i++) {
-		url = "http://nass-api.azurewebsites.net/api/api_get?";
-		url += queries[i];
-		console.log(queries);
-		query_api(url);
-
-	}
+	for (var i = 0; i < 2; i++) {                // can't automatically loop through b/c of aysnc ajax calls.  This was my patch fix.
+		var key = ['AREA PLANTED', 'PRODUCTION'];
+		query_default_from_key(key[i]);
+	};
 }
 
-function query_api(url){
+function query_default_from_key(key){
+	url = "http://nass-api.azurewebsites.net/api/api_get?";
+	url += default_queries[key]['queries'][0];
+	var jqxhr = query_api(url, undefined, true);
+	var promises = [];
+	jqxhr.done(function(){
+		var l = Highcharts.charts.length-1;
+		for (i = 1; i < default_queries[key]['queries'].length; i++) {
+			url = "http://nass-api.azurewebsites.net/api/api_get?";
+			url += default_queries[key]['queries'][i];
+			promises.push(query_api(url, Highcharts.charts[l]), true);
+		};
+	});
+	return promises;
+}
+
+function default_queries_to_string(default_queries){
+	for (var key in default_queries) {
+		if (!default_queries.hasOwnProperty(key)){continue;}
+		default_queries[key]['queries'] = [];
+		for (var k in default_queries[key]) {
+			if (!default_queries[key].hasOwnProperty(k)){continue;}
+			if (key == 'queries'){continue;}
+			var string = "";
+			for (var prop in default_queries[key][k]) {
+				if (!default_queries[key][k].hasOwnProperty(prop)){continue;}
+				string += prop;
+				string += "=";
+				string += encodeURIComponent(default_queries[key][k][prop]);
+				string += "&";
+			}
+			string += 'STATE_NAME=' + loc['state'].toUpperCase();
+			default_queries[key]['queries'].push(string);
+		}
+	}
+	return default_queries;
+}
+
+function query_api(url, key, defaults){
 	$('.loading').fadeIn();
-	$.ajax({
+	return $.ajax({
     	type: "GET",
     	url: url,
     	cached: true,
     	crossDomain: true,
     	contentType: "application/json; charset=utf-8",
     	dataType: "json", 
-    	success: function(json){
-    		console.log(json);
-			graphs.push(draw_zoom_graph(json));
-		},
-		error: function(error){
-			console.log(error.responseText);
-		}
 	})
-    .done(function() {  
+	.fail(function(error){
+		console.log(error.responseText);
+	})
+    .done(function(json) {  
+    	console.log(json);
+
+    	draw_zoom_graph(json, key, defaults);
+
   		$('.loading').fadeOut();
   		$('#graphs').sortable({
   			handle: '.glyphicon-fullscreen',
@@ -119,274 +206,109 @@ function query_api(url){
   		});
   		$('.chart').resizable({
 			stop: function( event, ui) {
-				for (var i = 0; i < graphs.length; i++) {
-					graphs[i].reflow();
+				for (var i = 0; i < Highcharts.charts.length; i++) {
+					Highcharts.charts[i].reflow();
 				};
 			}
 		});
-		
-
-		console.log(graphs);
-
     });	
 }
 
-// function draw_graph(json){
-	
-// 	// Create a containing div as Masonry grid item
-// 	var key = String(Math.random());  //used to create random key for graph ID for renderTo property
-// 	var html = '<div id=\'' + key + '\' class=\'chart grid-item\'><span class=\"glyphicon glyphicon-new-window\" aria-hidden=\"true\"> </span>  </div>';
-// 	$('#graphs').append(html);
+function draw_zoom_graph(json, key, defaults){
+	var original = false;
+	if (key === undefined){
+		// Create a containing div 
+		var key = String(Math.random());  //used to create random key for graph ID for renderTo property
+		var html = '<div id=\'' + key + '\' class=\'chart grid-item\'><span class=\"glyphicon glyphicon-new-window\" aria-hidden=\"true\"> </span>  </div>';
+		$('#graphs').append(html);
+		original = true;
+	}
 
-	
-
-// 	dataArray = format_data(json);
-// 	var chart = new Highcharts.Chart({
-// 	       plotOptions: {
-// 	        series: {
-// 	            cursor: '#hc-modal-target',
-// 	            point: {
-// 	                events: {
-// 	                    click: function (e) {
-// 	                        hs.htmlExpand(null, {
-// 	                            pageOrigin: {
-// 	                                x: e.pageX || e.clientX,
-// 	                                y: e.pageY || e.clientY
-// 	                            },
-// 	                            headingText: this.series.name,
-// 	                            maincontentText: Highcharts.dateFormat('%A, %b %e, %Y', this.x) + ':<br/> ' +
-// 	                                this.y + ' visits',
-// 	                            width: 200
-// 	                        });
-// 	                    }
-// 	                }
-// 	            },
-// 	            marker: {
-// 	                lineWidth: 1
-// 	            }
-// 	        }
-// 	    },
-
-// 		chart: {
-// 			renderTo: key
-// 		},
-// 		title: {
-// 			text: json.data[0].commodity_desc
-// 		},
-// 		subtitle: {
-//             text: json.data[0].data_item
-//         },
-//         xAxis: {
-//                 tickInterval: 7 * 24 * 3600 * 1000 * 52, // one year
-//                 tickWidth: 0,
-//                 gridLineWidth: 1,
-//                 labels: {
-//                     align: 'left',
-//                     x: 3,
-//                     y: -3
-//                 },
-//                 title: {
-//         			text: json.data[0].freq_desc
-//         		}
-//             },
-
-//             yAxis: { 
-//                 title: {
-// 					text: json.data[0].statisticcat_desc + " in " + json.data[0].unit_desc
-// 				},
-//             },
-// 		series: [{
-// 			type: "line",
-// 			allowPointSelect: true,
-// 			// pointStart: dataArray[1],
-// 			// pointInterval: (dataArray.length / 15),
-// 			name: 'Farm Data',
-// 			data: dataArray
-// 		}]
-
-// 	});
-	
-// 	html = '<a><span class=\"glyphicon glyphicon-new-window\" aria-hidden=\"true\"><a>';
-// 	$(chart.container).prepend(html);
-
-// 	$(chart.container).children('a').click(function(event) {
-// 	   	$(this).parents('.chart').dialog({
-// 	   		width: 'auto',
-// 	   		height: 'auto',
-// 	   		modal: true,
-// 	   		open: function() {
-// 				$(this).css('overflow', 'hidden'); //this line does the actual hiding
-// 			},
-// 	   		resize: function() {
-// 	   			chart.reflow();
-// 	   		},
-// 	   		close: function() {
-// 	   			$(this).dialog('destroy');
-// 	   			$(this).removeClass();
-// 	   			$(this).removeAttr('style');
-// 	   			$(this).addClass('chart griditem ui-resizable');
-// 	   			$('#graphs').append($(this))
-// 	   			chart.reflow();
-// 	   			// $(this).prepend(html);
-// 	   			// $(this).remove();
-// 	   		}
-// 	   	});
-// 	});
-
-	
-
-	  
-	
-// 	// Zoom on graph on click using Masonry
-// 	// var originalEvent = chart.container.onclick;
-// 	// chart.container.onclick = function(e){
-// 	// 	$(this).parent('.grid-item').toggleClass('grid-item-full');
-// 	// 	chart.reflow();
-// 	// 	//$('.grid').masonry();
-// 	// 	originalEvent(e);
-// 	// 	console.log('event triggered');
-// 	// }
-
-// 	// chart.container = $('#hc-modal-target');
-
-
-// 	return chart;
-// }
-
-function draw_zoom_graph(json){
-	// Create a containing div as Masonry grid item
-	var key = String(Math.random());  //used to create random key for graph ID for renderTo property
-	var html = '<div id=\'' + key + '\' class=\'chart grid-item\'><span class=\"glyphicon glyphicon-new-window\" aria-hidden=\"true\"> </span>  </div>';
-	$('#graphs').append(html);
 	dataArray = format_data(json);
-
-	var options = {
-		// plotOptions: {
-	 //        series: {
-	 //            cursor: '#hc-modal-target',
-	 //            point: {
-	 //                events: {
-	 //                    click: function (e) {                    // this does not work right now, need to fix
-	 //                        Highcharts.htmlExpand(null, {
-	 //                            pageOrigin: {
-	 //                                x: e.pageX || e.clientX,
-	 //                                y: e.pageY || e.clientY
-	 //                            },
-	 //                            headingText: this.series.name,
-	 //                            maincontentText: Highcharts.dateFormat('%A, %b %e, %Y', this.x) + ':<br/> ' +
-	 //                                this.y + ' visits',
-	 //                            width: 200
-	 //                        });
-	 //                    }
-	 //                }
-	 //            },
-	 //            marker: {
-	 //                lineWidth: 1
-	 //            }
-	 //        }
-	 //    },
-
-		chart: {
-			zoomType: 'xy',
-			renderTo: key
-		},
-		title: {
-			text: json.data[0].commodity_desc
-		},
-		subtitle: {
-            text: json.data[0].data_item
-        },
-        xAxis: {
-                // tickInterval: 7 * 24 * 3600 * 1000 * 52, // one year                 ****figure out way to use 'year'
-                // tickWidth: 0,
-                // gridLineWidth: 1,
-                // labels: {
-                //     align: 'left',
-                //     x: 3,
-                //     y: -3
-                // },
-            title: {
-    			text: json.data[0].freq_desc
-    		}
-        },
-        yAxis: { 
-            title: {
-				text: json.data[0].statisticcat_desc + " in " + json.data[0].unit_desc
+	if (original) {
+		var options = {
+			chart: {
+				zoomType: 'xy',
+				renderTo: key
 			},
-        },
-		series: [{
-			regression: true ,
-            regressionSettings: {
-                type: 'linear',
-                color:  'rgba(223, 83, 83, .9)'
-            },
-			type: 'scatter',
-			name: 'Farm Data',
+			title: {
+				text: json.data[0].commodity_desc
+			},
+			subtitle: {
+	            text: json.data[0].data_item
+	        },
+	        xAxis: {
+	            title: {
+	    			text: json.data[0].freq_desc
+	    		}
+	        },
+	        yAxis: { 
+	            title: {
+					text: json.data[0].statisticcat_desc + " in " + json.data[0].unit_desc
+				},
+	        },
+			
+		};
+
+		if (defaults) {
+			options.series =  [{
+				type: 'line',
+				name: json.data[0].statisticcat_desc,
+				data: dataArray
+			}];
+		} else {
+			options.series =  [{
+				regression: true ,
+	            regressionSettings: {
+	                type: 'linear',
+	                color:  'rgba(223, 83, 83, .9)'
+	            },
+				type: 'scatter',
+				name: json.data[0].statisticcat_desc,
+				data: dataArray
+			}];
+		}
+
+		// console.log(options.series[0].data);
+		var chart = new Highcharts.Chart(options);
+
+
+		html  = '<a><span class=\"glyphicon glyphicon-new-window\" aria-hidden=\"true\"><a>';
+		html += '<a><span class=\"glyphicon glyphicon-fullscreen\" aria-hidden=\"true\"><a>';
+		html += '<a><span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\"><a>';
+		$(chart.container).prepend(html);
+
+		$(chart.container).find('.glyphicon-new-window').parent('a').click(function(event) {
+		   	$(this).parents('.chart').dialog({
+		   		width: 'auto',
+		   		height: 'auto',
+		   		modal: true,
+		   		open: function() {
+					$(this).css('overflow', 'hidden'); //this line does the actual hiding
+				},
+		   		resize: function() {
+		   			chart.reflow();
+		   		},
+		   		close: function() {
+		   			$(this).dialog('destroy');
+		   			$(this).removeClass();
+		   			$(this).removeAttr('style');
+		   			$(this).addClass('chart griditem ui-resizable');
+		   			$('#graphs').append($(this))
+		   			chart.reflow();
+		   		}
+		   	});
+		});
+
+		$(chart.container).find('.glyphicon-remove').parent('a').click(function(event) {
+			$(chart.container).parent().remove();
+		});
+	} else {
+		key.addSeries({
+			name: json.data[0].statisticcat_desc,
 			data: dataArray
-		}]
-	};
-
-	// console.log(options.series[0].data);
-	var chart = new Highcharts.Chart(options);
-
-
-	html  = '<a><span class=\"glyphicon glyphicon-new-window\" aria-hidden=\"true\"><a>';
-	html += '<a><span class=\"glyphicon glyphicon-fullscreen\" aria-hidden=\"true\"><a>';
-	html += '<a><span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\"><a>';
-	$(chart.container).prepend(html);
-
-	$(chart.container).find('.glyphicon-new-window').parent('a').click(function(event) {
-	   	$(this).parents('.chart').dialog({
-	   		width: 'auto',
-	   		height: 'auto',
-	   		modal: true,
-	   		open: function() {
-				$(this).css('overflow', 'hidden'); //this line does the actual hiding
-			},
-	   		resize: function() {
-	   			chart.reflow();
-	   		},
-	   		close: function() {
-	   			$(this).dialog('destroy');
-	   			$(this).removeClass();
-	   			$(this).removeAttr('style');
-	   			$(this).addClass('chart griditem ui-resizable');
-	   			$('#graphs').append($(this))
-	   			chart.reflow();
-	   		}
-	   	});
-	});
-
-	$(chart.container).find('.glyphicon-remove').parent('a').click(function(event) {
-		$(chart.container).parent().remove();
-	});
-
+		});
+	}
 	return chart;
 }
 
-function display_location_params(){
-
-	var defaultsValues = "distinctParams=STATE_NAME"; 
-	var url = "http://nass-api.azurewebsites.net/api/get_dependent_param_values?" + defaultsValues;
-	
-	$.ajax({
-    	type: "GET",
-    	url: url,
-    	cached: true,
-    	crossDomain: true,
-    	contentType: "application/json; charset=utf-8",
-    	dataType: "json", 
-    	success: function(json){
-    		console.log("Initial params: ");
-    		console.log(json);
-    		json.data[0].Values.shift();  //first element is empty for some reason?
-			loadCommodities(json);
-		},
-		error: function(error){
-			console.log(error.responseText);
-		}
-	})
-  .done(function() {  
-		$('#loadingModal').fadeOut();
-  });	
-}
