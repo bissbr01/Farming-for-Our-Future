@@ -11,3 +11,4 @@ $path = "includes/js/";
 <script src="<?php echo $path; ?>data_query.js"></script>
 <script src="<?php echo $path; ?>/parameter_query.js"></script>
 <script src="<?php echo $path; ?>/select_locale.js"></script>
+<script src="<?php echo $path; ?>/geo_based_features.js"></script>

@@ -2,9 +2,9 @@
 loc = new Object(); //used to store city, county, state
 
 function find_location(){
-   if (navigator.geolocation) {
-  
+   if (navigator.geolocation) {  
 		navigator.geolocation.getCurrentPosition(function(pos){
+			
 			var apiurl = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + pos.coords.latitude + ',' + pos.coords.longitude + '&sensor=false';
 		    var get = $.getJSON(apiurl,
 		        function(data){
@@ -31,11 +31,14 @@ function find_location(){
 		    if (loc['state'] != false){        // there is a valid value for state
 			    get.done(generate_defaults);  //display graphs w/ this location w/ callback 
 		    }
-		});
+			
+		if(pos) setup_geo_services(pos);   //Run extra features requiring geolocation
 		
+		});			
+					
 		return loc;
     } else {
-        $('#geo').html("Geolocation is not supported by this browser.");
+        $('#geo').html("Geolocation is not supported by this browser.");	
         return null;
     }
 }

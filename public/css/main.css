@@ -44,6 +44,14 @@ main {
 	height: 20px;
 }
 
+.currently {
+	background-color:  hsla(98, 60%, 16%, .9);
+	border-radius: 16px;
+	display: inline;
+	margin: 0 6px 0 9%;
+	padding: 5px;
+}
+
 #selectors > div {
 	overflow: auto;
 	min-height: 10em;	
@@ -61,6 +69,20 @@ main {
 
 #selectors > div > .form-group {
 	width: auto;
+}
+
+#geo {
+	text-align: center;
+	max-width: 74%;
+	width: auto;
+}
+
+#geoTemp {
+	min-width: 120px;
+}
+
+#primary {
+	margin-top: 10px;
 }
 
 #loadingModal {

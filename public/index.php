@@ -20,8 +20,8 @@
 		
 
 		<div class="col-sm-12 col-xs-12">
-			<h3 id='geo'></h3>
-			<form accept-charset="utf-8"> 
+			<h3 id='geo'>Location Unknown</h3>
+			<form id="primary" accept-charset="utf-8" > 
 				<div role="tabpanel">
 					<!-- Nav tabs -->
 					<ul class="nav nav-tabs" role="tablist">
@@ -83,8 +83,7 @@
 			$(document).ready(function() {
 				// display_location_params();
 				display_inital_params();
-				find_location();
-			
+				find_location(); //Init other functions needing location as callback
 			});
 	
 			$('#clear-form').click(function(event) {
