@@ -30,11 +30,16 @@ main {
 
 
 .banner {
-	background-color:  hsla(98, 60%, 16%, .15);
+	background-color:  hsla(98, 60%, 16%, .35);
 	border-radius: 25px;
 	color: white; 
 	float: left;
+	margin: 5px 0 0 5px;
     padding: 2px 28px;
+}
+
+.banner-item {
+	font-weight: bold;
 }
 
 .banner-subtitle {
@@ -67,7 +72,7 @@ main {
 
 #selectors {
     background-color: hsla(98, 60%, 16%, 0.75);
-	width: 74%;
+	width: 79%;
 }
 
 #selectors > div {
@@ -92,19 +97,8 @@ main {
 #geo {
 	text-align: center;
 	max-width: 74%;
+	margin: 0 auto;
 	width: auto;
-}
-
-#geoTemp {
-	min-width: 120px;
-}
-
-#geoTomorrow {
-	opacity: .7;
-}
-
-#geo2Day {
-	opacity: .4;
 }
 
 #primary {
@@ -170,7 +164,7 @@ main {
  	color: #333;
  }
  
-/******** Cloud style div **********/
+/******** Cloud style div - Credit: http://thecodeplayer.com/walkthrough/make-a-simple-cloud-in-css3 **********/
 
 #theSky {
 	z-index: 99999;    
@@ -197,15 +191,16 @@ color: gray;
     padding: 5px 10px;
     position: relative;
     text-align: center;
-    width: 30%;
+	transition: all 2s linear;
+    width: 31%;
 }
 
 #cloud2 {
-	opacity: .8;
+	opacity: .7;
 }
 
 #cloud3 {
-	opacity: .6;
+	opacity: .5;
 }
 
 [id*="cloud"]:after, [id*="cloud"]:before {

@@ -47,6 +47,9 @@ function get_weather(){
 				"text": "" + description,
 				"class": "currently"
 			  }).appendTo( "#cloud" );
+			  
+			  $('#cloud').children().hide().fadeIn(500);			  
+			  
 		}
 	});
 }
@@ -93,6 +96,8 @@ function get_forecast(){
 				"class": "forecasted tomorrow"
 			  }).appendTo( "#cloud2" );
 			  
+			  $('#cloud2').children().hide();
+			  
 			//2 Day Forecast:
 			$( "<div/>", {
 				"text": "2 Days Away",
@@ -116,6 +121,13 @@ function get_forecast(){
 				"text": "" + description2 + ".",
 				"class": "forecasted day2"
 			  }).appendTo( "#cloud3" );
+			  
+			  $('#cloud3').children().hide();	
+			  		  
+				  $('#cloud2').children().fadeIn(300, function() {	
+					$('#cloud3').children().fadeIn(300);
+				  
+			  });		  
 		}
 	});	
 }
