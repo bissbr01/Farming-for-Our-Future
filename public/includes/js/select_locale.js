@@ -37,7 +37,7 @@ function find_location(){
 		    	} 
 			});
 		}, function(){        // fail callback
-			$('.loading').fadeOut();
+			$('.loading').fadeOut();	
 		});			
     }
 }
@@ -168,8 +168,7 @@ function query_api(url, key, defaults){
 		console.log(error.responseText);
 	})
     .done(function(json) {  
-    	if (json.data[0].commodity_desc != undefined && 
-    		json.data[0].statisticcat_desc != undefined) {
+    	if (json.data != undefined) {
 	    	console.log(json);
 	    	draw_zoom_graph(json, key, defaults);
 

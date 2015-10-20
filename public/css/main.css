@@ -73,7 +73,6 @@ main {
 
 #selectors {
     background-color: hsla(98, 60%, 16%, 0.75);
-	width: 79%;
 }
 
 #selectors > div {

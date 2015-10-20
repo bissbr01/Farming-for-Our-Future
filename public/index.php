@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<title>USDA Challenge App</title>
+	<title>Farming For Our Future</title>
 	<link rel="stylesheet" media="screen" href="//netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="includes/js/jQuery/jquery-ui-1.11.4/jquery-ui.min.css">
 	<link href='https://fonts.googleapis.com/css?family=Comfortaa:400,300' rel='stylesheet' type='text/css'>
@@ -14,7 +14,7 @@
 	<div class="page-container">
 		<div class="banner">
 			<h1 class="banner-item">Farming For Our Future</h1>
-			<h5 class="banner-subtitle">Looking Backward, Farming Forward</h5>
+			<h5 class="banner-subtitle">Looking Backward, Plowing Forward</h5>
 		</div> 
 <!-- 		<div id='loadingModal'> <div id='loading-text'>We're shucking corn and grinding out some data... </div> </div>
  -->		
@@ -41,6 +41,12 @@
 						<li role="presentation"> 
 							<a href="#time" aria-controls="time" role="tab" data-toggle="tab">Time</a>
 						</li>
+						<li role="presentation" class="pull-right"> 
+							<a href="#resources" aria-controls="time" role="tab" data-toggle="tab">Resources</a>
+						</li>
+						<li role="presentation" class="pull-right"> 
+							<a href="#filters" aria-controls="time" role="tab" data-toggle="tab">Filters</a>
+						</li>
 					</ul>
 					<!-- Tab panes -->
 					<div id="selectors" class="tab-content">
@@ -49,6 +55,23 @@
 						<div id="location" role="tabpanel" class="tab-pane filter">
 						</div>
 						<div id="time" role="tabpanel" class="tab-pane filter">
+						</div>
+						<div id="filters" role="tabpanel" class="tab-pane filter">
+							<btn></btn>
+						</div>
+						<div id="resources" role="tabpanel" class="tab-pane filter">
+							<h5>Resources</h5>
+							<ul>
+								<li><a href="http://www.usda.gov/wps/portal/usda/usdahome?navid=NEWSROOM">USDA News</a></li>
+								<li><a href="http://www.usda.gov/wps/portal/usda/usdahome?navid=LAWS_REGS&navtype=SU">Legal Aid</a></li>
+								<li><a href="http://www.agweb.com/markets/futures/">Aggriculture Market Prices</a></li>
+							</ul>
+							<h5>Background Reading</h5>
+							<ul>
+								<li><a href="https://en.wikipedia.org/wiki/Issues_in_American_commodity_farming">Issues in American Commodity Farming</a></li>
+								<li><a href="http://seedstock.com/2012/04/18/five-major-challenges-facing-north-american-agriculture/">Challenges Facing North American Agriculture</a></li>
+								<li><a href="https://en.wikipedia.org/wiki/History_of_agriculture_in_the_United_States ">History of Agriculture in the United States</a></li>
+							</ul>
 						</div>
 					</div>
 				</div>			
