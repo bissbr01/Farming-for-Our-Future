@@ -168,21 +168,24 @@ function query_api(url, key, defaults){
 		console.log(error.responseText);
 	})
     .done(function(json) {  
-    	console.log(json);
-    	draw_zoom_graph(json, key, defaults);
+    	if (json.data[0].commodity_desc != undefined && 
+    		json.data[0].statisticcat_desc != undefined) {
+	    	console.log(json);
+	    	draw_zoom_graph(json, key, defaults);
 
-  		$('.loading').fadeOut();
-  		$('#graphs').sortable({
-  			handle: '.glyphicon-fullscreen',
-  			cancel: ''
-  		});
-  		$('.chart').resizable({
-			stop: function( event, ui) {
-				for (var i = 0; i < Highcharts.charts.length; i++) {
-					Highcharts.charts[i].reflow();
-				};
-			}
-		});
+	  		$('.loading').fadeOut();
+	  		$('#graphs').sortable({
+	  			handle: '.glyphicon-fullscreen',
+	  			cancel: ''
+	  		});
+	  		$('.chart').resizable({
+				stop: function( event, ui) {
+					for (var i = 0; i < Highcharts.charts.length; i++) {
+						Highcharts.charts[i].reflow();
+					};
+				}
+			});
+  		}
     });	
 }
 
