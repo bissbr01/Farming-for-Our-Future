@@ -19,7 +19,7 @@ function get_weather(){
 		dataType: 'json',
 		success: function (data) { 
 			//console.log(data.weather[0].description);
-			var temp = data.main.temp;
+			var temp = Math.round(parseFloat(data.main.temp));
 			var humidity = data.main.humidity;
 			var description = data.weather[0].description;
 			
@@ -32,7 +32,7 @@ function get_weather(){
 			  
 			$( "<div/>", {
 				"id": "geoTemp",
-				"text": "Temperature: " + temp + " F",
+				"text": "Temperature: " + temp + " ºF",
 				"class": "currently"
 			  }).appendTo( "#cloud" );
 			  
@@ -66,11 +66,11 @@ function get_forecast(){
 			
 			var humidity = days[0].main.humidity;
 			var description = days[0].weather[0].description;
-			var temp = days[0].main.temp;
+			var temp = Math.round(parseFloat(days[0].main.temp));
 			
 			var humidity2 = days[1].main.humidity;
 			var description2 = days[1].weather[0].description;
-			var temp2 = days[1].main.temp;
+			var temp2 = Math.round(parseFloat(days[1].main.temp));
 			
 			//Tomorrow:			
 			$( "<div/>", {
@@ -80,7 +80,7 @@ function get_forecast(){
 			  
 			$( "<div/>", {
 				"id": "geoforecastedTemp",
-				"text": "Temperature: " + temp + " F",
+				"text": "Temperature: " + temp + " ºF",
 				"class": "forecasted tomorrow"
 			  }).appendTo( "#cloud2" );
 			  
@@ -106,7 +106,7 @@ function get_forecast(){
 			  
 			$( "<div/>", {
 				"id": "geoforecastedTemp2",
-				"text": "Temperature: " + temp2 + " F",
+				"text": "Temperature: " + temp2 + " ºF",
 				"class": "forecasted day2"
 			  }).appendTo( "#cloud3" );
 			  
