@@ -30,9 +30,16 @@ main {
 
 
 .banner {
-	background-color:  hsla(98, 60%, 16%, .3);
+	background-color:  hsla(98, 60%, 16%, .15);
+	border-radius: 25px;
 	color: white; 
-	padding: 1rem 0 1rem 2rem;
+	float: left;
+    padding: 2px 28px;
+}
+
+.banner-subtitle {
+	font-style: italic;
+	text-align: center;
 }
 
 .chart {
@@ -44,12 +51,23 @@ main {
 	height: 20px;
 }
 
-.currently {
-	background-color:  hsla(98, 60%, 16%, .9);
-	border-radius: 16px;
-	display: inline;
-	margin: 0 6px 0 9%;
-	padding: 5px;
+.headerWeather {
+    background-color: hsla(98, 60%, 16%, 0.9);
+    border-radius: 16px;
+    display: inline-block;
+	margin: 2px 4.5%;    
+	min-width: 170px;
+    padding: 5px;
+    width: 15%;
+}
+
+#primary .nav-tabs {
+    border-bottom: 0px solid #ddd;
+}
+
+#selectors {
+    background-color: hsla(98, 60%, 16%, 0.75);
+	width: 74%;
 }
 
 #selectors > div {
@@ -79,6 +97,14 @@ main {
 
 #geoTemp {
 	min-width: 120px;
+}
+
+#geoTomorrow {
+	opacity: .7;
+}
+
+#geo2Day {
+	opacity: .4;
 }
 
 #primary {
@@ -122,27 +148,107 @@ main {
 }
 
 .btn {
-	width: 30%;
+	width: 21.5%;
 	margin: 1rem;
 }
 
 /******bs3 navtabs********/
 .nav-tabs > li > a {
-	background-color: hsla(98, 60%, 16%, .7);
+	background-color: hsla(98, 60%, 16%, .9);
+	font-weight: bold;
 	color: white;
 }
 
 .nav-tabs > li:hover > a {
-	background-color: hsla(98, 60%, 16%, .4);
+	background-color: hsla(90, 20%, 19%, 0.9);
 }
 
 .nav-tabs > li.active > a,
 .nav-tabs > li.active > a:focus, 
 .nav-tabs > li.active > a:hover {
- 	background-color: #F1DD9E;
+ 	background-color: #aa9657;
  	color: #333;
  }
+ 
+/******** Cloud style div **********/
 
+#theSky {
+	z-index: 99999;    
+	margin-top: -55px;
+}
+
+.headerWeather .header {
+font-weight: bold;
+font-size: 16px;
+color: gray;
+}
+
+[id*="cloud"] {
+	background: #f2f9fe;
+	background: linear-gradient(top, #f2f9fe 5%, #d6f0fd 100%);
+	background: -webkit-linear-gradient(top, #f2f9fe 5%, #d6f0fd 100%);
+	background: -moz-linear-gradient(top, #f2f9fe 5%, #d6f0fd 100%);
+	background: -ms-linear-gradient(top, #f2f9fe 5%, #d6f0fd 100%);
+	background: -o-linear-gradient(top, #f2f9fe 5%, #d6f0fd 100%);	
+    border-radius: 100px;
+    color: black;
+    height: 120px;
+    margin: 79px 5px 20px;
+    padding: 5px 10px;
+    position: relative;
+    text-align: center;
+    width: 30%;
+}
+
+#cloud2 {
+	opacity: .8;
+}
+
+#cloud3 {
+	opacity: .6;
+}
+
+[id*="cloud"]:after, [id*="cloud"]:before {
+	content: '';
+	position: absolute;
+	background: #f2f9fe;
+	z-index: -1
+}
+
+[id*="cloud"]:after {
+	width: 29%; height: 100px;
+	top: -50px; left: 50px;
+	
+	border-radius: 100px;
+	-webkit-border-radius: 100px;
+	-moz-border-radius: 100px;
+}
+
+[id*="cloud"]:before {
+	width: 52%; height: 180px;
+	top: -90px; right: 50px;
+	
+	border-radius: 200px;
+	-webkit-border-radius: 200px;
+	-moz-border-radius: 200px;
+}
+
+.shadow {
+    background: #000 none repeat scroll 0 0;
+    bottom: -22px;
+    position: absolute;
+    width: 71%;
+    z-index: -1;
+	
+	box-shadow: -171px 0 25px 8px rgba(0, 0, 0, 0.4);
+	-moz-box-shadow: -171px 0 25px 8px rgba(0, 0, 0, 0.4);
+	-webkit-box-shadow: -171px 0 25px 8px rgba(0, 0, 0, 0.4);
+	
+	border-radius: 50%;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+}
+/******** Cloud style div **********/
 
 /**********************************
 *       Masonry Grid Styles
