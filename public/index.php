@@ -13,14 +13,20 @@
 <body>
 	<div class="page-container">
 		<div class="banner">
-			<h1 class="banner-item">Farm Data Finder</h1>
-		</div>
-<!-- 		<div id='loadingModal'> <div id='loading-text'>Hold up! We're shucking corn and grinding out some data... </div> </div>
- -->		
-		
-
+			<h1 class="banner-item">Farming For Our Future</h1>
+			<h5 class="banner-subtitle">Looking Backward, Farming Forward</h5>
+		</div> 
+		<div id='loadingModal'> <div id='loading-text'>We're shucking corn and grinding out some data... </div> </div>
 		<div class="col-sm-12 col-xs-12">
+		<div id="theSky">
+			<div id="cloud" class="headerWeather"><span class='shadow'></span></div>
+			<div id="cloud2" class="headerWeather"><span class='shadow'></span></div>
+			<div id="cloud3" class="headerWeather"><span class='shadow'></span></div>
+		</div>
 			<h3 id='geo'>Location Unknown</h3>
+			<!-- <div id="geoToday" class="headerWeather"><b>Today</b></div>
+			<div id="geoTomorrow" class="headerWeather"><b>Tomorrow</b></div>
+			<div id="geo2Day" class="headerWeather"><b>Two Days Away</b></div> -->
 			<form id="primary" accept-charset="utf-8" > 
 				<div role="tabpanel">
 					<!-- Nav tabs -->
