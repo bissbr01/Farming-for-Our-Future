@@ -13,7 +13,8 @@ html, body {
 	font-size: 14px;
 	font-family: 'Comfortaa', cursive;
 	font-weight: 300;
-	background: url("../images/farm_background_2.png") no-repeat #234311;
+	/*background: url("../images/farm_background_2.png") no-repeat #234311;*/
+	background: #234311;
 	color: white;
 }
 

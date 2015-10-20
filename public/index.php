@@ -16,7 +16,8 @@
 			<h1 class="banner-item">Farming For Our Future</h1>
 			<h5 class="banner-subtitle">Looking Backward, Farming Forward</h5>
 		</div> 
-		<div id='loadingModal'> <div id='loading-text'>We're shucking corn and grinding out some data... </div> </div>
+<!-- 		<div id='loadingModal'> <div id='loading-text'>We're shucking corn and grinding out some data... </div> </div>
+ -->		
 		<div class="col-sm-12 col-xs-12">
 		<div id="theSky">
 			<div id="cloud" class="headerWeather"><span class='shadow'></span></div>
