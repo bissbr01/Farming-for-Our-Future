@@ -71,12 +71,14 @@ function loadCommodities(json){
 function display_chart(){
 
 	var params = find_GET_params();
+
 	//var link = "http://nass-api.azurewebsites.net/api/api_get?";
 	var link = "http://nass-api.azurewebsites.net/api/api_get?";
 	//link += params_to_string(params);
 	link += params;  
 	console.log(link);
     query_api(link, undefined, false);
+    display_inital_params();  // clear data from selects, otherwise easy to get stale data
 }
 
 function parseFloatIgnoreCommas(number) {

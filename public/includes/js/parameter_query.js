@@ -191,7 +191,8 @@ function display_inital_params(){
 	var defaultsValues = "distinctParams=source_desc&distinctParams=sector_desc&distinctParams=group_desc&distinctParams=commodity_desc&distinctParams=agg_level_desc&distinctParams=year"; //&distinctParams=freq_desc
 	var url = "http://nass-api.azurewebsites.net/api/get_dependent_param_values?" + defaultsValues;
 	//var url = 'http://nass-api.azurewebsites.net/api/get?containers=source_desc&sector_desc&group_desc&commodity_desc&agg_level_desc&year'
-	
+	$('.filter > .form-group').remove();  //clear old data
+
 	$.ajax({
     	type: "GET",
     	url: url,
@@ -208,7 +209,7 @@ function display_inital_params(){
 			console.log(error.responseText);
 		}
 	})
-  .done(function() {  
+    .done(function() {  
   		$('.form-control').attr('disabled', false);
 		// $('#loadingModal').fadeOut();
   });	

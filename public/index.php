@@ -85,7 +85,7 @@
 						</div>
 						<div id="about" role="tabpanel" class="tab-pane filter">
 							<p>
-								We have teamed up with the USDA and DevPost to bring to your fingertips the vast databases of the National Agricultural Stistics Service (NASS).
+								We have teamed up with the USDA and DevPost to bring to your fingertips the vast databases of the National Agricultural Statistics Service (NASS).
 								We hope that this app helps you produce, buy, and sell farm products.
 							</p>
 							<h4>Creating a Graph</h4>
@@ -108,6 +108,10 @@
 								</li>
 								<li>
 									You can delete, move, resize, and pop out graphs.  Use the corresponding icons on the graphs.  
+								</li>
+								<li>
+									You can zoom in on a section of a graph by clicking and dragging over the selection you'd like to view.  
+									This can then be reset to the original by clicking the "reset zoom" button in the top left corner.
 								</li>
 							</ul>
 							<h4>Using the Presets</h4>
