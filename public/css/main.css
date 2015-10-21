@@ -344,4 +344,7 @@ color: gray;
 	.btn {
 		width: 90%;
 	}
+	.glyphicon {
+		display: none;
+	}
 }
