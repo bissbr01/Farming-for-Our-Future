@@ -4,7 +4,7 @@
  * @param  {[ name of NASS parameter]}
  * @return {[none]} just outputs html to "#selectors"
  */
-function optionHTML(json, param) {
+function optionHTML(json, param, loc) {
 
 	$('select#' + param).parent().remove();
 
@@ -19,35 +19,38 @@ function optionHTML(json, param) {
 	    	html += "<option>" + json.Values[j].toString() + "</option>";
 		}
 		html +=	"</select></div>";
-		if (
-			param == 'SOURCE_DESC' ||
-			param == 'SECTOR_DESC' ||
-			param == 'COMMODITY_DESC' ||
-			param == 'STATISTICCAT_DESC' ||
-			param == 'CLASS_DESC'
-			)
-		{
-			var div = '#commodity';
+		if (loc == undefined) {
+			if (
+				param == 'SOURCE_DESC' ||
+				param == 'SECTOR_DESC' ||
+				param == 'COMMODITY_DESC' ||
+				param == 'STATISTICCAT_DESC' ||
+				param == 'CLASS_DESC'
+				)
+			{
+				var div = '#commodity';
+			}
+			else if 
+				(
+				param == 'AGG_LEVEL_DESC' ||
+				param == 'STATE_NAME' ||
+				param == 'ASD_DESC' ||
+				param == 'COUNTY_NAME'
+				) 
+			{
+				var div = '#location';
+			}
+			else if 
+				(
+				param == 'YEAR' ||
+				param == 'FREQ_DESC'
+				) 
+			{
+				var div = '#time';
+			}
+		} else {
+			var div = loc;
 		}
-		else if 
-			(
-			param == 'AGG_LEVEL_DESC' ||
-			param == 'STATE_NAME' ||
-			param == 'ASD_DESC' ||
-			param == 'COUNTY_NAME'
-			) 
-		{
-			var div = '#location';
-		}
-		else if 
-			(
-			param == 'YEAR' ||
-			param == 'FREQ_DESC'
-			) 
-		{
-			var div = '#time';
-		}
-
 		$(div).append(html);
 	}
 }

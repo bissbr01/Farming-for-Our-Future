@@ -32,17 +32,26 @@ function find_location(){
 		    );
 			get.done(function(){
 		    	if (loc != undefined && loc['state'] != undefined){        // there is not a valid value for state
-			    	generate_defaults();
+			    	
 					setup_geo_services(pos);   //Run extra features requiring geolocation
+					$('#cash-crops > .btn').click(function(e){
+						generate_defaults(0);
+					});
+					$('#overview > .btn').click(function(e){
+						generate_defaults(1);
+					});
+					
 		    	} 
 			});
 		}, function(){        // fail callback
-			$('.loading').fadeOut();	
+			$('.loading').fadeOut();
+			$('section .btn').attr('disabled', 'disabled');	
+			$('section > .row').prepend('<div class=\'no-geo\'><h4>This feature requires your location to function.</h4><p>If you\'d like to use this, enable geolocation services and reload the page. </p></div>');
 		});			
     }
 }
 
-function generate_defaults(){
+function generate_defaults(index){
 
 	default_queries['AREA PLANTED'] = {
 		'CORN' : {
@@ -108,12 +117,10 @@ function generate_defaults(){
         
 	// query API for each default, then display each in graph
 	default_queries_to_string(default_queries);
-	console.log(default_queries);
 
-	for (var i = 0; i < 2; i++) {                // can't automatically loop through b/c of aysnc ajax calls.  This was my patch fix.
-		var key = ['AREA PLANTED', 'PRODUCTION'];
-		query_default_from_key(key[i]);
-	};
+    // can't automatically loop through b/c of aysnc ajax calls.  This was my patch fix.
+	var key = ['AREA PLANTED', 'PRODUCTION'];
+	query_default_from_key(key[index]);
 }
 
 function query_default_from_key(key){
@@ -138,7 +145,7 @@ function default_queries_to_string(default_queries){
 		default_queries[key]['queries'] = [];
 		for (var k in default_queries[key]) {
 			if (!default_queries[key].hasOwnProperty(k)){continue;}
-			if (key == 'queries'){continue;}
+			if (k == 'queries'){continue;}
 			var string = "";
 			for (var prop in default_queries[key][k]) {
 				if (!default_queries[key][k].hasOwnProperty(prop)){continue;}
@@ -155,14 +162,22 @@ function default_queries_to_string(default_queries){
 }
 
 function query_api(url, key, defaults){
+
 	$('.loading').fadeIn();
-	return $.ajax({
+
+	return jqxhr =  $.ajax({
     	type: "GET",
     	url: url,
     	cached: true,
     	crossDomain: true,
     	contentType: "application/json; charset=utf-8",
-    	dataType: "json", 
+    	dataType: "json",
+    	timeout: 10000         // 10 seconds
+	})
+	.fail(function(error, timeout, jqXHR){
+		$('.loading').fadeOut();
+    	$('#graphs').prepend('<h3>The request was timed out.  Use a more specific search or try again later.  </h3>');
+    	setTimeout(function() { $('#graphs > h3').fadeOut(); }, 5000);
 	})
 	.fail(function(error){
 		console.log(error.responseText);
@@ -172,12 +187,13 @@ function query_api(url, key, defaults){
 	    	console.log(json);
 	    	draw_zoom_graph(json, key, defaults);
 
-	  		$('.loading').fadeOut();
+			$('.loading').fadeOut();
 	  		$('#graphs').sortable({
 	  			handle: '.glyphicon-fullscreen',
 	  			cancel: ''
 	  		});
 	  		$('.chart').resizable({
+	  			// helper: "ui-resizable-helper",
 				stop: function( event, ui) {
 					for (var i = 0; i < Highcharts.charts.length; i++) {
 						Highcharts.charts[i].reflow();
@@ -295,4 +311,5 @@ function draw_zoom_graph(json, key, defaults){
 	}
 	return chart;
 }
+
 
