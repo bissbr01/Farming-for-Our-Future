@@ -31,7 +31,7 @@
 					<!-- Nav tabs -->
 					<ul class="nav nav-tabs" role="tablist">
 						<li role="presentation" class="active">
-							<a href="#commodity" aria-controls="commodity" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-leaf pull-left"></span>Commodity</a>
+							<a href="#commodity" aria-controls="commodity" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-grain pull-left"></span>Commodity</a>
 						</li>
 						<li role="presentation">
 							<a href="#location" aria-controls="location" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-globe pull-left"></span>Location</a>
@@ -40,13 +40,13 @@
 							<a href="#time" aria-controls="time" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-calendar pull-left"></span>Time</a>
 						</li>
 						<li role="presentation" class="pull-right"> 
-							<a href="#about" aria-controls="time" role="tab" data-toggle="tab">About</a>
+							<a href="#about" aria-controls="time" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-info-sign"></span>About</a>
 						</li>
 						<li role="presentation" class="pull-right"> 
-							<a href="#resources" aria-controls="time" role="tab" data-toggle="tab">Resources</a>
+							<a href="#resources" aria-controls="time" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-book"></span>Resources</a>
 						</li>
 						<li role="presentation" class="pull-right"> 
-							<a href="#presets" aria-controls="time" role="tab" data-toggle="tab">Presets</a>
+							<a href="#presets" aria-controls="time" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-signal"></span>Presets</a>
 						</li>
 					</ul>
 					<!-- Tab panes -->
