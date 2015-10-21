@@ -49,6 +49,7 @@ a:hover{
 
 .banner-item {
 	font-weight: bold;
+	display: inline;
 }
 
 .banner-subtitle {
@@ -205,8 +206,8 @@ a:hover{
 /******** Cloud style div - Credit: http://thecodeplayer.com/walkthrough/make-a-simple-cloud-in-css3 **********/
 
 #theSky {
-	z-index: 99999;    
-	margin-top: -55px;
+	z-index: 99999;   
+	margin-top: -70px;
 }
 
 .headerWeather .header {

@@ -92,7 +92,7 @@ function get_forecast(){
 			  
 			$( "<div/>", {
 				"id": "geoforecastedSkyDescription",
-				"text": "" + description + ".",
+				"text": "" + description,
 				"class": "forecasted tomorrow"
 			  }).appendTo( "#cloud2" );
 			  
@@ -118,7 +118,7 @@ function get_forecast(){
 			  
 			$( "<div/>", {
 				"id": "geoforecastedSkyDescription2",
-				"text": "" + description2 + ".",
+				"text": "" + description2,
 				"class": "forecasted day2"
 			  }).appendTo( "#cloud3" );
 			  
