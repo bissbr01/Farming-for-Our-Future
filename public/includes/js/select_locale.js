@@ -237,6 +237,12 @@ function draw_zoom_graph(json, key, defaults){
 					text: json.data[0].statisticcat_desc + " in " + json.data[0].unit_desc
 				},
 	        },
+	        tooltip: {
+			    crosshairs: [true, true],
+		        formatter: function(){
+		        	return '<b>'+ this.x + '</b><br>' + '<br><span style="color:'+ this.series.color +'">\u25CF</span>: ' + this.series.name + ': ' + this.y;
+		        }
+			}
 			
 		};
 
