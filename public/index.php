@@ -12,6 +12,67 @@
 </head>
 <body>
 	<div class="page-container">
+				<div class="sun">
+				<div class="sun-face">
+					<div class="sun-hlight"></div>
+					<div class="sun-leye"></div>
+					<div class="sun-reye"></div>
+					<div class="sun-lred"></div>
+					<div class="sun-rred"></div>
+					<div class="sun-nose"></div>
+				</div>
+				<div class="sun-anime">
+				<div class="sun-ball"></div>
+				<div class="sun-light">
+					<b></b>
+					<s></s>
+				</div>
+				<div class="sun-light">
+					<b></b>
+					<s></s>
+				</div>
+				<div class="sun-light">
+					<b></b>
+					<s></s>
+				</div>
+				<div class="sun-light">
+					<b></b>
+					<s></s>
+				</div>
+				<div class="sun-light">
+					<b></b>
+					<s></s>
+				</div>
+				<div class="sun-light">
+					<b></b>
+					<s></s>
+				</div>
+				<div class="sun-light">
+					<b></b>
+					<s></s>
+				</div>
+				<div class="sun-light">
+					<b></b>
+					<s></s>
+				</div>
+				<div class="sun-light">
+					<b></b>
+					<s></s>
+				</div>
+				<div class="sun-light">
+					<b></b>
+					<s></s>
+				</div>
+				<div class="sun-light">
+					<b></b>
+					<s></s>
+				</div>
+				<div class="sun-light">
+					<b></b>
+					<s></s>
+				</div>
+			</div>
+		</div>
 		<div class="banner">
 			<h1 class="banner-item">Farming For Our Future</h1>
 			<h5 class="banner-subtitle">Looking Backward, Plowing Forward</h5>

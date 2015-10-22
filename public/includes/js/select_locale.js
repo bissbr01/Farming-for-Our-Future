@@ -23,7 +23,7 @@ function find_location(){
 
 		        	console.log(loc);
 
-		            var html = 'Your location: ';
+		            var html = 'Location: ';
 		            for (key in loc) {
 		            	html += loc[key] + ' ';
 		            };     	          
