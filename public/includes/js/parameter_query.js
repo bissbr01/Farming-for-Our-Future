@@ -210,7 +210,10 @@ function display_inital_params(){
 		}
 	})
     .done(function() {  
-  		$('.form-control').attr('disabled', false);
+  		$('.form-control').attr('disabled', false);  
+		$('html, body').animate({
+        scrollTop: $("#graphs").offset().top
+		}, 2000);
 		// $('#loadingModal').fadeOut();
   });	
 }

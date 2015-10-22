@@ -9,13 +9,13 @@
 *
 */
 
-html, body {
+body {
 	font-size: 14px;
 	font-family: 'Comfortaa', cursive;
 	font-weight: 300;
-	background: url("../images/farm_background_2.png") no-repeat #234311;
+	background: url("../images/woodFence.jpg") no-repeat #234311;
 	color: white;
-	min-height: 1543px;
+	/* min-height: 1543px; */
 }
 
 h3, label {
@@ -25,9 +25,11 @@ h3, label {
 	font-weight: 400;
 }
 
+/*
 main {
 	min-height: 600px !important;
 }
+*/
 
 a {
 	color: white;
@@ -39,12 +41,14 @@ a:hover{
 
 
 .banner {
-	background-color:  hsla(98, 60%, 16%, .35);
-	border-radius: 25px;
-	color: white; 
-	float: left;
-	margin: 5px 0 0 5px;
+    background-color: hsla(98, 60%, 16%, 0.35);
+    border-radius: 25px;
+    color: white;
+    float: left;
+    margin: 5px 0 0 5px;
+    opacity: 0.6;
     padding: 2px 28px;
+    z-index: 9999999;
 }
 
 .banner-item {
@@ -172,6 +176,10 @@ a:hover{
 .btn {
 	width: 28%;
 	margin: 1rem;
+}
+
+.buttons {
+	text-align: center;
 }
 
 .buttons,
@@ -485,9 +493,10 @@ a:hover{
  
 /******** Cloud style div - Credit: http://thecodeplayer.com/walkthrough/make-a-simple-cloud-in-css3 **********/
 
-#theSky {
-	z-index: 99999;   
+#theSky {  
 	margin-top: -70px;
+	min-height: 236px;
+	position: relative;
 }
 
 .headerWeather .header {
@@ -512,17 +521,28 @@ color: gray;
     height: 120px;
     margin: 79px 5px 20px;
     padding: 5px 10px;
-    position: relative;
+    position: absolute;
     text-align: center;
     width: 31%;
 }
 
+#cloud {
+    opacity: 0.9;
+    left: 1%;
+    top: 23px;
+	z-index: -1; 
+}
+
 #cloud2 {
-	opacity: .7;
+    opacity: 0.7;
+    right: 35%;
+    top: -29px;
 }
 
 #cloud3 {
-	opacity: .5;
+    opacity: 0.85;
+    right: 4%;
+    top: 15px;
 }
 
 [id*="cloud"]:after, [id*="cloud"]:before {
@@ -551,6 +571,7 @@ color: gray;
 }
 
 .shadow {
+	display: none;
     background: #000 none repeat scroll 0 0;
     bottom: -22px;
     position: absolute;

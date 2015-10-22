@@ -48,7 +48,7 @@ function get_weather(){
 				"class": "currently"
 			  }).appendTo( "#cloud" );
 			  
-			  $('#cloud').children().hide().fadeIn(500);			  
+			  $('#cloud').children().hide().fadeIn(400);			  
 			  
 		}
 	});
@@ -124,8 +124,8 @@ function get_forecast(){
 			  
 			  $('#cloud3').children().hide();	
 			  		  
-				  $('#cloud2').children().fadeIn(300, function() {	
-					$('#cloud3').children().fadeIn(300);
+				  $('#cloud2').children().fadeIn(500, function() {	
+					$('#cloud3').children().fadeIn(700);
 				  
 			  });		  
 		}

@@ -61,7 +61,7 @@ function optionHTML(json, param, loc) {
  * ]
  */
 function loadCommodities(json){
-	console.log("Loaded Commodities:");
+	//console.log("Loaded Commodities:");
 
 	for (var i = 0; i < json.data.length; i++) {
 		optionHTML(json.data[i], json.data[i].Name)
@@ -76,7 +76,7 @@ function display_chart(){
 	var link = "http://nass-api.azurewebsites.net/api/api_get?";
 	//link += params_to_string(params);
 	link += params;  
-	console.log(link);
+	//console.log(link);
     query_api(link, undefined, false);
     display_inital_params();  // clear data from selects, otherwise easy to get stale data
 }
@@ -109,7 +109,7 @@ function format_data(json){
 		dataArray.sort(Comparator);                 // find better way to sort data         
 		return dataArray;
 	} else {
-		console.log("Object or object property is undefined");
+		//console.log("Object or object property is undefined");
 		return false;
 	}
 }
