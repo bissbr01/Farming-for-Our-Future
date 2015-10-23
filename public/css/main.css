@@ -80,10 +80,9 @@ a:hover{
     width: 15%;
 }
 
-.no-geo {
-	color:#DCDB45;
-	background: hsla(0, 0%, 0%, .6);
-	text-align: center;
+.nogeo, #geo.nogeo {
+	color: gray;
+    background: hsla(0, 0%, 0%, 0.6) url("/images/mapOff.png") no-repeat scroll 0 0;
 }
 
 #primary .nav-tabs {
@@ -114,10 +113,22 @@ a:hover{
 }
 
 #geo {
-	text-align: center;
-	max-width: 74%;
-	margin: 0 auto;
-	width: auto;
+    background: hsla(0, 0%, 0%, 0.6) url("/images/mapOn.png") no-repeat scroll 0 0;
+    margin: 0 auto;
+    max-width: 74%;
+    padding-left: 55px;
+    text-align: center;
+    width: auto;
+}
+
+#refreshLoc {
+	cursor: pointer;
+	padding: 2px;
+	opacity: .7;
+	transition: opacity .6s linear;
+}
+#refreshLoc:hover {
+	opacity: 1;
 }
 
 #primary {
@@ -158,9 +169,18 @@ a:hover{
     z-index: 1000;
 }
 
+.loadingSpin {
+	text-align: center;
+	margin: 0 auto;    
+	display: block;
+	width: 20%;
+}
+
 .loading{
-	opacity: 0.7;
+	background: hsla(0, 0%, 100%, 0.95) none repeat scroll 0 0;
+	opacity: 0.6;
 	display: none;
+	background: hsla(0, 0%, 100%, 0.9) none repeat scroll 0 0;
 }
 
 .clearfix {
@@ -174,8 +194,17 @@ a:hover{
 }
 
 .btn {
+	margin: 1rem;    
+	min-width: 150px;
+}
+
+.btn-primary {
 	width: 28%;
-	margin: 1rem;
+	font-size: 19px;
+}
+
+.btn-danger {
+	width: 16%;
 }
 
 .buttons {
@@ -204,7 +233,7 @@ a:hover{
 .nav-tabs > li.active > a,
 .nav-tabs > li.active > a:focus, 
 .nav-tabs > li.active > a:hover {
- 	background-color: #aa9657;
+ 	background-color: silver;
  	color: #333;
  }
  .nav-tabs > li.active > a > span {

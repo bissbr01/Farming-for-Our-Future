@@ -83,7 +83,7 @@
 			<div id="cloud2" class="headerWeather"><span class='shadow'></span></div>
 			<div id="cloud3" class="headerWeather"><span class='shadow'></span></div>
 		</div>
-			<h3 id='geo'>Location Unknown</h3>
+			<h3 id='geo' class='nogeo' >Location Unknown <img id='refreshLoc' src='/images/refreshLoc.png' alt='Update your location' /></h3>
 			<!-- <div id="geoToday" class="headerWeather"><b>Today</b></div>
 			<div id="geoTomorrow" class="headerWeather"><b>Tomorrow</b></div>
 			<div id="geo2Day" class="headerWeather"><b>Two Days Away</b></div> -->
@@ -222,7 +222,7 @@
 			</div>		
 			<div id="graphs" class='grid'>
 			<div class='loading chart'>
-				<img src="images/loading.gif" alt="">
+				<img class='loadingSpin' src="images/loading.gif" alt="">
 			</div>
 			<!-- 	<div class='grid-sizer'></div>
 				<div class='grid-item'></div>
@@ -239,7 +239,11 @@
 				display_inital_params();
 				find_location(); //Init other functions needing location as callback
 			});
-	
+						
+			$('#refreshLoc').click(function() {
+				window.location.href=window.location.href; //Reload page to allow 2nd shot at geolocation
+			});	
+			
 			$('#clear-form').click(function(event) {
 				$('.form-group').remove();
 				display_inital_params();
