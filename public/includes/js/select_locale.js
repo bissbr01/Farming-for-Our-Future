@@ -253,6 +253,13 @@ function draw_zoom_graph(json, key, defaults){
 				data: dataArray
 			}];
 		}
+		else if (json.data.length < 2){   //regression line will display incorrectly if less than 3 points, so don't show
+			options.series =  [{
+				type: 'scatter',
+				name: json.data[0].statisticcat_desc,
+				data: dataArray
+			}];
+		}
 		else {
 			options.series =  [{
 				regression: true ,

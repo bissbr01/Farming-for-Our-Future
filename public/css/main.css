@@ -124,7 +124,7 @@ a:hover{
 	margin-top: 10px;
 }
 
-#selectors > div > p,
+#selectors > div  p,
 #selectors > div > ul,
 #selectors > div > ol {
 	padding: 1rem 2rem;

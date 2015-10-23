@@ -122,10 +122,12 @@
 							<div class='row'>
 								<div id="cash-crops" class='col-sm-6 col-xs-12'>
 									<h4>Top 5 Cash Crops</h4>
+									<p>Based on your current location, this will show you the Area Planted by 5 major cash crops: corn, cotton, soybeans, rice, and wheat.</p>
 									<a class="btn btn-info">Process</a>
 								</div>	
 								<div id="overview" class='col-sm-6 col-xs-12'>
-									<h4>Corn Commodity Overview</h4>	
+									<h4>Corn Commodity Overview</h4>
+									<p>Based on your current location, this will show you the yield, area planted, and area harvested of corn.</p>
 									<a class="btn btn-info">Process</a>
 								</div>
 							</div>	
@@ -163,6 +165,7 @@
 								</li>
 								<li>
 									The red linear regression line helps you to read the data.  The larger the data set, the more reliable the linear regression line is to predict where the data is going.
+									The regression line will not appear if there is at less than 3 points on the graph.
 								</li>
 								<li>
 									You can toggle on and off the blue scatter plot or the red regression line by selecting their names at the bottom of the graph.
@@ -179,11 +182,11 @@
 							<ol>
 								<li>
 								<h5>Top 5 Cash Crops</h5>
-								<p>Based on your current location, this will show you the Area Planted by 5 major cash crops: corn, cotton, soybeans, rice, and wheat.</p>
+								<span>Based on your current location, this will show you the Area Planted by 5 major cash crops: corn, cotton, soybeans, rice, and wheat.</span>
 								</li>
 								<li>
 								<h5>Corn Commodity Overview</h5>
-								<p>Based on your current location, this will show you the yield, area planted, and area harvested of corn.</p>
+								<span>Based on your current location, this will show you the yield, area planted, and area harvested of corn.</span>
 								</li>
 							</ol>
 							<h4>Tips</h4>
