@@ -23,7 +23,7 @@ function find_params(changeEvent){
 
 	});
 	find_hidden_params(params);  
-	console.log(params);
+	//console.log(params);
 	return params;
 }
 
@@ -41,7 +41,7 @@ function erase_stale_params(changeEvent){
 	var filterID = '#' + filter.id;
 
 	$(filterID).find('select').each(function() {
-		console.log($(this)[0].id);
+		//console.log($(this)[0].id);
 		if (clear == true) {
 			$(this).children('option').removeAttr('selected');
 		}
@@ -152,7 +152,7 @@ function get_dependent_params(changeEvent) {
 	var link = "http://nass-api.azurewebsites.net/api/get_dependent_param_values?";
 	//link += params_to_string(params);
 	link += params;  
-	console.log(link);
+	//console.log(link);
 
     $.ajax({
     	type: "GET",
@@ -162,18 +162,18 @@ function get_dependent_params(changeEvent) {
     	contentType: "application/json; charset=utf-8",
     	dataType: "json", 
     	success: function(json) {
-	    	console.log("Success! ");
-	    	console.log(json);
+	    	//console.log("Success! ");
+	    	//console.log(json);
 	    	// Need to check to see if empty.  This will occur when all params are selected.
 	    	if (json != undefined && json.data != undefined) {
 			loadCommodities(json);
 			} else {
-				console.log("All Parameters are chosen.  Click submit to query, or change params");
+				//console.log("All Parameters are chosen.  Click submit to query, or change params");
 			}
 				
 		},
 		error: function(error){
-			console.log(error.responseText);
+			//console.log(error.responseText);
 		}
 	})
   .done(function() {  
@@ -203,12 +203,12 @@ function display_inital_params(clear){
     	contentType: "application/json; charset=utf-8",
     	dataType: "json", 
     	success: function(json){
-    		console.log("Initial params: ");
-    		console.log(json);
+    		//console.log("Initial params: ");
+    		//console.log(json);
 			loadCommodities(json);
 		},
 		error: function(error){
-			console.log(error.responseText);
+			//console.log(error.responseText);
 		}
 	})
     .done(function() {  
@@ -218,6 +218,7 @@ function display_inital_params(clear){
 	        	scrollTop: $("#graphs").offset().top
 			}, 2000);
 		}
+
   });	
 }
 

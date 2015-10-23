@@ -10,7 +10,7 @@ function find_location(){
 			var apiurl = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + pos.coords.latitude + ',' + pos.coords.longitude + '&sensor=false';
 		    var get = $.getJSON(apiurl,
 		        function(data){
-		        	console.log(data);
+		        	//console.log(data);
 		        	loc['city'] = data.results[0].address_components[1].short_name;   // city
 		        	loc['county'] = data.results[0].address_components[3].short_name;   // county
 		        	
@@ -21,19 +21,25 @@ function find_location(){
 		        		}
 		        	};
 
-		        	console.log(loc);
+		        	//console.log(loc);
 
 		            var html = 'Location: ';
 		            for (key in loc) {
 		            	html += loc[key] + ' ';
-		            };     	          
-            		$('#geo').html(html);
+		            };    
+					html += "<img id='refreshLoc' src='images/refreshLoc.png' alt='Update your location' />"; //Reload location button
+            		$('#geo').html(html);					
+					
+					$('#refreshLoc').click(function() {
+						window.location.href=window.location.href; //Reload page to allow 2nd shot at geolocation
+					});
 		        }
 		    );
 			get.done(function(){
 		    	if (loc != undefined && loc['state'] != undefined){        // there is not a valid value for state
 			    	
 					setup_geo_services(pos);   //Run extra features requiring geolocation
+					
 					$('#cash-crops > .btn').click(function(e){
 						generate_defaults(0);
 					});
@@ -41,12 +47,17 @@ function find_location(){
 						generate_defaults(1);
 					});
 					
+					$('#geo').removeClass('nogeo');
+					
 		    	} 
 			});
-		}, function(){        // fail callback
+		}, function(){        // fail callback --- probably never called. Spotty browser implementation. 
 			$('.loading').fadeOut();
 			$('section .btn').attr('disabled', 'disabled');	
-			$('section > .row').prepend('<div class=\'no-geo\'><h4>This feature requires your location to function.</h4><p>If you\'d like to use this, enable geolocation services and reload the page. </p></div>');
+			$('section > .row').prepend('<div class=\'nogeo\'><h4>This feature requires your location to function.</h4><p>If you\'d like to use this, enable geolocation services and reload the page. </p></div>');			
+			$('html, body').animate({
+			scrollTop: $("div.nogeo").offset().top
+			}, 2000);
 		});			
     }
 }
@@ -176,30 +187,38 @@ function query_api(url, key, defaults){
 	})
 	.fail(function(error, timeout, jqXHR){
 		$('.loading').fadeOut();
-    	$('#graphs').prepend('<h3>The request was timed out.  Use a more specific search or try again later.  </h3>');
+		$('.timedOut').remove(); //Clear old fails
+    	$('#graphs').prepend('<h3 class="timedOut">Report failed. Use a more specific search by selecting more filters or try again later.  </h3>');
+		$('html, body').animate({
+			scrollTop: $(".timedOut").offset().top
+		}, 2000);
     	setTimeout(function() { $('#graphs > h3').fadeOut(); }, 5000);
-	})
-	.fail(function(error){
-		console.log(error.responseText);
 	})
     .done(function(json) {  
     	if (json.data != undefined) {
-	    	console.log(json);
+	    	//console.log(json);
 	    	draw_zoom_graph(json, key, defaults);
 
 			$('.loading').fadeOut();
+						
 	  		$('#graphs').sortable({
 	  			handle: '.glyphicon-fullscreen',
 	  			cancel: ''
 	  		});
-	  // 		$('.chart').resizable({
-	  // 			// helper: "ui-resizable-helper",
+
+	  		// 		$('.chart').resizable({
+	  		// 			// helper: "ui-resizable-helper",
 			// 	stop: function( event, ui) {
 			// 		for (var i = 0; i < Highcharts.charts.length; i++) {
 			// 			Highcharts.charts[i].reflow();
 			// 		};
 			// 	}
 			// });
+
+						
+			$('html, body').animate({
+			scrollTop: $("#graphs").children().last().offset().top
+			}, 2000);
   		}
     });	
 }

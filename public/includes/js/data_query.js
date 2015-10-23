@@ -11,8 +11,16 @@ function optionHTML(json, param, loc) {
 	// if (json.Values[0] != ""){  //ensure we don't output an empty selector, which can then be selected and break app
 	if (json.Values[0] != ""){
 		var html = "";
+		var tempLabel = "";
 		html += "<div class=\"form-group\">";
-		html +=	"<label>" + param.split('_').join(' ') + ":</label>";
+		if (param.indexOf('_DESC') > 0) {
+			tempLabel = param.split('_DESC').join('');
+			if (tempLabel === 'STATISTICCAT') tempLabel = 'STATISTICAL CATEGORY';
+			if (tempLabel === 'AGG_LEVEL') tempLabel = 'LOCATION GROUP';
+			if (tempLabel === 'FREQ') tempLabel = 'FREQUENCY';
+		}
+		else tempLabel = param.split('_').join(' ');
+		html +=	"<label>" + tempLabel + ":</label>";
 		html +=	"<select id=\"" + param + "\" name=\"" + param + "\" class=\"form-control\" MULTIPLE SIZE=5>"
 	    // html += "<option value='' selected>None</option>"; //Default option
 		for (var j=0; j < json.Values.length; j++) {
