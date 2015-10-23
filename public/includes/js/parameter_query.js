@@ -186,8 +186,10 @@ function get_dependent_params(changeEvent) {
  *  displays initial parameters to index.php.
  * @return {[none]}
  */
-function display_inital_params(){
-	$('#submit').attr('disabled', true);
+function display_inital_params(clear){
+	$('#submit').attr('disabled', true);  //disable Graph! button
+	$("a[href='#commodity']").tab('show');
+
 	var defaultsValues = "distinctParams=source_desc&distinctParams=sector_desc&distinctParams=group_desc&distinctParams=commodity_desc&distinctParams=agg_level_desc&distinctParams=year"; //&distinctParams=freq_desc
 	var url = "http://nass-api.azurewebsites.net/api/get_dependent_param_values?" + defaultsValues;
 	//var url = 'http://nass-api.azurewebsites.net/api/get?containers=source_desc&sector_desc&group_desc&commodity_desc&agg_level_desc&year'
@@ -210,11 +212,12 @@ function display_inital_params(){
 		}
 	})
     .done(function() {  
-  		$('.form-control').attr('disabled', false);  
-		$('html, body').animate({
-        scrollTop: $("#graphs").offset().top
-		}, 2000);
-		// $('#loadingModal').fadeOut();
+  		$('.form-control').attr('disabled', false);
+  		if(!clear){  
+			$('html, body').animate({
+	        	scrollTop: $("#graphs").offset().top
+			}, 2000);
+		}
   });	
 }
 

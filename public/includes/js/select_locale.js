@@ -192,14 +192,14 @@ function query_api(url, key, defaults){
 	  			handle: '.glyphicon-fullscreen',
 	  			cancel: ''
 	  		});
-	  		$('.chart').resizable({
-	  			// helper: "ui-resizable-helper",
-				stop: function( event, ui) {
-					for (var i = 0; i < Highcharts.charts.length; i++) {
-						Highcharts.charts[i].reflow();
-					};
-				}
-			});
+	  // 		$('.chart').resizable({
+	  // 			// helper: "ui-resizable-helper",
+			// 	stop: function( event, ui) {
+			// 		for (var i = 0; i < Highcharts.charts.length; i++) {
+			// 			Highcharts.charts[i].reflow();
+			// 		};
+			// 	}
+			// });
   		}
     });	
 }
@@ -283,22 +283,31 @@ function draw_zoom_graph(json, key, defaults){
 
 		$(chart.container).find('.glyphicon-new-window').parent('a').click(function(event) {
 		   	$(this).parents('.chart').dialog({
-		   		width: 'auto',
+		   		width: '100%',
 		   		height: 'auto',
 		   		modal: true,
 		   		open: function() {
+		   			chart.setSize($('.ui-dialog').width(), $('.ui-dialog').height());
 					$(this).css('overflow', 'hidden'); //this line does the actual hiding
 				},
 		   		resize: function() {
-		   			chart.reflow();
+		   			chart.setSize($('.ui-dialog').width(), $('.ui-dialog').height());
 		   		},
 		   		close: function() {
 		   			$(this).dialog('destroy');
 		   			$(this).removeClass();
 		   			$(this).removeAttr('style');
 		   			$(this).addClass('chart griditem ui-resizable');
-		   			$('#graphs').append($(this))
-		   			chart.reflow();
+		   			$('#graphs').append($(this));
+
+		   			// js media based queries encouraged to not use $(window).  See https://www.fourfront.us/blog/jquery-window-width-and-media-queries
+		   			if ($("a[role='tab'] > .glyphicon").css('display') == 'none'){
+		   				var w = ($('body').width()-35);
+		   				chart.setSize( w, 400);
+		   			} else {
+		   				var w = ($('body').width() /2) -30;
+		   				chart.setSize( w, 400);
+		   			}
 		   		}
 		   	});
 		});

@@ -221,13 +221,13 @@
 				<a id='clear-graphs' class="btn btn-danger">Clear Graphs</a>
 			</div>		
 			<div id="graphs" class='grid'>
-			<div class='loading chart'>
-				<img src="images/loading.gif" alt="">
-			</div>
 			<!-- 	<div class='grid-sizer'></div>
 				<div class='grid-item'></div>
 				<div class='grid-item'></div>
 				<div class='grid-item'></div> -->
+			</div>
+			<div class='loading chart'>
+				<img src="images/loading.gif" alt="">
 			</div>
 		</main>
 	</div>
@@ -236,13 +236,13 @@
 		
 		<script>
 			$(document).ready(function() {
-				display_inital_params();
+				display_inital_params(true);
 				find_location(); //Init other functions needing location as callback
 			});
 	
 			$('#clear-form').click(function(event) {
 				$('.form-group').remove();
-				display_inital_params();
+				display_inital_params(true);
 			});
 
 			$('#clear-graphs').click(function(event) {
@@ -258,6 +258,14 @@
 				// $('#loadingModal').fadeIn();
 				get_dependent_params(event);
 			});
+
+			if (Highcharts.Charts.length > 0){
+				$( window ).resize(function() {
+				 	for (var i = 0; i < Highcharts.Charts.length; i++) {
+				 		Highcharts.Charts[i].reflow();
+				 	};
+				});
+			}
 
 			
 
