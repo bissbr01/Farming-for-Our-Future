@@ -2,6 +2,7 @@
 Use our visual interface with the NASS dataset to help you produce, buy, and sell farm products.
 
 Instructions:
+
 1.	Open in the following URL in your web browser (Chrome preferred, but all work):
 a.	http://www.ratemyphillylandlord.com/USDA_Project/index.php
 2.	You will be asked if you’d like to share your location.  
