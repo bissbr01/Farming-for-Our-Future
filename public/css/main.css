@@ -86,6 +86,10 @@ a:hover{
     border-bottom: 0px solid #ddd;
 }
 
+.right-align {
+	float: right !important;
+}
+
 #selectors {
     background-color: hsla(98, 60%, 16%, 0.75);
 }
@@ -674,6 +678,16 @@ color: gray;
 @media screen and (max-width: 890px){
 	[id*='cloud']:before{display: none;}
 	[id*='cloud']:after{display: none;}
+}
+
+@media screen and (max-width: 850px){
+	.right-align {
+		float: left !important;
+	}
+	ul.nav-tabs {
+		background: hsla(98, 60%, 16%, .7);
+		border: 2px solid rgb(156, 125, 35);
+	}
 }
 
 @media screen and (max-width: 580px){

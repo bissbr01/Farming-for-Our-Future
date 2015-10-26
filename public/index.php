@@ -100,13 +100,13 @@
 						<li role="presentation"> 
 							<a href="#time" aria-controls="time" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-calendar pull-left"></span>Time</a>
 						</li>
-						<li role="presentation" class="pull-right"> 
+						<li role="presentation" class="right-align"> 
 							<a href="#about" aria-controls="time" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-info-sign"></span>About</a>
 						</li>
-						<li role="presentation" class="pull-right"> 
+						<li role="presentation" class="right-align"> 
 							<a href="#resources" aria-controls="time" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-book"></span>Resources</a>
 						</li>
-						<li role="presentation" class="pull-right"> 
+						<li role="presentation" class="right-align"> 
 							<a href="#presets" aria-controls="time" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-signal"></span>Presets</a>
 						</li>
 					</ul>

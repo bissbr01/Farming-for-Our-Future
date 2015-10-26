@@ -191,7 +191,7 @@ function query_api(url, key, defaults){
     	$('#graphs').prepend('<h3 class="timedOut">Report failed. Use a more specific search by selecting more filters or try again later.  </h3>');
 		$('html, body').animate({
 			scrollTop: $(".timedOut").offset().top
-		}, 2000);
+		}, 800);
     	setTimeout(function() { $('#graphs > h3').fadeOut(); }, 5000);
 	})
     .done(function(json) {  
@@ -214,11 +214,6 @@ function query_api(url, key, defaults){
 			// 		};
 			// 	}
 			// });
-
-						
-			$('html, body').animate({
-			scrollTop: $("#graphs").children().last().offset().top
-			}, 2000);
   		}
     });	
 }
@@ -334,6 +329,10 @@ function draw_zoom_graph(json, key, defaults){
 		$(chart.container).find('.glyphicon-remove').parent('a').click(function(event) {
 			$(chart.container).parent().remove();
 		});
+
+		$('html, body').animate({
+			scrollTop: $("#graphs").children().last().offset().top
+		}, 800);
 	} else {
 		if (json.data[0].commodity_desc != 'CORN' &&
 			json.data[0].statisticcat_desc == 'AREA PLANTED'){
