@@ -3,8 +3,7 @@ Use our visual interface with the NASS dataset to help you produce, buy, and sel
 
 Instructions
 
-1.	Open in the following URL in your web browser (Chrome preferred, but all work):
-a.	http://www.ratemyphillylandlord.com/USDA_Project/index.php
+1.	Clone the repository and load it up on a local web server.
 2.	You will be asked if you’d like to share your location.  
 a.	By selecting yes, you will be able to use the full functionality of the app.  
 b.	If you do not, you will still be able to use the main features.
